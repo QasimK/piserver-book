@@ -1,6 +1,6 @@
 # Forum \(with Discourse\)
 
-We can forum it.
+We can forum it. Discourse requires 1GB minimum WITH SWAP. Probably can't Raspberry Pi it.
 
 Discourse is a modern forum, "takes security seriously".
 
