@@ -18,7 +18,7 @@
 * [Cloud \(NextCloud\)](cloud-nextcloud.md)
 * [NAS \(Samba\)](nas-samba.md)
 * [Personal VPN \(OpenVPN\)](vpn-openvpn.md)
-* [Service Discovery \(avahi\)](service-discovery.md)
+* [Service Discovery \(Avahi\)](service-discovery.md)
 * [Pi-Hole](pi-hole.md)
 * [IPFS](ipfs.md)
 * [Blog \(Jekyll\)](blog-jekyll.md)
