@@ -1,8 +1,6 @@
-# Email
+# Mail Server
 
-Erm... No.
+Erm... No, probably not.
 
-\(Residential mail servers are not well-liked?\)
-
-
+\(Residential mail servers are not well-liked? I might give it a go anyway :\)
 

@@ -10,25 +10,47 @@ Transmission is a simple, no-frills torrenting application with different GUI, C
 4. The web interface will be secured with HTTPS and will be accessible over the LAN only.
 5. The data storage directory will be accessible to selected users.
 
+## VPN
+
+Something something split-tunneling not going to do it?
+
 ## PiStorage/Torrent
 
 mkfs.f2fs needs benchmarking for optimal settings if you want. Otherwise -d lets you use USB storage easily.
+
+## Web Interface
+
+`socat`, like the name suggests, can connect sockets together. A socket could be a TCP socket, a Unix socket, or something else.
+
+We'll create a systemd service that will
 
 ## Port Fowarding
 
 The torrent client can seed much more effectively  if you have an open port that allows new, incoming connections from other peers.
 
-## Web Interface
-
-socat, like the name suggests, can connect sockets together. A socket could be a TCP socket, a Unix socket, or something else.
-
-We'll create a systemd service that will
-
 ## Remote File Access
 
-SSHFS can be used. Optimal settings needed.
+See alternatives: NAS \(Samba\).
 
-Neither of NFS and Samba are particularly secure \(or the secure variants are a pain to set up\).
+Neither of NFS and Samba are particularly secure \(or the secure variants are a pain to set up\), so we will use SSHFS which will allow us to access the completed files from any \(capable\) device that we can SSH in from.
+
+## Backup
+
+Update the backup file:
+
+```
+/var/lib/transmission/config/config.json or something
+```
+
+## Conclusion
+
+* We set up a secure torrent server
+* that ensures our privacy, and
+* that provides access to a web UI both on the LAN and through the internet, and
+* that is a good citizen that will seed torrents, and
+* that provides access to a web UI both on the LAN and through the internet, and
+* that allows access to the files remotely, and
+* that will backup the configuration files for easy restore.
 
 
 

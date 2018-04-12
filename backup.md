@@ -1,6 +1,6 @@
 # Backup
 
-Backup is the final core step. After this, you can pick and choose what you want to do.
+Backup is the first step where you actually do something that is not just configuration. It is also the most important. After this, you can pick and choose what you want to do.
 
 Backups are important!
 

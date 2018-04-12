@@ -1,5 +1,7 @@
 # Initial Setup
 
+Now we can move the SD card into the Raspberry Pi, connect the power \(there is no on/off switch\), and SSH in as alarm.
+
 We'll perform some basic setup.
 
 ## Hostname, Locale
@@ -14,9 +16,21 @@ Create your user. Set up sudo. SSH Key. Delete alarm.
 
 Change port to 23, forbid root, etc. etc.
 
-## umask 027
+Firewall
+
+## Firewall - UFW
 
 ## Simple Outbound Mail
 
 mstmp.
+
+## Extra Security
+
+### umask 027
+
+### usbguard
+
+Since it's headless we don't need those ports.
+
+If we disabled the USB controller, we would also disable the ethernet.
 
