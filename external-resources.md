@@ -10,6 +10,7 @@ The Raspberry Pi can be used for a number of other things than just a Linux serv
 * A Magic Mirror \(links\)
 * A Retro gaming box \(links\)
 * A TV box \(links\)
+* Portable \(battery-powered\) wireless station \(links\) - e.g. file share, media streaming, etc.
 
 
 
