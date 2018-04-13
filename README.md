@@ -2,7 +2,7 @@
 
 > This book is largely incomplete.
 >
-> You can contact me at &lt;...&gt; - I don't do support. Also take a look at &lt;x&gt; forum for community support.
+> You can contact me at &lt;...&gt;, but I don't do support. Also take a look at &lt;x&gt; forum for community support.
 
 This book is about building a PiServer - an internet-connected, always-on Raspberry Pi in your home.
 
