@@ -12,3 +12,7 @@ Backups are important!
 
 Now that we have the encrypted backup file, we can upload it somewhere. Perhaps upload the file to your Google Drive?
 
+# MONITORING
+
+Simple: https://my-netdata.io/ Not really historical past a few hours. Difficult to zoom graphs..
+
