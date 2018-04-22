@@ -23,11 +23,12 @@
 * [IPFS](ipfs.md)
 * [Blog \(Jekyll\)](blog-jekyll.md)
 * [Git \(Pure\)](git.md)
-* [Git \(GitLab\)](git-gitlab.md)
+* [Git \(Gitea\)](git-gitea.md)
 * [Email](email.md)
-* [Forum \(Discourse\)](forum-discourse.md)
+* [Forum \(FlaskBB\)](forum-flaskbb.md)
 
 ## Appendix
 
 * [Raspberry Pi Models](appendix/raspberry-pi-models.md)
+* [Things That Won't Work](appendix/things-that-wont-work.md)
 
