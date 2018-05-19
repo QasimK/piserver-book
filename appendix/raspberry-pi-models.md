@@ -1,8 +1,8 @@
 # Raspberry Pi Models
 
-1?!, 2?!, 3B, 3B+
+1?!, 2?!, Zero, 3B, 3B+
 
-Depending on what you do, but generally, you can use any. The IO doesn't get any better, but other stuff does.
+Generally you can use any of these. The IO doesn't get any better, but other stuff like the CPU does.
 
 References:
 
