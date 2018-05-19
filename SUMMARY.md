@@ -3,7 +3,7 @@
 ## Core
 
 * [Introduction](README.md)
-* [Installation](chapter1.md)
+* [Installation](installation.md)
 * [Initial Setup](initial-setup.md)
 * [Backup](backup.md)
 * [Dynamic DNS \(DuckDNS\)](dynamic-dns-duckdns.md)
