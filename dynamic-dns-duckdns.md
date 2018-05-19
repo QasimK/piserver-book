@@ -4,7 +4,7 @@ Dynamic DNS will let you access your PiServer over the internet even though your
 
 ## Domain
 
-You must have a domain.
+You must have a domain?
 
 ## Service & Auto-update Script
 
@@ -29,6 +29,4 @@ e.g. cloud.piserver.domain.com -cname-&gt; piserver.domain.com -cname-&gt; you-p
 ## Conclusion
 
 ...
-
-
 

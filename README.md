@@ -12,8 +12,7 @@ We have the following assumptions, but they are not pre-requisites if you're wil
 
 * We are at home with a normal computer and also a Raspberry Pi. \(I used the Raspberry Pi 3 Model B while writing this book.\)
 * We don't worry about the device being compromised physically **\[1\]**, i.e. if someone picks it up and takes the SD card out.
-  * [ ] \(I would and should encrypt the filesystem at least, but did not originally due to performance concerns.\)
-* We worry about the device being compromised over the network, a lot.
+* We worry about the device being compromised over the network/remotely a lot.
 * We are not afraid of the command-line.
 * We can port-forward our home router.
 * We want to learn new things :\)
@@ -34,23 +33,34 @@ We'll stick to a headless server, i.e. without a connected monitor, keyboard or 
 * SD card reader for the installation \(e.g. a USB SD card reader\).
 * Your main computer, e.g. a desktop or laptop.
 * Recommended, an ethernet internet connection.
-* Optionally, an extra USB Flash Drive \[1\].
+* Optionally, an extra USB Flash Drive **\[1\]**.
 * Optionally, a nice little case.
 
 \[2\] The following storage configurations for the operating system are possible.
 
-* 256MB micro SD card, with at least one 2+GB USB Flash Drive - much more effort to install!
-* 2+GB micro SD card, with whatever size USB Flash Drive for data storage.
+* 256MB micro SD card for booting, with at least one 2GB+ USB Flash Drive - much more effort to install though!
+  * You might want to do this to use an old micro SD card or to rely on the flash drive more.
+* 2GB+ micro SD card, with whatever size USB Flash Drive for non-OS data storage.
 
 I personally use a 64GB micro SD card and a single compact 64 GB USB flash drive.
 
-The Raspberry Pi is highly IO constrained - both the ethernet and USB devices share the same USB2 Bus \(480Mbps inc. overhead\). I recommend using a high quality micro SD card.
+The Raspberry Pi is highly IO constrained - both the ethernet and USB devices share the same USB2 Bus \(480Mbps inc. overhead\). SD cards usually have very poor performance, so I recommend using a high quality micro SD card. TBD: Does the micro SD card share the USB2 Bus?
 
-\[1\] Some notes on the power supply:
+---
+
+\[1\] Some notes on security:
+
+We don't worry about physical security too much as the Pi is not well-suited for this. However, it is possible to upgrade the physical security \(i.e. when they can hold the device\) from "someone can copy the data from the attached storage devices without me knowing/just straight up steal the device" to "someone can modify the Pi without me knowing aboutit to steal my encryption password". The latter reduces certain opportunistic attacks.
+
+* [ ] I would and should encrypt the filesystem at least, but did not originally due to performance concerns, which can be tested.
+* [ ] It's possible to use a small SSH server with the boot loader that lets you decrypt the OS via SSH \(Drop Bear SSH\).
+
+\[2\] Some notes on the power supply:
 
 * You may get log warnings, brown-outs, and data corruption if the power supply is under.
 * \(Link Source\). \(Varies between model.\) The CPU uses up to 1.2 amps by itself, and up to a further 1.2 amps in total for the USB 2 devices \(0.5 amps max for each\).
-* \(Link Source\). We can save a little bit of power by disabling HDMI, Wi-Fi and bluetooth.
+* We can save a little bit of power [by disabling HDMI, Wi-Fi and bluetooth](https://www.jeffgeerling.com/blogs/jeff-geerling/raspberry-pi-zero-power).
+* A UPS may be useful to avoid data corruption in the event of power loss as Raspberry Pi's can be sensitive to this. Pis don't consume much power so a pass-through power bank is sufficient \(note: some "pass-through" chargers do not seamlessly switch to the battery and will cause your Raspberry Pi to reboot which is useless\).
 
 
 
