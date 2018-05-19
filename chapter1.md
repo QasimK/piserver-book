@@ -1,6 +1,6 @@
 # Installation
 
-We're going to use Arch Linux ARM not because we like to move fast and break things, but because it is a minimal base that will let us make the most of the diminuitive hardware.
+We're going to use Arch Linux ARM not because we like to move fast and break things, but because it is a minimal base that will let us make the most of the diminuitive hardware and gives us an opportunity to learn more about our computer.
 
 ## Initial Install
 
@@ -18,11 +18,30 @@ Encryption is tricky because you'll need to physically enter the password if you
 
 **Create an image for easy future use... \(after initial setup... hmm\)**
 
-`badblocks -wsv /dev/...` can be used to check each storage device you are using is okay.
+> Note: `badblocks -wsv /dev/...` can be used to check each storage device you are using is okay.
 
 ### Hardware Optimisation
 
+#### Raspberry Pi 3
+
 Edit /boot/config.txt.
+
+```
+# Reduce memory allocation to unused GPU, increasing RAM available to OS
+gpu_mem=16
+
+# Disable unused WiFi and Bluetooth hardware to save power
+dtoverlay=pi3-disable-wifi
+dtoverlay=pi3-disable-bt
+
+# Disable unused HDMI port to save power (undocumented - need source link)
+hdmi_blanking=2
+
+# Reduce minimum frequency of processor (to save power?)
+arm_freq_min=300
+```
+
+> Note that the status of the HDMI port can be checked at /opt/vc/bin/tvservice.
 
 ## File System Variations
 
