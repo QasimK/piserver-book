@@ -25,18 +25,27 @@ We'll stick to a headless server, i.e. without a connected monitor, keyboard or 
 
 ## Hardware Requirements
 
-* Raspberry Pi.
+* A Raspberry Pi.
 * A USB power supply **\[2\]** \(not supplied with the Pi\). This must be at least 2 amps; 2.5 amps is the official recommendation.
 * A micro SD card **\[3\]** \(not usually supplied with the Pi\).
 * SD card reader for the installation \(e.g. a USB SD card reader\).
 * Your main computer, e.g. a desktop or laptop.
-* Recommended, an ethernet internet connection.
+* Internet connection for the Raspberry Pi \(ethernet is recommended\).
 * Optionally, an extra USB Flash Drive **\[3\]**.
 * Optionally, a nice little case.
 
 I personally use a 64GB micro SD card and a single compact 64 GB USB flash drive.
 
-The Raspberry Pi is highly IO constrained - both the ethernet and USB devices share the same USB2 Bus \(480Mbps inc. overhead\). SD cards usually have very poor performance, so I recommend using a high quality micro SD card. TBD: Does the micro SD card share the USB2 Bus?
+The Raspberry Pi is highly IO constrained - both the ethernet and USB devices share the same USB2 Bus \(480Mbps inc. overhead\). SD cards usually have very poor performance for general purpose computing \(they are optimised for reading and writing large files, rather than a lot of random small ones\). Therefore, I recommend using a high quality micro SD card. TBD: Does the micro SD card share the USB2 Bus?
+
+### Alternatives devices
+
+You may want better compute, storage or networking performance, more RAM, or may already have something else at hand:
+
+* A traditional general purpose computer like a desktop or laptop that you will never turn off.
+* Other single-board computers \(SBCs\) like the Orange Pi, Banana Pi, ODROID, Asus Tinker Board, etc.
+
+The initial installation onto these devices will be different, but after that it's all the same.
 
 ---
 
