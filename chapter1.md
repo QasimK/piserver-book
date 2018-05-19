@@ -18,6 +18,8 @@ Encryption is tricky because you'll need to physically enter the password if you
 
 **Create an image for easy future use... \(after initial setup... hmm\)**
 
+`badblocks -wsv /dev/...` can be used to check each storage device you are using is okay.
+
 ### Hardware Optimisation
 
 Edit /boot/config.txt.
@@ -42,5 +44,5 @@ Note LVM can actually raid, but the tooling is more opaque and there is less com
 
 Well we're using Arch, so why not a slightly dodgy filesystem? It has cool features like copy-on-write, snapshots, fast backups, and... RAID5 corrupting your data.
 
-https://github.com/NicoHood/NicoHood.github.io/wiki/Raspberry-Pi-Encrypted-Btrfs-Root
+[https://github.com/NicoHood/NicoHood.github.io/wiki/Raspberry-Pi-Encrypted-Btrfs-Root](https://github.com/NicoHood/NicoHood.github.io/wiki/Raspberry-Pi-Encrypted-Btrfs-Root)
 
