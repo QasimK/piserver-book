@@ -2,7 +2,7 @@
 
 Transmission is a simple, no-frills torrenting application with different GUI, CLI and web interfaces. We will set up a service that works through a VPN that uses the data storage area of the Pi with a secure web interface to manage it. This will allow the peer-to-peer torrent traffic to be more securely segmented from other services that you may run, and only have access to one open port.
 
-\(Alternatives might include rtorrent.\)
+\(Alternatives might include rtorrent or deluge.\)
 
 ## Security
 
@@ -46,11 +46,11 @@ Update the backup file:
 
 ## Conclusion
 
-* We set up a secure torrent server
+We set up a secure torrent server
+
 * that ensures our privacy, and
 * that provides access to a web UI both on the LAN and through the internet, and
 * that is a good citizen that will seed torrents, and
-* that provides access to a web UI both on the LAN and through the internet, and
 * that allows access to the files remotely, and
 * that will backup the configuration files for easy restore.
 

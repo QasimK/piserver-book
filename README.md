@@ -62,10 +62,10 @@ However, it is possible to upgrade the physical security \(i.e. when they can ho
 
 * You may get log warnings, brown-outs, and data corruption if the power supply is under.
 * \(Link Source\). \(Varies between model.\) The CPU uses up to 1.2 amps by itself, and up to a further 1.2 amps in total for the USB 2 devices \(0.5 amps max for each\).
-* We can save a little bit of power [by disabling HDMI, Wi-Fi and bluetooth](https://www.jeffgeerling.com/blogs/jeff-geerling/raspberry-pi-zero-power).
+* We can, and do, save a little bit of power [by disabling HDMI, Wi-Fi and bluetooth](https://www.jeffgeerling.com/blogs/jeff-geerling/raspberry-pi-zero-power).
 * A UPS may be useful to avoid data corruption in the event of power loss as Raspberry Pi's can be sensitive to this. Pis don't consume much power so a pass-through power bank is sufficient \(note: some "pass-through" chargers do not seamlessly switch to the battery and will cause your Raspberry Pi to reboot which is useless\).
 
-**\[3\]** The following storage configurations for the operating system are possible.
+**\[3\]** The following storage configurations for the operating system are possible:
 
 * 256MB micro SD card for booting, with at least one 2GB+ USB Flash Drive - much more effort to install though!
   * You might want to do this to use an old micro SD card or to rely on the flash drive more.
