@@ -15,6 +15,7 @@ Encryption is tricky because you'll need to physically enter the password if you
 * [http://blog.nguyenvq.com/blog/2011/09/13/remote-unlocking-luks-encrypted-lvm-using-dropbear-ssh-in-ubuntu/](http://blog.nguyenvq.com/blog/2011/09/13/remote-unlocking-luks-encrypted-lvm-using-dropbear-ssh-in-ubuntu/)
 * [https://security.stackexchange.com/q/46548](https://security.stackexchange.com/q/46548)
 * [https://esther.codes/post-cryptsetup\_raspberry/](https://esther.codes/post-cryptsetup_raspberry/)
+* https://docs.kali.org/kali-dojo/04-raspberry-pi-with-luks-disk-encryption
 
 **Create an image for easy future use... \(after initial setup... hmm\)**
 
@@ -24,7 +25,7 @@ Encryption is tricky because you'll need to physically enter the password if you
 
 #### Raspberry Pi 3
 
-Edit /boot/config.txt.
+Edit `/boot/config.txt`
 
 ```
 # Reduce memory allocation to unused GPU, increasing RAM available to OS
@@ -45,7 +46,7 @@ arm_freq_min=300
 
 ## File System Variations
 
-The `/boot` partition is fairly inflexible \(confirm encryption?\), it must be FAT32.
+The `/boot` partition is fairly inflexible \(confirm encryption?\), it must be FAT32. It is possible to boot over the network, or from a USB flash drive.
 
 The root `/` partition is more flexible, and you can install with other file systems from the get-go, e.g. f2fs or btrfs. Edit cmdline.txt.
 
