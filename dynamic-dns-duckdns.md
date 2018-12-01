@@ -36,19 +36,17 @@ This is a systemd service that simply runs the command and exits. We can create 
 
 ```ini
 [Unit]
-Description=Run duckdns.service every 5 minutes
+Description=Run duckdns.service every minute
 
 [Timer]
 OnBootSec=30
-OnUnitActiveSec=5min
-# Trigger the server immediately if the last start time was missed
-Persistent=true
+OnUnitActiveSec=1min
 
 [Install]
 WantedBy=timers.target
 ```
 
-We'll start the timer 30 seconds after boot to let the system settle, and thereafter every 5 minutes after the last execution.
+We'll start the timer 30 seconds after boot to let the system settle, and thereafter every minute after the last execution.
 
 * This can be enabled with `sudo systemctl enable --now duckdns.timer`
 
