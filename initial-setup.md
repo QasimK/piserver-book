@@ -14,6 +14,16 @@ Set a hostname \(piserver\), set your locale.
 
 Create your user. Set up sudo. SSH Key. Delete alarm.
 
+### Personal Preferences
+
+Configure `~/.pam_environment` for cross-shell environment variables.
+
+```
+VISUAL=/usr/bin/vim
+```
+
+This is a little more annoying than just using `.bashrc`, but it does let you switch between shells more easily.
+
 ## SSH
 
 Change port to 23, forbid root, etc. etc.

@@ -2,31 +2,81 @@
 
 Dynamic DNS will let you access your PiServer over the internet even though your home IP address might be changing, as is common with consumer ISPs.
 
-## Domain
+An easy way to find out your external IP address \(i.e. the one that your router has\) is `curl ifconfig.co`.
 
-You must have a domain?
+While any Dynamic DNS provider can be used, we will use DuckDNS as an example because it is free and easy-to-use.
+
+## DNS and Custom Domains
+
+A custom domain is not necessary, because your Dynamic DNS provider will \(usually?\) give you one. For example,  `example.duckdns.org`.
+
+However, if you have one then you can add a `CNAME` record for your nicer domain, e.g. `piserver.example.com` to point to the uglier domain.
+
+You can further chain the `CNAME` records, for example, you might point `cloud.example.com` -&gt; `piserver.example.com`.
 
 ## Service & Auto-update Script
 
-Any Dynamic DNS provider can be used, the script to execute is just going to be a little different. We will use DuckDNS because it is free \(accepting donations\).
+The systemd script \(replacing placeholders `<DOMAIN>` and `<TOKEN>`\) at `/etc/systemd/system/duckdns.service`
 
-The DNS configuration... CNAME does what.
+```ini
+[Unit]
+Description=Update the dynamic IP address on DuckDNS
+After=network-online.target
 
-The systemd script...
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/curl --max-time 30 "https://www.duckdns.org/update?domains=<DOMAIN>&token=<TOKEN>&ip="
+SyslogIdentifier=duckdns
+```
 
-## DNS
+* This can be executed with `sudo systemctl start duckdns`.
+* This can be monitored with `sudo systemctl status duckdns` or `sudo journalctl -u duckdns`.
 
-You can create more DNS entries.
+This is a systemd service that simply runs the command and exits. We can create a systemd timer to run this oneshot command periodically at `/etc/systemd/system/duckdns.timer`
 
-e.g. cloud.piserver.domain.com -cname-&gt; piserver.domain.com -cname-&gt; you-piserver.duckdns.com -A-&gt; dynamic ip: 151.1.1.1
+```ini
+[Unit]
+Description=Run duckdns.service every 5 minutes
 
-\(Or alternative naming scheme, just: domain.com/cloud\)
+[Timer]
+OnBootSec=30
+OnUnitActiveSec=5min
+# Trigger the server immediately if the last start time was missed
+Persistent=true
+
+[Install]
+WantedBy=timers.target
+```
+
+We'll start the timer 30 seconds after boot to let the system settle, and thereafter every 5 minutes after the last execution.
+
+* This can be enabled with `sudo systemctl enable --now duckdns.timer`
+
+## Security
+
+As the service file contains the secret update token, we should prevent anyone other than `root` from being able to read it
+
+```sh
+sudo chmod 0640 /etc/systemd/system/duckdns.service
+```
+
+## Port-Forwarding & Testing SSH
+
+* You can test the DNS records using `dig example.duckdns.org` and  `dig piserver.example.com`.
+* You will almost certainly need to port-forward incoming connections to the PiServer on your router.
+* For SSH I would recommend using a non-standard port on your router \(e.g. Port 23\).
 
 ## Backup
 
-...
+Add the following lines to the backup script:
+
+```
+    /etc/systemd/system/duckdns.service \
+    /etc/systemd/system/duckdns.timer \
+    /etc/systemd/system/timers.target.wants/duckdns.timer \
+```
 
 ## Conclusion
 
-...
+We looked at why a Dynamic DNS service is useful for us, and created a systemd service and timer to automatically update our Dynamic DNS service provider with our IP address.
 
