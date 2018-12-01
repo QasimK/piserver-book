@@ -22,6 +22,7 @@ The systemd script \(replacing placeholders `<DOMAIN>` and `<TOKEN>`\) at `/etc/
 [Unit]
 Description=Update the dynamic IP address on DuckDNS
 After=network-online.target
+Wants=network-online.target
 
 [Service]
 Type=oneshot
