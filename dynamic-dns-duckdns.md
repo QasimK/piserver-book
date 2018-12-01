@@ -6,6 +6,10 @@ An easy way to find out our external IP address \(i.e. the one that our router h
 
 While any Dynamic DNS provider can be used, we will use DuckDNS as an example because it is free and easy-to-use.
 
+## Security
+
+1. The file containing the secret token will be accessible only to `root`.
+
 ## DNS and Custom Domains
 
 A custom domain is not necessary, because our Dynamic DNS provider will \(usually?\) give us one. For example,  `example.duckdns.org`.
@@ -33,6 +37,12 @@ SyslogIdentifier=duckdns
 * This can be executed with `sudo systemctl start duckdns`.
 * This can be monitored with `sudo systemctl status duckdns` or `sudo journalctl -u duckdns`.
 
+As the service file contains a secret token, we should prevent anyone other than `root` from being able to read it
+
+```sh
+sudo chmod 0640 /etc/systemd/system/duckdns.service
+```
+
 This is a systemd service that simply runs the command and exits. We can create a systemd timer to run this oneshot command periodically at `/etc/systemd/system/duckdns.timer`
 
 ```ini
@@ -50,14 +60,6 @@ WantedBy=timers.target
 We'll start the timer 30 seconds after boot to let the system settle, and thereafter every minute after the last execution.
 
 * This can be enabled with `sudo systemctl enable --now duckdns.timer`
-
-## Security
-
-As the service file contains the secret update token, we should prevent anyone other than `root` from being able to read it
-
-```sh
-sudo chmod 0640 /etc/systemd/system/duckdns.service
-```
 
 ## Port-Forwarding & Testing
 
