@@ -1,18 +1,18 @@
 # Dynamic DNS \(with DuckDNS\)
 
-Dynamic DNS will let you access your PiServer over the internet even though your home IP address might be changing, as is common with consumer ISPs.
+Dynamic DNS will let us access our PiServer over the internet even though our home IP address might be changing, as is common with consumer ISPs.
 
-An easy way to find out your external IP address \(i.e. the one that your router has\) is `curl ifconfig.co`.
+An easy way to find out our external IP address \(i.e. the one that our router has\) is `curl ifconfig.co`.
 
 While any Dynamic DNS provider can be used, we will use DuckDNS as an example because it is free and easy-to-use.
 
 ## DNS and Custom Domains
 
-A custom domain is not necessary, because your Dynamic DNS provider will \(usually?\) give you one. For example,  `example.duckdns.org`.
+A custom domain is not necessary, because our Dynamic DNS provider will \(usually?\) give us one. For example,  `example.duckdns.org`.
 
-However, if you have one then you can add a `CNAME` record for your nicer domain, e.g. `piserver.example.com` to point to the uglier domain.
+However, if we have one then we can add a `CNAME` record for our nicer domain, e.g. `piserver.example.com` to point to the uglier domain.
 
-You can further chain the `CNAME` records, for example, you might point `cloud.example.com` -&gt; `piserver.example.com`.
+We can further chain the `CNAME` records, for example, we might point `cloud.example.com` -&gt; `piserver.example.com`.
 
 ## Service & Auto-update Script
 
@@ -60,11 +60,12 @@ As the service file contains the secret update token, we should prevent anyone o
 sudo chmod 0640 /etc/systemd/system/duckdns.service
 ```
 
-## Port-Forwarding & Testing SSH
+## Port-Forwarding & Testing
 
-* You can test the DNS records using `dig example.duckdns.org` and  `dig piserver.example.com`.
-* You will almost certainly need to port-forward incoming connections to the PiServer on your router.
-* For SSH I would recommend using a non-standard port on your router \(e.g. Port 23\).
+* We can test the DNS records using `dig example.duckdns.org` and  `dig piserver.example.com`.
+* We will almost certainly need to port-forward incoming connections to the PiServer on our router.
+* If we are testing SSH, we may struggle to SSH in to our router's public IP address, so we could try using a mobile connection \(e.g. our phone with a WiFi hotspot\).
+  * [ ] Why is this \(sometimes?\) a problem?
 
 ## Backup
 

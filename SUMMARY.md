@@ -6,18 +6,19 @@
 * [Installation](installation.md)
 * [Initial Setup](initial-setup.md)
 * [Backup](backup.md)
-* [Dynamic DNS \(DuckDNS\)](dynamic-dns-duckdns.md)
 * [Next Steps](next-steps.md)
 * [External Resources](external-resources.md)
 
 ## Things we can do
 
+* [Dynamic DNS \(DuckDNS\)](dynamic-dns-duckdns.md)
+* [Dynamic DNS \(SSH-over-Tor\)](dynamic-dns-ssh-over-tor.md)
 * [Torrent \(Transmission\)](torrent-transmission.md)
 * [Contacts & Calenders \(Radicale\)](contacts-and-calenders-radicale.md)
 * [File Sync \(Resilio\)](file-sync-resilio.md)
 * [Cloud \(NextCloud\)](cloud-nextcloud.md)
 * [NAS \(Samba\)](nas-samba.md)
-* [Personal VPN \(OpenVPN\)](vpn-openvpn.md)
+* [Personal VPN \(WireGuard\)](personal-vpn-wireguard.md)
 * [Service Discovery \(Avahi\)](service-discovery.md)
 * [Pi-Hole](pi-hole.md)
 * [IPFS](ipfs.md)
@@ -25,7 +26,7 @@
 * [Git \(Pure\)](git.md)
 * [Git \(Gitea\)](git-gitea.md)
 * [Email](email.md)
-* [Forum \(FlaskBB\)](forum-flaskbb.md)
+* Personal VPN \(WireGuard\)
 
 ## Appendix
 
