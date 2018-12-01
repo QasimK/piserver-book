@@ -12,7 +12,7 @@
 ## Things we can do
 
 * [Dynamic DNS \(DuckDNS\)](dynamic-dns-duckdns.md)
-* [Dynamic DNS \(SSH-over-Tor\)](dynamic-dns-ssh-over-tor.md)
+* [Dynamic DNS \(Tor\)](dynamic-dns-ssh-over-tor.md)
 * [Torrent \(Transmission\)](torrent-transmission.md)
 * [Contacts & Calenders \(Radicale\)](contacts-and-calenders-radicale.md)
 * [File Sync \(Resilio\)](file-sync-resilio.md)

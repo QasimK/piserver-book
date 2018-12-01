@@ -1,6 +1,6 @@
 # Torrent App \(with Transmission\)
 
-Transmission is a simple, no-frills torrenting application with different GUI, CLI and web interfaces. We will set up a service that works through a VPN that uses the data storage area of the Pi with a secure web interface to manage it. This will allow the peer-to-peer torrent traffic to be more securely segmented from other services that you may run, and only have access to one open port.
+Transmission is a simple, no-frills torrenting application with different GUI, CLI and web interfaces. We will set up a service that works through a VPN that uses the data storage area of the Pi with a secure web interface to manage it. This will allow the peer-to-peer torrent traffic to be more securely segmented from other services that you may run, and only have access to one open incoming port.
 
 \(Alternatives might include rtorrent or deluge.\)
 

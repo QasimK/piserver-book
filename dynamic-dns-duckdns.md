@@ -6,6 +6,8 @@ An easy way to find out our external IP address \(i.e. the one that our router h
 
 While any Dynamic DNS provider can be used, we will use DuckDNS as an example because it is free and easy-to-use.
 
+See alternative: Tor.
+
 ## Security
 
 1. The file containing the secret token will be accessible only to `root`.
