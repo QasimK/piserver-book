@@ -1,4 +1,4 @@
-# Initial Setup
+# Initial Setup \(Arch Linux\)
 
 Now we can move the SD card into the Raspberry Pi, connect the power \(there is no on/off switch\), and SSH in as `alarm`.
 
@@ -37,4 +37,18 @@ Since it's headless we don't need those ports.
 TBD: What does this protect against exactly?
 
 We cannot just disable the USB controller because that would also disable the ethernet.
+
+## Other Tips
+
+### Pacman
+
+A few tips for `/etc/pacman.conf`
+
+```
+# Misc options
+Color
+TotalDownload
+```
+
+
 
