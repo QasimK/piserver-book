@@ -27,7 +27,6 @@
 * [Git \(Pure\)](git.md)
 * [Git \(Gitea\)](git-gitea.md)
 * [Email](email.md)
-* [Personal VPN \(WireGuard\)](personal-vpn-wireguard.md)
 
 ## Appendix
 
