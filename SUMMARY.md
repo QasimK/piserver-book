@@ -6,6 +6,7 @@
 * [Installation](installation.md)
 * [Initial Setup](initial-setup.md)
 * [Backup](backup.md)
+* [Monitoring](monitoring.md)
 * [Next Steps](next-steps.md)
 * [External Resources](external-resources.md)
 
@@ -26,7 +27,7 @@
 * [Git \(Pure\)](git.md)
 * [Git \(Gitea\)](git-gitea.md)
 * [Email](email.md)
-* Personal VPN \(WireGuard\)
+* [Personal VPN \(WireGuard\)](personal-vpn-wireguard.md)
 
 ## Appendix
 
