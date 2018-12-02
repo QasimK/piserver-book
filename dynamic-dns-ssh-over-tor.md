@@ -2,7 +2,7 @@
 
 Tor can be used as a Dynamic DNS provider by registering any type of service in the Tor Hidden Service Directory.
 
-Compared to normal Dynamic DNS services, this has the advantage of hiding your public IP address, and the disadvantages of requiring Tor to be installed on both the server and the client, and reduced performance.
+Compared to normal Dynamic DNS services, this has the advantages of not requiring port-forwarding on the router, and hiding your public IP address, and the disadvantages of requiring Tor to be installed on both the server and the client, and reduced performance.
 
 See alternative: DuckDNS.
 
