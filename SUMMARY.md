@@ -12,10 +12,10 @@
 
 ## Things we can do
 
+* [Contacts & Calenders \(Radicale\)](contacts-and-calenders-radicale.md)
 * [Dynamic DNS \(DuckDNS\)](dynamic-dns-duckdns.md)
 * [Dynamic DNS \(Tor\)](dynamic-dns-ssh-over-tor.md)
 * [Torrent \(Transmission\)](torrent-transmission.md)
-* [Contacts & Calenders \(Radicale\)](contacts-and-calenders-radicale.md)
 * [File Sync \(Resilio\)](file-sync-resilio.md)
 * [Cloud \(NextCloud\)](cloud-nextcloud.md)
 * [NAS \(Samba\)](nas-samba.md)
