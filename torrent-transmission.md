@@ -34,7 +34,24 @@ The torrent client can seed much more effectively  if you have an open port that
 
 See alternatives: NAS \(Samba\).
 
-Neither of NFS and Samba are particularly secure \(or the secure variants are a pain to set up\), so we will use SSHFS which will allow us to access the completed files from any \(capable\) device that we can SSH in from.
+Neither NFS nor Samba are particularly secure \(or the secure variants are a pain to set up\), so we will use SSHFS which will allow us to access the completed files from any device that we can SSH in from.
+
+We create the mount directory on our normal devices \(not the PiServer\) for our user: `~/Mount/piserver/torrent`. We can mount the directory on the PiServer with
+
+```
+sshfs -o auto_unmount,kernel_cache,auto_cache,delay_connect piserver:/mnt/pistorage/torrent ~/Mount/piserver/torrent
+```
+
+* `auto_unmount`
+* `kernel_cache`
+* `auto_cache`
+* `delay_connect` Connect when the directory is first opened
+* \( `Ciphers=arcfour` was not allowed.\)
+* \(`Compression=no` did not help CPU usage nor transfer speed - limited at 100 Mbit/s. Err is that my LAN's fault?\)
+
+Unmount with `fusermount3 -u ~/Mount/piserver/torrent`.
+
+* [ ] Auto-mount with `/etc/fstab`.
 
 ## Backup
 
