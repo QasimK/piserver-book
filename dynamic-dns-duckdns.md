@@ -70,6 +70,16 @@ We'll start the timer 30 seconds after boot to let the system settle, and therea
 * If we are testing SSH, we may struggle to SSH in to our router's public IP address, so we could try using a mobile connection \(e.g. our phone with a WiFi hotspot\).
   * [ ] Why is this \(sometimes?\) a problem?
 
+## Monitoring
+
+If we have set up monitoring on our PiServer, we can modify our service file with the additions:
+
+```
+[Unit]
+...
+OnFailure=notify-email@%i.service
+```
+
 ## Backup
 
 Add the following lines to the backup script:

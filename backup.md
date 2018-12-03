@@ -14,12 +14,12 @@ There are many ways to backup and many tools that can do this. Rather than confi
 
 The following script can be executed on your normal computer.
 
-* [ ] Encrypt .tar.gz file.
+* [ ] Encrypt the .tar.gz file?
 
 ```bash
 #!/bin/bash
 ssh piserver "\
-    sudo tar -cvz --preserve-permissions --one-file-system \
+    sudo tar -cvz --preserve-permissions --xattrs --one-file-system \
     --exclude-backups --exclude-caches-all --exclude-ignore=.tarignore \
     /boot/config.txt \
     /etc/fstab \
@@ -33,11 +33,51 @@ ssh piserver "\
 * `-c`
 * `-v`
 * `-z`
-* `--preservice-permissions`
+* `--preserve-permissions`
+* `--xattrs` 
 * `--one-file-system`
 * `--exclude-backups`
 * `--exclude-caches-all`
 * `--exclude-ignore=.tarignore`
+
+The `.tarignore` file can be used to ignore files within a directory. This is useful for not backing up secret credentials, or for saving space by ignoring temporary files.
+
+For example `/root/.tarignore`
+
+```
+.bash_history
+.gnupg
+.lesshst
+.local
+.vim
+.viminfo
+.wget-hsts
+```
+
+Or, `/home/user/.tarignore`
+
+```
+.bash_history
+.cache
+.cargo
+.ipython
+.lesshst
+.local
+.python-history
+.rustup
+.ssh
+.vim
+.virtualenvs
+.wget-hsts
+tmp
+__pycache__
+```
+
+Or, `/etc/openvpn/client/.tarignore`
+
+```
+auth.txt
+```
 
 ## Off-Site Backup
 
