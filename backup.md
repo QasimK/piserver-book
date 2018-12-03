@@ -64,6 +64,7 @@ Or, `/home/user/.tarignore`
 .lesshst
 .local
 .python-history
+.rnd
 .rustup
 .ssh
 .vim
