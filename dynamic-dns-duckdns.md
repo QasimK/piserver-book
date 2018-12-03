@@ -11,6 +11,7 @@ See alternative: Tor.
 ## Security
 
 1. The file containing the secret token will be accessible only to `root`.
+2. [ ] **The file is included in the backup script.** We should use GPG or something instead.
 
 ## DNS and Custom Domains
 
@@ -29,6 +30,7 @@ The systemd script \(replacing placeholders `<DOMAIN>` and `<TOKEN>`\) at `/etc/
 Description=Update the dynamic IP address on DuckDNS
 After=network-online.target
 Wants=network-online.target
+# OnFailure=notify-email@%N.service
 
 [Service]
 Type=oneshot
@@ -72,13 +74,7 @@ We'll start the timer 30 seconds after boot to let the system settle, and therea
 
 ## Monitoring
 
-If we have set up monitoring on our PiServer, we can modify our service file with the additions:
-
-```
-[Unit]
-...
-OnFailure=notify-email@%i.service
-```
+If we have set up monitoring on our PiServer, we can un-comment `OnFailure` in the above service file.
 
 ## Backup
 
