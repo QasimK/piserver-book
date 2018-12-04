@@ -11,6 +11,7 @@ See alternative: Tor.
 ## Security
 
 1. The file containing the secret token will be accessible only to `root`.
+   1. [ ] **Doesn't work.** "Configuration file /etc/systemd/system/duckdns.service is marked world-inaccessible. This has no effect as configuration data is accessible via APIs without restrictions. Proceeding anyway."
 2. [ ] **The file is included in the backup script.** We should use GPG or something instead.
 
 ## DNS and Custom Domains
