@@ -6,6 +6,8 @@ We'll perform some basic setup below.
 
 > If at any point it is impossible to access your Raspberry Pi, then connect the micro SD card \(containing your operating system\) back to your main computer and edit any files necessary to get it to work again.
 
+We should set up SSH on our main computer so that we can connect to the piserver simply with `ssh piserver`. This will make things easier.
+
 ## Hostname, Locale
 
 Set a hostname \(piserver\), set your locale.

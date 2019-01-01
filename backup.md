@@ -4,9 +4,9 @@ Backup is the first step where you actually do something that is not just config
 
 Backups are important!
 
-...
+You can skip this step and come back to it, if you really want to...
 
-You can skip this step and come back to it, if you really want...
+But, seriously, backups are important!
 
 ## Main Computer Backup
 
@@ -38,7 +38,7 @@ ssh piserver "\
     /home/ \
     /root/
     " \
-    | openssl enc -aes-256-cbc -pbkdf2 -pass pass:"$PASSWORD" -out piserver-backup.tar.gz.openssl
+    | openssl enc -aes-256-cbc -pbkdf2 -pass pass:"$PASSWORD" -out piserver-backup.tar.gz.enc
 ```
 
 * `-c`
@@ -101,16 +101,17 @@ auth.txt
 The encrypted file can be decrypted with:
 
 ```bash
-openssl enc -d -aes-256-cbc -pbkdf2 -in piserver-backup.tar.gz.openssl -out piserver-backup.tar.gz
+openssl enc -d -aes-256-cbc -pbkdf2 -in piserver-backup.tar.gz.enc -out piserver-backup.tar.gz
 ```
 
 * [ ] TODO: Restore onto fresh PiServer steps.
+* [ ] Careful restore of fstab and group files.
 
 ## Off-Site Backup
 
 Now that we have the encrypted backup file, we can upload it somewhere. Perhaps upload the file to your Google Drive?
 
-# 
+
 
 
 
