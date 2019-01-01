@@ -45,7 +45,9 @@ The `.tarignore` file can be used to ignore files within a directory. This is us
 For example `/root/.tarignore`
 
 ```
+secrets
 .bash_history
+.cache
 .gnupg
 .lesshst
 .local

@@ -4,15 +4,13 @@ Dynamic DNS will let us access our PiServer over the internet even though our ho
 
 An easy way to find out our external IP address \(i.e. the one that our router has\) is `curl ifconfig.co`.
 
-While any Dynamic DNS provider can be used, we will use DuckDNS as an example because it is free and easy-to-use.
+While any Dynamic DNS provider can be used, we will use DuckDNS as an example because it is free and easy-to-use. The steps outlined in this chapter can be adapted for any other Dynamic DNS provider.
 
 See alternative: Tor.
 
 ## Security
 
 1. The file containing the secret token will be accessible only to `root`.
-   1. [ ] **Doesn't work.** "Configuration file /etc/systemd/system/duckdns.service is marked world-inaccessible. This has no effect as configuration data is accessible via APIs without restrictions. Proceeding anyway."
-2. [ ] **The file is included in the backup script.** We should use GPG or something instead.
 
 ## DNS and Custom Domains
 
@@ -22,9 +20,30 @@ However, if we have one then we can add a `CNAME` record for our nicer domain, e
 
 We can further chain the `CNAME` records, for example, we might point `cloud.example.com` -&gt; `piserver.example.com`.
 
+## Secret Token
+
+DuckDNS uses a secret token. We will create this inside `/root/secrets/duckdns`:
+
+```ini
+TOKEN=<TOKEN>
+```
+
+Replace `<TOKEN>` with the token you obtain from the service. We will ensure that no one else can read the token:
+
+```bash
+chmod 0750 /root/secrets
+chmod 0600 /root/secrets/duckdns
+```
+
+Ensure `/root/.tarignore` excludes these secrets with the line:
+
+```
+secrets
+```
+
 ## Service & Auto-update Script
 
-The systemd script \(replacing placeholders `<DOMAIN>` and `<TOKEN>`\) at `/etc/systemd/system/duckdns.service`
+The systemd script \(replacing the placeholder `<DOMAIN>`\) at `/etc/systemd/system/duckdns.service`
 
 ```ini
 [Unit]
@@ -35,20 +54,15 @@ Wants=network-online.target
 
 [Service]
 Type=oneshot
-ExecStart=/usr/bin/curl --max-time 30 "https://www.duckdns.org/update?domains=<DOMAIN>&token=<TOKEN>&ip="
+EnvironmentFile=/root/secrets/duckdns
+ExecStart=/usr/bin/curl --max-time 30 "https://www.duckdns.org/update?domains=<DOMAIN>&token=${TOKEN}&ip="
 SyslogIdentifier=duckdns
 ```
 
 * This can be executed with `sudo systemctl start duckdns`.
 * This can be monitored with `sudo systemctl status duckdns` or `sudo journalctl -u duckdns`.
 
-As the service file contains a secret token, we should prevent anyone other than `root` from being able to read it
-
-```sh
-sudo chmod 0640 /etc/systemd/system/duckdns.service
-```
-
-This is a systemd service that simply runs the command and exits. We can create a systemd timer to run this oneshot command periodically at `/etc/systemd/system/duckdns.timer`
+The above is a systemd service that simply runs the command and exits. We can create a systemd timer to run this oneshot command periodically at `/etc/systemd/system/duckdns.timer`
 
 ```ini
 [Unit]
@@ -87,7 +101,11 @@ Add the following lines to the backup script:
     /etc/systemd/system/timers.target.wants/duckdns.timer \
 ```
 
+### Restore
+
+1. Re-create `/root/secrets/duckdns` as described in the Secret Token section.
+
 ## Conclusion
 
-We looked at why a Dynamic DNS service is useful for us, and created a systemd service and timer to automatically update our Dynamic DNS service provider with our IP address.
+We looked at why a Dynamic DNS service is useful for us, and created a systemd service and timer to automatically update our Dynamic DNS service provider with our PiServer's IP address.
 
