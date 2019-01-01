@@ -35,7 +35,7 @@ chmod 0750 /root/secrets
 chmod 0600 /root/secrets/duckdns
 ```
 
-Ensure `/root/.tarignore` excludes these secrets with the line:
+Ensure the `secrets` folder is excluded from backups by adding the following line to `/root/.tarignore` 
 
 ```
 secrets
@@ -89,7 +89,7 @@ We'll start the timer 30 seconds after boot to let the system settle, and therea
 
 ## Monitoring
 
-If we have set up monitoring on our PiServer, we can un-comment `OnFailure` in the above service file.
+If we have set up monitoring on our PiServer, we can un-comment `OnFailure` in the above service file. This will notify us via email if the service fails.
 
 ## Backup
 
