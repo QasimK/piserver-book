@@ -38,7 +38,7 @@ ssh piserver "\
     /home/ \
     /root/
     " \
-    | openssl enc -aes-256-cbc -pbkdf2 -pass pass:${PASSWORD} -out piserver-backup.tar.gz.openssl
+    | openssl enc -aes-256-cbc -pbkdf2 -pass pass:"$PASSWORD" -out piserver-backup.tar.gz.openssl
 ```
 
 * `-c`
