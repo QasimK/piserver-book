@@ -11,6 +11,7 @@ See alternative: Tor.
 ## Security
 
 1. The file containing the secret token will be accessible only to `root`.
+2. [ ] Minimise privileges of systemd service \(it's only curl, but still!\)
 
 ## DNS and Custom Domains
 
@@ -35,7 +36,7 @@ chmod 0750 /root/secrets
 chmod 0600 /root/secrets/duckdns
 ```
 
-Ensure the `secrets` folder is excluded from backups by adding the following line to `/root/.tarignore` 
+Ensure the `secrets` folder is excluded from backups by adding the following line to `/root/.tarignore`
 
 ```
 secrets
