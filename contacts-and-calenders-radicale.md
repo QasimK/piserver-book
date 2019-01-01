@@ -1,6 +1,6 @@
 # Contacts & Calendar App \(with Radicale\)
 
-We can sync our own contacts & calenders. I wouldn't recommend it :\)
+We can sync our own contacts & calenders. I wouldn't recommend it :\) I forgot why.
 
 Radicale is pretty great though.
 
