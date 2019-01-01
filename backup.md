@@ -14,20 +14,31 @@ There are many ways to backup and many tools that can do this. Rather than confi
 
 The following script can be executed on your normal computer.
 
-* [ ] Encrypt the .tar.gz file?
-
 ```bash
 #!/bin/bash
+
+# Get password to encrypt backup archive up-front
+# https://stackoverflow.com/a/28393320/197488
+printf "Password: "
+stty -echo
+trap 'stty echo' EXIT
+read PASSWORD
+stty echo
+trap - EXIT
+printf "\n"
+
 ssh piserver "\
     sudo tar -cvz --preserve-permissions --xattrs --one-file-system \
     --exclude-backups --exclude-caches-all --exclude-ignore=.tarignore \
+    --absolute-names \
     /boot/config.txt \
     /etc/fstab \
     /etc/group \
     /etc/sudoers.d/ \
     /home/ \
     /root/
-    " > piserver-backup.tar.gz
+    " \
+    | openssl enc -aes-256-cbc -pbkdf2 -pass pass:${PASSWORD} -out piserver-backup.tar.gz.openssl
 ```
 
 * `-c`
@@ -39,6 +50,9 @@ ssh piserver "\
 * `--exclude-backups`
 * `--exclude-caches-all`
 * `--exclude-ignore=.tarignore`
+* `--absolute-names` - the archive is taken from the root of the filesystem - it is absolute.
+
+As we add applications to the Piserver, we will expand the list of files and directories to backup.
 
 The `.tarignore` file can be used to ignore files within a directory. This is useful for not backing up secret credentials, or for saving space by ignoring temporary files.
 
@@ -81,6 +95,16 @@ Or, `/etc/openvpn/client/.tarignore`
 ```
 auth.txt
 ```
+
+## Restore
+
+The encrypted file can be decrypted with:
+
+```bash
+openssl enc -d -aes-256-cbc -pbkdf2 -in piserver-backup.tar.gz.openssl -out piserver-backup.tar.gz
+```
+
+* [ ] TODO: Restore onto fresh PiServer steps.
 
 ## Off-Site Backup
 
