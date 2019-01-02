@@ -58,11 +58,11 @@ Created symlink /etc/systemd/system/multi-user.target.wants/netdata.service → 
 ```
 
 * [ ] It is accessible over the lan: `piserver.local:19999`
-* [ ] You can configure Nginx to show the dashboard over-the-internet. https://docs.netdata.cloud/docs/high-performance-netdata/
+* [ ] You can configure Nginx to show the dashboard over-the-internet. [https://docs.netdata.cloud/docs/high-performance-netdata/](https://docs.netdata.cloud/docs/high-performance-netdata/)
 * [ ] Email notifications
-* [ ] Raspberry Pi sensor https://docs.netdata.cloud/docs/netdata-for-iot/
-* [ ] More charts: https://docs.netdata.cloud/docs/add-more-charts-to-netdata/
-* [ ] Perf: https://docs.netdata.cloud/docs/performance/
+* [ ] Raspberry Pi sensor [https://docs.netdata.cloud/docs/netdata-for-iot/](https://docs.netdata.cloud/docs/netdata-for-iot/)
+* [ ] More charts: [https://docs.netdata.cloud/docs/add-more-charts-to-netdata/](https://docs.netdata.cloud/docs/add-more-charts-to-netdata/)
+* [ ] Perf: [https://docs.netdata.cloud/docs/performance/](https://docs.netdata.cloud/docs/performance/)
 
 
 
