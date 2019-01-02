@@ -30,7 +30,7 @@ printf "\n"
 ssh piserver "\
     sudo tar -cvz --preserve-permissions --xattrs --one-file-system \
     --exclude-backups --exclude-caches-all --exclude-ignore=.tarignore \
-    --absolute-names \
+    --absolute-names --check-links --totals \
     /boot/config.txt \
     /etc/fstab \
     /etc/group \
@@ -49,8 +49,11 @@ ssh piserver "\
 * `--one-file-system`
 * `--exclude-backups`
 * `--exclude-caches-all`
-* `--exclude-ignore=.tarignore`
+* `--exclude-ignore=.tarignore` - Non-recursive ignore files
 * `--absolute-names` - the archive is taken from the root of the filesystem - it is absolute.
+* `--sparse` - handle sparse files efficiently
+* `--check-links` - ?
+* `--totals` - print summary
 
 As we add applications to the Piserver, we will expand the list of files and directories to backup.
 
@@ -110,8 +113,4 @@ openssl enc -d -aes-256-cbc -pbkdf2 -in piserver-backup.tar.gz.enc -out piserver
 ## Off-Site Backup
 
 Now that we have the encrypted backup file, we can upload it somewhere. Perhaps upload the file to your Google Drive?
-
-
-
-
 
