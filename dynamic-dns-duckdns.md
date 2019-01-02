@@ -10,9 +10,8 @@ See alternative: Tor.
 
 ## Security
 
-1. The file containing the secret token will be accessible only to `root`.
-
-2. [ ] Minimise privileges of systemd service \(it's only curl, but still!\)
+1. The file containing the secret token is secured.
+2. The systemd application has minimal privileges.
 
 ## DNS and Custom Domains
 
@@ -24,10 +23,10 @@ We can further chain the `CNAME` records, for example, we might point `cloud.exa
 
 ## Secret Token
 
-DuckDNS uses a secret token as part of the URL query string. To avoid insecurely placing this as a parameter to curl, we will configure our command to use a curl config file. We will create this at `/root/secrets/curl-duckdns.conf`
+DuckDNS uses a secret token as part of the URL query string. To avoid insecurely placing this as a parameter to curl, we will configure our command to use a curl config file. We will create this at `/var/lib/private/duckdns/duckdns.conf`
 
 ```ini
-url = "https://www.duckdns.org/update?domains=piserver007&token=<TOKEN>&ip="
+url = "https://www.duckdns.org/update?domains=<DOMAIN>&token=<TOKEN>&ip="
 
 # Only log errors
 silent
@@ -40,7 +39,7 @@ max-time = 10
 # Don't spend longer than 30 seconds in total
 retry-max-time = 30
 # Retry up to 5 times with exponential backoff
-retry = 5 
+retry = 5
 # Retry even when connection was refused
 retry-connrefused
 
@@ -53,24 +52,15 @@ tlsv1.2
 tcp-fastopen
 ```
 
-Replace `<TOKEN>` with the token you obtain from the service. We will ensure that no one else can read the token:
+Replace the `<DOMAIN>` and `<TOKEN>` placeholders \(or, indeed, the entire URL\).
 
-```bash
-chmod 0750 /root/secrets
-chmod 0600 /root/secrets/curl-duckdns.conf
-```
+This file is secure because `/var/lib/private` acts as a boundary, allowing only `root` inside.
 
-Ensure the `secrets` folder is excluded from backups by adding the following line to `/root/.tarignore`
-
-```
-secrets
-```
-
-> We are overloading curl-duckdns.conf to include both the curl configuration _and_ the secret token.
+> We are overloading `duckdns.conf` to include both the curl configuration _and_ the secret token. It could be split into two files, and `--config` given twice to curl.
 
 ## Service & Auto-update Script
 
-The systemd script \(replacing the placeholder `<DOMAIN>`\) at `/etc/systemd/system/duckdns.service`
+The systemd script at `/etc/systemd/system/duckdns.service`
 
 ```ini
 [Unit]
@@ -81,8 +71,40 @@ Wants=network-online.target
 
 [Service]
 Type=oneshot
-ExecStart=/usr/bin/curl --config /root/secrets/duckdns-curl.conf
+DynamicUser=yes
+StateDirectory=duckdns
+ExecStart=/usr/bin/curl --config /var/lib/duckdns/duckdns.conf
 SyslogIdentifier=duckdns
+Nice=19
+
+# Additional Security:
+
+#* PrivateTmp=yes
+#* RemoveIPC=yes
+ProtectHome=yes
+PrivateDevices=yes
+PrivateUsers=yes
+PrivateMounts=yes
+PrivateTmp=yes
+# We need the internet
+# PrivateNetwork=yes
+ProtectSystem=Strict
+ProtectHome=yes
+ProtectKernelTunables=yes
+ProtectKernelModules=yes
+ProtectControlGroups=yes
+RestrictNamespaces=yes
+RemoveIPC=yes
+NoNewPrivileges=yes
+RestrictAddressFamilies=
+MemoryDenyWriteExecute=yes
+SystemCallArchitectures=native
+#* RemoveIPC=yes
+RestrictRealtime=yes
+RestrictAddressFamilies=
+SystemCallFilter=@system-service
+CapabilityBoundingSet=
+AmbientCapabilities=
 ```
 
 * This can be executed with `sudo systemctl start duckdns`.
@@ -117,6 +139,8 @@ We'll start the timer 30 seconds after boot to let the system settle, and therea
 
 If we have set up monitoring on our PiServer, we can un-comment `OnFailure` in the above service file. This will notify us via email if the service fails.
 
+We can test this by temporarily editing `duckdns.conf` with an invalid URL.
+
 ## Backup
 
 Add the following lines to the backup script:
@@ -125,11 +149,12 @@ Add the following lines to the backup script:
     /etc/systemd/system/duckdns.service \
     /etc/systemd/system/duckdns.timer \
     /etc/systemd/system/timers.target.wants/duckdns.timer \
+    /var/lib/private/duckdns/duckdns.conf \
 ```
 
 ### Restore
 
-1. Re-create `/root/secrets/curl-duckdns.conf` as described in the Secret Token section.
+No special steps are required.
 
 ## Conclusion
 
