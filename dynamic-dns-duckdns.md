@@ -12,7 +12,7 @@ See alternative: Tor.
 
 1. The file containing the secret token will be accessible only to `root`.
 
-1. [ ] Minimise privileges of systemd service \(it's only curl, but still!\)
+2. [ ] Minimise privileges of systemd service \(it's only curl, but still!\)
 
 ## DNS and Custom Domains
 
@@ -65,6 +65,8 @@ Ensure the `secrets` folder is excluded from backups by adding the following lin
 ```
 secrets
 ```
+
+> We are overloading curl-duckdns.conf to include both the curl configuration _and_ the secret token.
 
 ## Service & Auto-update Script
 
