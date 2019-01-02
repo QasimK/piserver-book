@@ -39,11 +39,30 @@ This notification method can be used by our other systemd services.
 We add the files to our backup script:
 
 ```
+    /etc/msmtprc \
     /etc/aliases \
     /etc/systemd/system/notify-email@.service \
 ```
 
-> We do not add `/etc/msmtprc` because it currently contains our credentials
+## System Monitoring
+
+We will use netdata.
+
+```
+sudo pacmatic -S --needed netdata
+sudo systemctl enable --now netdata
+```
+
+```
+Created symlink /etc/systemd/system/multi-user.target.wants/netdata.service → /usr/lib/systemd/system/netdata.service.
+```
+
+* [ ] It is accessible over the lan: `piserver.local:19999`
+* [ ] You can configure Nginx to show the dashboard over-the-internet. https://docs.netdata.cloud/docs/high-performance-netdata/
+* [ ] Email notifications
+* [ ] Raspberry Pi sensor https://docs.netdata.cloud/docs/netdata-for-iot/
+* [ ] More charts: https://docs.netdata.cloud/docs/add-more-charts-to-netdata/
+* [ ] Perf: https://docs.netdata.cloud/docs/performance/
 
 
 
