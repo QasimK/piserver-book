@@ -12,6 +12,7 @@ See alternative: Tor.
 
 1. The file containing the secret token will be accessible only to `root`.
 2. [ ] The token is visible as a parameter to curl \(e.g. htop\)
+   1. [ ] curl --config command with file simple url = "example.com"
 3. [ ] Minimise privileges of systemd service \(it's only curl, but still!\)
 
 ## DNS and Custom Domains
