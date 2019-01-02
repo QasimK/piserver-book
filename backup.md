@@ -29,6 +29,7 @@ printf "\n"
 
 # Sense check password
 echo "Password Length=${#PASSWORD}"
+sleep 1
 
 # Create backup file
 ssh piserver "\
