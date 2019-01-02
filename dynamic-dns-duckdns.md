@@ -11,9 +11,8 @@ See alternative: Tor.
 ## Security
 
 1. The file containing the secret token will be accessible only to `root`.
-2. [ ] The token is visible as a parameter to curl \(e.g. htop\)
-   1. [ ] curl --config command with file simple url = "example.com"
-3. [ ] Minimise privileges of systemd service \(it's only curl, but still!\)
+
+1. [ ] Minimise privileges of systemd service \(it's only curl, but still!\)
 
 ## DNS and Custom Domains
 
@@ -25,17 +24,40 @@ We can further chain the `CNAME` records, for example, we might point `cloud.exa
 
 ## Secret Token
 
-DuckDNS uses a secret token. We will create this inside `/root/secrets/duckdns`:
+DuckDNS uses a secret token as part of the URL query string. To avoid insecurely placing this as a parameter to curl, we will configure our command to use a curl config file. We will create this at `/root/secrets/curl-duckdns.conf`
 
 ```ini
-TOKEN=<TOKEN>
+url = "https://www.duckdns.org/update?domains=piserver007&token=<TOKEN>&ip="
+
+# Only log errors
+silent
+show-error
+
+# Do not redirect
+max-redirs = 0
+# Don't spend longer than 10 seconds on each try
+max-time = 10
+# Don't spend longer than 30 seconds in total
+retry-max-time = 30
+# Retry up to 5 times with exponential backoff
+retry = 5 
+# Retry even when connection was refused
+retry-connrefused
+
+# Security, use tlsv1.2+ (tlsv1.3 is not supported by server)
+tlsv1.2
+# Require OCSP stapling (not supported by server)
+# cert-status
+
+# Use TCP Fast Open for extra performance
+tcp-fastopen
 ```
 
 Replace `<TOKEN>` with the token you obtain from the service. We will ensure that no one else can read the token:
 
 ```bash
 chmod 0750 /root/secrets
-chmod 0600 /root/secrets/duckdns
+chmod 0600 /root/secrets/curl-duckdns.conf
 ```
 
 Ensure the `secrets` folder is excluded from backups by adding the following line to `/root/.tarignore`
@@ -57,8 +79,7 @@ Wants=network-online.target
 
 [Service]
 Type=oneshot
-EnvironmentFile=/root/secrets/duckdns
-ExecStart=/usr/bin/curl --max-time 30 "https://www.duckdns.org/update?domains=<DOMAIN>&token=${TOKEN}&ip="
+ExecStart=/usr/bin/curl --config /root/secrets/duckdns-curl.conf
 SyslogIdentifier=duckdns
 ```
 
@@ -106,7 +127,7 @@ Add the following lines to the backup script:
 
 ### Restore
 
-1. Re-create `/root/secrets/duckdns` as described in the Secret Token section.
+1. Re-create `/root/secrets/curl-duckdns.conf` as described in the Secret Token section.
 
 ## Conclusion
 
