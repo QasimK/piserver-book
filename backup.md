@@ -27,10 +27,15 @@ stty echo
 trap - EXIT
 printf "\n"
 
+# Sense check password
+echo "Password Length=${#PASSWORD}"
+
+# Create backup file
 ssh piserver "\
     sudo tar -cvz --preserve-permissions --xattrs --one-file-system \
     --exclude-backups --exclude-caches-all --exclude-ignore=.tarignore \
     --absolute-names --check-links --totals \
+    --label=piserver-$(date --iso-8601=seconds) \
     /boot/config.txt \
     /etc/fstab \
     /etc/group \
@@ -38,22 +43,26 @@ ssh piserver "\
     /home/ \
     /root/
     " \
-    | openssl enc -aes-256-cbc -pbkdf2 -pass pass:"$PASSWORD" -out piserver-backup.tar.gz.enc
+    | openssl enc -aes-256-cbc -pbkdf2 -pass pass:"$PASSWORD" -out piserver-backup.tar.gz.enc.1
+
+# Atomic replacement of previous backup (if any)
+mv -f piserver-backup.tar.gz.enc.1 piserver-backup.tar.gz.enc
 ```
 
 * `-c`
 * `-v`
 * `-z`
 * `--preserve-permissions`
-* `--xattrs` 
+* `--xattrs` - include extended attributes \(a filesystem feature\)
 * `--one-file-system`
 * `--exclude-backups`
 * `--exclude-caches-all`
 * `--exclude-ignore=.tarignore` - Non-recursive ignore files
-* `--absolute-names` - the archive is taken from the root of the filesystem - it is absolute.
+* `--absolute-names` - the archive is taken from the root of the filesystem - allow file paths starting with `/`.
 * `--sparse` - handle sparse files efficiently
-* `--check-links` - ?
-* `--totals` - print summary
+* `--check-links` - verifies hard-links
+* `--totals` - print size summary for us to manually sense-check
+* `--label=piserver-$(date --iso-8601=seconds)` - labels the archive
 
 As we add applications to the Piserver, we will expand the list of files and directories to backup.
 
