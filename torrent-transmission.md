@@ -10,7 +10,7 @@ Transmission is a simple, no-frills torrenting application with different GUI, C
 2. It will have access to only its own files and a special data directory.
 3. It will operate inside a VPN \(using OpenVPN\) that forwards exactly one port.
 4. The web interface will be secured with HTTPS and will be accessible over the LAN only.
-5. The data storage directory will be accessible to selected users.
+5. The data storage directory will be accessible only to specific users.
 
 ## VPN
 

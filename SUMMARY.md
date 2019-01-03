@@ -21,6 +21,8 @@
 * [NAS \(Samba\)](nas-samba.md)
 * [Personal VPN \(WireGuard\)](personal-vpn-wireguard.md)
 * [Service Discovery \(Avahi\)](service-discovery.md)
+* [System Monitoring \(systemd\)](system-monitoring-systemd.md)
+* [System Monitoring \(Netdata\)](system-monitoring-netdata.md)
 * [Pi-Hole](pi-hole.md)
 * [IPFS](ipfs.md)
 * [Blog \(Jekyll\)](blog-jekyll.md)
