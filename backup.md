@@ -42,7 +42,9 @@ ssh piserver "\
     /etc/group \
     /etc/sudoers.d/ \
     /etc/ssh/sshd_config \
-    /etc/pacman.d/hooks/paccache.hook \
+    /etc/pacman.conf \
+    /etc/pacman.d/hooks/paccache-remove.hook \
+    /etc/pacman.d/hooks/paccache-upgrade.hook \
     /home/ \
     /root/
     " \

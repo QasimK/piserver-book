@@ -8,15 +8,23 @@ We'll perform some basic setup below.
 
 We should set up SSH on our main computer so that we can connect to the piserver simply with `ssh piserver`. This will make things easier.
 
-## Hostname, Locale, Timezone
-
-Set a hostname \(piserver\), set your locale. You may also set a non-UTC timezone.
-
-```
-timedatectl set-timezone $(tzselect)
-```
-
 ## Users and Sudo
+
+The system comes with two users:
+
+* `root` with password `root` \(the super-user\), and
+* `alarm` with password `alarm`.
+
+This is insecure, so we will remove access to both accounts.
+
+We need to SSH into the piserver and switch to the root account.
+
+```console
+# Your computer
+ssh 192.168.1.1
+# Now on the Raspberry Pi
+su - root
+```
 
 We install some basic tools:
 
@@ -25,7 +33,7 @@ We install some basic tools:
 * `vim` is the one true text editor.
 
 ```console
-sudo pacman -Syu --needed sudo pacmatic vim
+pacman -Syu --needed sudo pacmatic vim
 ```
 
 We create our adminstrative user, substiting `<YOU>` for the username we like the most
@@ -57,6 +65,17 @@ sudo passwd --lock root
 
 The only way to login as root is to switch to it with `sudo su - root`.
 
+## Hostname, Locale, Timezone
+
+We set a hostname, and our locale. We may also set a non-UTC timezone if we like that kind of thing for our servers.
+
+```
+hostnamectl set-hostname piserver
+localectl list-locales
+localectl set-locale <LOCALE>
+timedatectl set-timezone $(tzselect)
+```
+
 ### Personal Preferences
 
 Configure `~/.pam_environment` for cross-shell environment variables.
@@ -84,7 +103,25 @@ sudo timedatectl set-ntp true
 
 ### Cache
 
-Pacman will build up an infinite collection of cached system packages in `/etc/cache/pacman/pkg`. We can automatically clean this up when we do a upgrade. To keep the last 7 versions of each package, we create `/etc/pacman.d/hooks/paccache.hook`
+Pacman will build up an infinite collection of cached system packages in `/etc/cache/pacman/pkg`. This is not useful, and it is likely we have limited disk space on the PiServer. We can remove old cached packages using a _pacman_ hook that runs after we execute certain _pacman_ commands.
+
+Keeping some old versions is useful for the \(very\) rare occasion that you want to downgrade.
+
+To remove all versions of an uninstalled package, we `sudoedit /etc/pacman.d/hooks/paccache-remove.hook`
+
+```ini
+[Trigger]
+Operation = Remove
+Type = Package
+Target = * 
+
+[Action]
+Description = Removing all cached uninstalled packages...
+When = PostTransaction
+Exec = /usr/bin/paccache -ruk0
+```
+
+To keep the last 3 versions of each package we still have installed, we `sudoedit /etc/pacman.d/hooks/paccache-upgrade.hook`
 
 ```ini
 [Trigger]
@@ -95,14 +132,9 @@ Target = *
 [Action]
 Description = Removing old cached packages...
 When = PostTransaction
-Exec = /usr/bin/paccache -rk7
+Exec = /usr/bin/paccache -rk3
 ```
 
-It is possible to delete uninstall packages with `paccache -ru0` but I am not sure if it is necessary.
-
-## Firewall - UFW
-
-...
 
 ## Simple Outbound Mail
 
@@ -112,10 +144,16 @@ mstmp.
 
 ## Extra Security
 
+There are further steps that we can take, however they offer increasingly diminishing returns. We do not consider MAC/ACLs/SELinux because they are, apparently, a PITA.
+
 * [ ] Delay after login attempts \(user accounts\).
 * [ ] Limit number of processes a user may have.
 * [ ] Limit users which may login as root: [https://wiki.archlinux.org/index.php/Security\#Allow\_only\_certain\_users](https://wiki.archlinux.org/index.php/Security#Allow_only_certain_users)
-* [ ] Kernel hardening: https://wiki.archlinux.org/index.php/Security\#Kernel\_hardening
+* [ ] Kernel hardening: [https://wiki.archlinux.org/index.php/Security\#Kernel\_hardening](https://wiki.archlinux.org/index.php/Security#Kernel_hardening)
+
+### Firewall - UFW
+
+...
 
 ### umask 027
 
