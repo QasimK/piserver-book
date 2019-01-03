@@ -28,6 +28,7 @@
 * [Blog \(Jekyll\)](blog-jekyll.md)
 * [Git \(Pure\)](git.md)
 * [Git \(Gitea\)](git-gitea.md)
+* [Web Server \(Nginx\)](web-server-nginx.md)
 * [Email](email.md)
 
 ## Appendix

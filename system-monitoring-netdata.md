@@ -1,4 +1,4 @@
-# System Monitoring with Netdata
+# System Monitoring \(with Netdata\)
 
 Setting up a comprehensive system monitoring tool can be quite involved. Please see the separate guide: System Monitoring \(Netdata\).
 
@@ -86,8 +86,6 @@ Test with: `sudo -u netdata ./alarm-notify.sh test`
 
 1. `gpasswd -a netdata mail`
 
-
-
 Monitoring netdata:
 
 * Logs can be viewed with s`sudo journalctl -u netdata`
@@ -100,9 +98,10 @@ Performance:
 TODO:
 
 * [ ] You can configure Nginx to show the dashboard over-the-internet. [https://docs.netdata.cloud/docs/high-performance-netdata/](https://docs.netdata.cloud/docs/high-performance-netdata/)
-  * [ ] Nginx password: https://www.geekytuts.net/shell-tricks/password-protect-netdata-with-nginx-permission-denied-while-connecting-to-upstream-error/
 
-  * [ ] Nginx conf: https://docs.netdata.cloud/docs/running-behind-nginx/
+  * [ ] Nginx password: [https://www.geekytuts.net/shell-tricks/password-protect-netdata-with-nginx-permission-denied-while-connecting-to-upstream-error/](https://www.geekytuts.net/shell-tricks/password-protect-netdata-with-nginx-permission-denied-while-connecting-to-upstream-error/)
+
+  * [ ] Nginx conf: [https://docs.netdata.cloud/docs/running-behind-nginx/](https://docs.netdata.cloud/docs/running-behind-nginx/)
 
 * [ ] Perf: [https://docs.netdata.cloud/docs/performance/](https://docs.netdata.cloud/docs/performance/)
 

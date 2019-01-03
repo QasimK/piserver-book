@@ -1,4 +1,4 @@
-# Contacts & Calendar App \(with Radicale\)
+# Contacts & Calendar Server \(with Radicale\)
 
 We can sync our own contacts & calenders. I wouldn't recommend it :\) I forgot why.
 
