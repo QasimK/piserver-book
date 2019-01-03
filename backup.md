@@ -41,6 +41,8 @@ ssh piserver "\
     /etc/fstab \
     /etc/group \
     /etc/sudoers.d/ \
+    /etc/ssh/sshd_config \
+    /etc/pacman.d/hooks/paccache.hook \
     /home/ \
     /root/
     " \

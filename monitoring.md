@@ -46,6 +46,12 @@ We add the files to our backup script:
 
 ## System Monitoring
 
+> The /etc/netdata/edit-config command is incorrect. Modify it with `sudoedit edit-config`
+>
+> Line 12: \[...\] `NETDATA_USER_CONFIG_DIR="/etc/netdata"`
+>
+> Line 13: \[...\] `NETDATA_STOCK_CONFIG_DIR="/usr/lib/netdata/conf.d"`
+
 We will use netdata.
 
 ```
@@ -53,9 +59,51 @@ sudo pacmatic -S --needed netdata
 sudo systemctl enable --now netdata
 ```
 
+We will create the main configuration file at `/etc/netdata/netdata.conf`
+
 ```
-Created symlink /etc/systemd/system/multi-user.target.wants/netdata.service → /usr/lib/systemd/system/netdata.service.
+[global]
+    # A data point every 10 seconds for 24 hours
+    history = 8640
+    update every = 10
+    error log = syslog
+    access log = none
+
+[web]
+    bind to = localhost
 ```
+
+We will also modify the charts configuration file  `sudo -u netdata /etc/netdata/edit-config charts.d.conf`; uncomment the following line at the end:
+
+```
+sensors=force
+```
+
+To save memory we will enable Kernel Same-page Merging \(KSM\), i.e. RAM deduplication. We run it every 5 seconds \(the default is every 20 ms\) because netdata collects every 10 seconds.
+
+* [ ] TODO: Run the following on boot, 
+
+```
+echo 1 | sudo tee /sys/kernel/mm/ksm/run
+echo 10000 | sudo tee /sys/kernel/mm/ksm/sleep_millisecs
+```
+
+### Backup
+
+```
+    /etc/systemd/system/multi-user.target.wants/netdata.service \
+    /etc/netdata/netdata.conf \
+    /etc/netdata/charts.d.conf \
+```
+
+Monitoring netdata:
+
+* Logs can be viewed with s`sudo journalctl -u netdata`
+* Memory usage and KSM can be viewed with netdata itself, of course!
+
+Performance:
+
+* It runs with process scheduling policy = idle by default - this is lower than nice=19.
 
 * [ ] It is accessible over the lan: `piserver.local:19999`
 * [ ] You can configure Nginx to show the dashboard over-the-internet. [https://docs.netdata.cloud/docs/high-performance-netdata/](https://docs.netdata.cloud/docs/high-performance-netdata/)
