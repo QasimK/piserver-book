@@ -4,6 +4,18 @@ We're going to use Arch Linux ARM not because we like to move fast and break thi
 
 ## Initial Install
 
+> Raspberry Pi versions 1 - 3B+ \(all of them, circa 2018\) does not support hardware encryption, meaning full disk encryption will use significant CPU % and decrease disk performance.
+>
+> * [ ] Test.
+
+The initial installation is carried out on our computer following the correct variant of instructions:
+
+* [Raspberry Pi](https://archlinuxarm.org/platforms/armv6/raspberry-pi)
+* [Raspberry Pi 2](https://archlinuxarm.org/platforms/armv7/broadcom/raspberry-pi-2)
+* [Raspberry Pi 3](https://archlinuxarm.org/platforms/armv8/broadcom/raspberry-pi-3)
+
+See [_File System Variations_](#file-system-variations). It's easier to vary this now rather than later.
+
 bla bla bla.
 
 This is your opportunity to encrypt the root partition \(excluding the boot drive\) or use f2fs with the root partition. I did neither at this point.
