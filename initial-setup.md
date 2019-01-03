@@ -21,7 +21,7 @@ We need to SSH into the piserver and switch to the root account.
 
 ```console
 # Your computer
-ssh 192.168.1.1
+ssh <PISERVER IP ADDRESS>
 # Now on the Raspberry Pi
 su - root
 ```
@@ -70,11 +70,18 @@ The only way to login as root is to switch to it with `sudo su - root`.
 We set a hostname, and our locale. We may also set a non-UTC timezone if we like that kind of thing for our servers.
 
 ```
-hostnamectl set-hostname piserver
-localectl list-locales
+vim /etc/locale.gen
+locale-gen
 localectl set-locale <LOCALE>
+
+hostnamectl set-hostname piserver
+
 timedatectl set-timezone $(tzselect)
 ```
+
+* [ ] https://wiki.archlinux.org/index.php/Installation\_guide\#Localization
+* [ ] Font & Keymap
+* [ ] Does /etc/hosts need to be updated, or does hostnamectl do it?
 
 ### Personal Preferences
 
@@ -84,7 +91,9 @@ Configure `~/.pam_environment` for cross-shell environment variables.
 VISUAL=/usr/bin/vim
 ```
 
-This is a little more annoying than just using `.bashrc`, but it does let you switch between shells more easily.
+This is a little more annoying than just using `.bashrc`, but it does let us switch between shells more easily.
+
+Install the fish shell :\)
 
 ## SSH
 
@@ -134,7 +143,6 @@ Description = Removing old cached packages...
 When = PostTransaction
 Exec = /usr/bin/paccache -rk3
 ```
-
 
 ## Simple Outbound Mail
 
