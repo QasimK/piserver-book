@@ -15,7 +15,7 @@ Encryption is tricky because you'll need to physically enter the password if you
 * [http://blog.nguyenvq.com/blog/2011/09/13/remote-unlocking-luks-encrypted-lvm-using-dropbear-ssh-in-ubuntu/](http://blog.nguyenvq.com/blog/2011/09/13/remote-unlocking-luks-encrypted-lvm-using-dropbear-ssh-in-ubuntu/)
 * [https://security.stackexchange.com/q/46548](https://security.stackexchange.com/q/46548)
 * [https://esther.codes/post-cryptsetup\_raspberry/](https://esther.codes/post-cryptsetup_raspberry/)
-* https://docs.kali.org/kali-dojo/04-raspberry-pi-with-luks-disk-encryption
+* [https://docs.kali.org/kali-dojo/04-raspberry-pi-with-luks-disk-encryption](https://docs.kali.org/kali-dojo/04-raspberry-pi-with-luks-disk-encryption)
 
 **Create an image for easy future use... \(after initial setup... hmm\)**
 
@@ -45,6 +45,8 @@ arm_freq_min=300
 > Note that the status of the HDMI port can be checked at /opt/vc/bin/tvservice.
 
 ## File System Variations
+
+There is a lot of flexibility in how we configure the partitions.
 
 The `/boot` partition is fairly inflexible \(confirm encryption?\), it must be FAT32. It is possible to boot over the network, or from a USB flash drive.
 

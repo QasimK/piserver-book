@@ -2,7 +2,7 @@
 
 During the course of writing this book I came across or used a number of resources that you may find helpful when troubleshooting or looking for ideas.
 
-* [**Arch Linux Wiki**](https://wiki.archlinux.org "The single best resource for Linux-based operating systems!")
+* [Arch Linux Wiki](https://wiki.archlinux.org "The single best resource for Linux-based operating systems!") **\(strongly recommended\)**
 * [https://eltechs.com/raspberry-pi-nas-guide/](https://eltechs.com/raspberry-pi-nas-guide/)
 
 The Raspberry Pi can be used for a number of other things than just a Linux server. Some cool things that I've come across include:
