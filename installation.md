@@ -28,6 +28,7 @@ Encryption is tricky because you'll need to physically enter the password if you
 * [https://security.stackexchange.com/q/46548](https://security.stackexchange.com/q/46548)
 * [https://esther.codes/post-cryptsetup\_raspberry/](https://esther.codes/post-cryptsetup_raspberry/)
 * [https://docs.kali.org/kali-dojo/04-raspberry-pi-with-luks-disk-encryption](https://docs.kali.org/kali-dojo/04-raspberry-pi-with-luks-disk-encryption)
+* https://github.com/NicoHood/NicoHood.github.io/wiki/Raspberry-Pi-Encrypt-Root-Partition-Tutorial
 
 **Create an image for easy future use... \(after initial setup... hmm\)**
 
