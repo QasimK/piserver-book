@@ -79,7 +79,7 @@ hostnamectl set-hostname piserver
 timedatectl set-timezone $(tzselect)
 ```
 
-* [ ] https://wiki.archlinux.org/index.php/Installation\_guide\#Localization
+* [ ] [https://wiki.archlinux.org/index.php/Installation\_guide\#Localization](https://wiki.archlinux.org/index.php/Installation_guide#Localization)
 * [ ] Font & Keymap
 * [ ] Does /etc/hosts need to be updated, or does hostnamectl do it?
 
@@ -125,7 +125,7 @@ Type = Package
 Target = * 
 
 [Action]
-Description = Removing all cached uninstalled packages...
+Description = Removing package cache for uninstalled packages...
 When = PostTransaction
 Exec = /usr/bin/paccache -ruk0
 ```
