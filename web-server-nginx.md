@@ -111,7 +111,7 @@ add_header X-XSS-Protection $x_xss_protection always;
 
 We will modify `/etc/nginx/nginx.conf` slightly.
 
-Also: Add `tcp`_``nopush on; under `sendfile on` This is an optimisation.``_
+Also: Add ``tcpnopush on; under `sendfile on` This is an optimisation.``
 
 ## LAN-specific Configuration
 
@@ -188,20 +188,48 @@ server {
     }
 
     include snippets/self-signed-cert.conf;
-    
-    location / {
-        proxy_pass http://transmission;
 
+    location ~ /transmission/web/(style|images|javascript)/ {
+        root /usr/share/;
+        disable_symlinks if_not_owner;  # Extra-security
+        gzip_static on;
+        
+        access_log off;
+        open_file_cache         max=100;
+        open_file_cache_errors  on;
+    }
+
+    location ~ /transmission/ {
+        proxy_pass http://transmission;
+        proxy_redirect http://127.0.0.1:9091 https://piserver.local;
+        proxy_read_timeout 60;
+        proxy_http_version 1.1;
+
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Host $server_name;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header X-Forwarded-Port $server_port;
         # Correct handling of fallbacks for HTTP headers
-        proxy_hide_header  Referrer-Policy;
-        proxy_hide_header  X-Content-Type-Options;
-        proxy_hide_header  X-Frame-Options;
-        proxy_hide_header  X-XSS-Protection;
+        proxy_hide_header Referrer-Policy;
+        proxy_hide_header X-Content-Type-Options;
+        proxy_hide_header X-Frame-Options;
+        proxy_hide_header X-XSS-Protection;
+    }
+    
+    location ~* ^/transmission/?$ {
+        return 301 https://$server_name/transmission/web/;
     }
 }
 ```
 
-`ln -s /etc/nginx/sites-available/transmission.conf /etc/nginx/sites-enabled/transmission.conf`
+Start & Optimise:
+
+```console
+ln -s /etc/nginx/sites-available/transmission.conf /etc/nginx/sites-enabled/transmission.conf
+sudo find -L . -type f ! -iname "*.gz" ! -iname "*.png" ! -iname "*.jpg" ! -iname "*.jpeg" ! -iname "*.gif" ! -iname "*.webp" ! -iname "*.heif" -exec gzip --best -kf "{}" \;
+```
 
 
 
