@@ -145,6 +145,10 @@ When = PostTransaction
 Exec = /usr/bin/paccache -rk3
 ```
 
+### fstrim
+
+... SD card + SSD ok, but USB flash drive may not support it. mkfs.f2fs should say whether it does.
+
 ## Simple Outbound Mail
 
 mstmp.
