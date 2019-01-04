@@ -1,6 +1,6 @@
 # Initial Setup \(Arch Linux\)
 
-Now we can move the SD card into the Raspberry Pi, connect the power \(there is no on/off switch\), and SSH in as `alarm`.
+Now we can move the SD card into the Raspberry Pi, connect the power \(there is no on/off switch\), and SSH in as `alarm` with the password `alarm`.
 
 We'll perform some basic setup below.
 
