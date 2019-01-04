@@ -147,7 +147,17 @@ Exec = /usr/bin/paccache -rk3
 
 ### fstrim
 
-... SD card + SSD ok, but USB flash drive may not support it. mkfs.f2fs should say whether it does.
+Flash-based systems should be "trimmed" regularly to ensure optimal performance. This process physically clears the flash blocks for deleted files, which allows writes to those blocks to happen faster in the future.
+
+SD cards and SSD drives normally support trim, while USB flash drives normally do not. The output of `mkfs.f2fs`  reveals whether trim is supported.
+
+* [ ] In installation? What is the output?
+
+It is possible trim when the file is deleted, but this is normally unnecessary. Therefore, we will enable `/usr/lib/systemd/system/fstrim.timer` which trims all supported filesystems in `/etc/fstab` weekly.
+
+```console
+sudo systemctl enable --now fstrim.timer
+```
 
 ## Simple Outbound Mail
 

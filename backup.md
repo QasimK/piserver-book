@@ -47,6 +47,7 @@ ssh piserver "\
     /etc/pacman.conf \
     /etc/pacman.d/hooks/paccache-remove.hook \
     /etc/pacman.d/hooks/paccache-upgrade.hook \
+    /etc/systemd/system/timers.target.wants/fstrim.timer \
     /home/ \
     /root/
     " \
