@@ -20,8 +20,9 @@ This is insecure, so we will remove access to both accounts.
 We need to SSH into the piserver and switch to the root account.
 
 ```console
-# Your computer
-ssh <PISERVER IP ADDRESS>
+# On your computer
+ssh alarm@<PISERVER IP ADDRESS>
+
 # Now on the Raspberry Pi
 su - root
 ```
