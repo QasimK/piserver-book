@@ -16,6 +16,71 @@ Transmission is a simple, no-frills torrenting application with different GUI, C
 
 Something something split-tunneling not going to do it?
 
+To run a single application through the VPN rather than the entire system, we can use network namespaces.
+
+* [ ] Modify /etc/openvpn/client/move-to-netns.sh with vpn -&gt; "$NETNS\_NAME" and `if [ -z ${NETNS_NAME+x} ]; then exit 99; fi`
+
+We will create `/etc/systemd/netns@.service`
+
+```ini
+[Unit]
+Description=Named network namespace %i
+Documentation=https://github.com/systemd/systemd/issues/2741#issuecomment-336736214
+StopWhenUnneeded=yes
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+
+# Ask systemd to create a network namespace
+PrivateNetwork=yes
+
+
+# Ask ip netns to create a named network namespace
+# (This ensures that things like /var/run/netns are properly setup)
+ExecStart=/sbin/ip netns add %i
+
+# Drop the network namespace that ip netns just created
+ExecStart=/bin/umount /var/run/netns/%i
+
+# Re-use the same name for the network namespace that systemd put us in
+ExecStart=/bin/mount --bind /proc/self/ns/net /var/run/netns/%i
+
+# Clean up the name when we are done with the network namespace
+ExecStop=/sbin/ip netns delete %i
+```
+
+Then we will layer a new service that moves OpenVPN into that created network namespace `/etc/systemd/netns-openvpn@.service`
+
+```ini
+[Unit]
+Description=Create the network namespace "%i" routed through OpenVPN
+StopWhenUnneeded=yes
+
+[Service]
+Type=simple
+Environment=NETNS_NAME=%i
+ExecStart=/bin/openvpn --cd /etc/openvpn/client/ --config config.ovpn --config override.conf
+```
+
+* [ ] TODO: Harden OpenVPN
+
+## Transmission
+
+Edit the transmission service `sudo systemctl edit transmission`
+
+```ini
+[Unit]
+BindsTo=netns-openvpn@vpn.service
+After=netns-openvpn@vpn.service
+JoinsNamespaceOf=netns@vpn.service
+
+[Service]
+PrivateNetwork=true
+```
+
+Now start the service.
+
 ## PiStorage/Torrent
 
 mkfs.f2fs needs benchmarking for optimal settings if you want. Otherwise -d lets you use USB storage easily.
@@ -58,7 +123,12 @@ Unmount with `fusermount3 -u ~/Mount/piserver/torrent`.
 Update the backup file:
 
 ```
-/var/lib/transmission/config/config.json or something
+    /etc/openvpn/client \
+    /usr/local/bin/vpnbox \
+    /etc/systemd/system/netns@.service \
+    /etc/systemd/system/netns-openvpn@.service \
+    /etc/systemd/system/transmission.service.d/override.conf \
+    /var/lib/transmission/.config/transmission-daemon/settings.json \
 ```
 
 ## Conclusion

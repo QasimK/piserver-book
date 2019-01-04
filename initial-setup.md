@@ -1,12 +1,23 @@
 # Initial Setup \(Arch Linux\)
 
-Now we can move the SD card into the Raspberry Pi, connect the power \(there is no on/off switch\), and SSH in as `alarm` with the password `alarm`.
-
-We'll perform some basic setup below.
-
 > If at any point it is impossible to access your Raspberry Pi, then connect the micro SD card \(containing your operating system\) back to your main computer and edit any files necessary to get it to work again.
 
-We should set up SSH on our main computer so that we can connect to the piserver simply with `ssh piserver`. This will make things easier.
+We can now insert the SD card into the Raspberry Pi, and connect the power \(there is no on/off switch\).
+
+We should set up SSH on our main computer so that we can connect to the piserver simply with `ssh piserver`. On our main computer we edit `~/.ssh/config`
+
+```
+Host piserver
+    HostName <PISERVER IP ADDRESS>
+```
+
+Substituting in the IP address of the Raspberry Pi. We could:
+
+* Try lots of random IP addresses until we find the right one \(they're usually `192.168.1.x`, and we can `ping` to narrow down the list\),
+* Use the MAC address on the Raspberry Pi obtained from `ip link list` and look at the list of devices on our DHCP server \(i.e. our router\),
+* Set a static IP address on the Raspberry Pi,
+* Set a static IP address for the Raspberry Pi on our DHCP server,
+* Set up [**Service Discovery \(Avahi\)**](/service-discovery-avahi.md) so that we can set `HostName piserver.local` which works no matter what IP address the router has.
 
 ## Users and Sudo
 
@@ -21,7 +32,7 @@ We need to SSH into the piserver and switch to the root account.
 
 ```console
 # On your computer
-ssh alarm@<PISERVER IP ADDRESS>
+ssh alarm@piserver
 
 # Now on the Raspberry Pi
 su - root
@@ -86,6 +97,8 @@ timedatectl set-timezone $(tzselect)
 
 ### Personal Preferences
 
+* [ ] Move into the appendix and expand out.
+
 Configure `~/.pam_environment` for cross-shell environment variables.
 
 ```
@@ -111,7 +124,7 @@ sudo systemctl enable systemd-timesyncd.service
 sudo timedatectl set-ntp true
 ```
 
-### Cache
+### Pacman Cache
 
 Pacman will build up an infinite collection of cached system packages in `/etc/cache/pacman/pkg`. This is not useful, and it is likely we have limited disk space on the PiServer. We can remove old cached packages using a _pacman_ hook that runs after we execute certain _pacman_ commands.
 
@@ -145,7 +158,7 @@ When = PostTransaction
 Exec = /usr/bin/paccache -rk3
 ```
 
-### fstrim
+### Trim Flash Drives
 
 Flash-based systems should be "trimmed" regularly to ensure optimal performance. This process physically clears the flash blocks for deleted files, which allows writes to those blocks to happen faster in the future.
 
@@ -159,11 +172,13 @@ It is possible trim when the file is deleted, but this is normally unnecessary. 
 sudo systemctl enable --now fstrim.timer
 ```
 
+> On encrypted file systems, this will leak which areas of the drive are empty.
+
 ## Simple Outbound Mail
 
 mstmp.
 
-* [ ] Migrate from blog.
+* [ ] Migrate from blog. Move to "Things we can do".
 
 ## Extra Security
 
