@@ -28,7 +28,7 @@ Encryption is tricky because you'll need to physically enter the password if you
 * [https://security.stackexchange.com/q/46548](https://security.stackexchange.com/q/46548)
 * [https://esther.codes/post-cryptsetup\_raspberry/](https://esther.codes/post-cryptsetup_raspberry/)
 * [https://docs.kali.org/kali-dojo/04-raspberry-pi-with-luks-disk-encryption](https://docs.kali.org/kali-dojo/04-raspberry-pi-with-luks-disk-encryption)
-* https://github.com/NicoHood/NicoHood.github.io/wiki/Raspberry-Pi-Encrypt-Root-Partition-Tutorial
+* [https://github.com/NicoHood/NicoHood.github.io/wiki/Raspberry-Pi-Encrypt-Root-Partition-Tutorial](https://github.com/NicoHood/NicoHood.github.io/wiki/Raspberry-Pi-Encrypt-Root-Partition-Tutorial)
 
 **Create an image for easy future use... \(after initial setup... hmm\)**
 
@@ -68,6 +68,8 @@ The root `/` partition is more flexible, and you can install with other file sys
 It is easy to use RAID, LUKS, LVM and whatever file system you want on pure data devices.
 
 It is much more tricky to install if you want to do those things on your main root `/` partition.
+
+We will probably use 3-4 GB on `/` for programs and config files, and all data will be on a separate partition. I would recommend 4x this for  `/` , i.e. 16GB, to leave room for future growth, and significant spare space to extend the longevity of this part of the SD card.
 
 ### RAID + LUKS + LVM
 
