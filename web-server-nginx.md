@@ -17,10 +17,29 @@ sudo mkdir /etc/nginx/sites-available
 sudo mkdir /etc/nginx/sites-enabled
 ```
 
-Add at the very end of the http {} block inside `/etc/nginx/nginx.conf`
+Edit `/etc/nginx/nginx.conf`
 
-```
+```ini
+#user html;
+worker_processes  1;  
+
+events {
+    worker_connections  1024;
+}
+
+http {
+    include       mime.types;
+    default_type  application/octet-stream;
+
+    sendfile        on;
+    tcp_nopush      on;
+    tcp_nodelay     on;
+
+    keepalive_timeout  65;
+
+    include /etc/nginx/conf.d/*.conf;
     include sites-enabled/*;
+}
 ```
 
 > We generate fresh Diffie-Hellman parameters. This is an important security step, though it takes a while.
@@ -130,7 +149,9 @@ ssl_certificate /etc/ssl/certs/nginx-selfsigned.crt;
 ssl_certificate_key /etc/ssl/private/nginx-selfsigned.key;
 ```
 
-Install the crt on your devices.
+Install the crt on your devices...
+
+* [ ] Appendix this.
 
 Linux:
 
@@ -162,6 +183,12 @@ We do not backup the self-signed certificate.
     /etc/nginx/sites-enabled/ \
 ```
 
+### Restore
+
+Reinstall Nginx section - dhparam, certifications.
+
+Gzip files again for each application again.
+
 ## Applications
 
 ### Transmission
@@ -176,7 +203,7 @@ upstream transmission {
 }
 
 server {
-    listen 443 ssl http2;
+    listen 443 ssl http2  i;
     listen [::]:443 ssl http2;
     server_name piserver.local;
     charset utf-8;
@@ -189,20 +216,20 @@ server {
 
     include snippets/self-signed-cert.conf;
 
-    location ~ /transmission/web/(style|images|javascript)/ {
+    location ~ ^/transmission/web/(style|images|javascript)/ {
         root /usr/share/;
         disable_symlinks if_not_owner;  # Extra-security
-        gzip_static on;
-        
+        gzip_static on; 
+
         access_log off;
         open_file_cache         max=100;
-        open_file_cache_errors  on;
+        open_file_cache_errors  on; 
     }
 
-    location ~ /transmission/ {
+    location ~ ^/transmission/ {
         proxy_pass http://transmission;
         proxy_redirect http://127.0.0.1:9091 https://piserver.local;
-        proxy_read_timeout 60;
+        proxy_read_timeout 60; 
         proxy_http_version 1.1;
 
         proxy_set_header Host $host;
@@ -217,7 +244,7 @@ server {
         proxy_hide_header X-Frame-Options;
         proxy_hide_header X-XSS-Protection;
     }
-    
+
     location ~* ^/transmission/?$ {
         return 301 https://$server_name/transmission/web/;
     }
