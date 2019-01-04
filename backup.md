@@ -8,6 +8,8 @@ You can skip this step and come back to it, if you really want to...
 
 But, seriously, backups are important!
 
+* [ ] Remove /etc/fstab from script below.
+
 ## Main Computer Backup
 
 There are many ways to backup and many tools that can do this. Rather than configure a particular tool, we will take the opportunity to learn about `tar`.
@@ -76,7 +78,6 @@ The `.tarignore` file can be used to ignore files within a directory. This is us
 For example `/root/.tarignore`
 
 ```
-secrets
 .bash_history
 .cache
 .gnupg
