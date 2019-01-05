@@ -263,7 +263,7 @@ location /netdata/api/ {
 }
 
 location /netdata/ {
-    alias /usr/share/netdata/weebb/;
+    alias /usr/share/netdata/web/;
     disable_symlinks if_not_owner;  # Extra-security
     gzip_static on;
 
