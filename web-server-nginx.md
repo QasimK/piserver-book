@@ -10,6 +10,8 @@ We can use Nginx to serve other applications that we have set up using TLS encry
 
 ## Install
 
+> Changes to Nginx config can be checked with `sudo nginx -T`
+
 * [ ] TODO: Ciphers suitable for RPi
 
 ```
@@ -18,6 +20,10 @@ sudo openssl dhparam -out /etc/ssl/certs/dhparam.pem 2048 creates=/etc/ssl/certs
 sudo mkdir /etc/nginx/sites-available
 sudo mkdir /etc/nginx/sites-enabled
 ```
+
+> We generate fresh Diffie-Hellman parameters. This is an important security step, though it takes a while.
+>
+> Normally we would suggest 2048-bit, but the Raspberry Pi is a little underpowered :\) It takes fooorrrreevverrr just to generate the 2048-bit file.
 
 Edit `/etc/nginx/nginx.conf`
 
@@ -43,42 +49,41 @@ http {
     # Redirect all HTTP -> HTTPS
     server {
         listen [::]:80 default_server ipv6only=off;
-
-        # Redirect all HTTP requests to HTTPS with a 301 Moved Permanently response.
         return 301 https://$host$request_uri;
+    }
+    
+    # Nginx Stats Server
+    server {
+        listen 127.0.0.1:80;
+        server_name 127.0.0.1;
+
+        location /nginx_status {
+            stub_status on;
+            allow 127.0.0.1;
+            deny all;
+        }
     }
 
     server {
         listen [::]:443 ssl http2 ipv6only=off;
+        allow 192.168.1.1/24;
+        deny all;
         server_name piserver.local;
-        charset utf-8;
 
+        allow 192.168.1.1/24;
+
+        allow 192.168.1.1/24;
         include snippets/self-signed-cert.conf;
-
         include /etc/nginx/locations-enabled-lan/*.conf;
-    }   
+    }
 }
 ```
 
 This allows us to configure each application as its own component.
 
-> We generate fresh Diffie-Hellman parameters. This is an important security step, though it takes a while.
->
-> Normally we would suggest 2048-bit, but the Raspberry Pi is a little underpowered :\) It takes fooorrrreevverrr just to generate the 2048-bit file.
+We have configured access on the LAN 192.168.1.1/24, which may need to be altered for your subnet.
 
 ## Configuration
-
-We will enable a global redirect from HTTP -&gt; HTTPS `/etc/nginx/sites-available/default.conf`
-
-```nginx
-# Redirect all HTTP -> HTTPS
-server {
-    listen [::]:80 default_server ipv6only=off;
-
-    # Redirect all HTTP requests to HTTPS with a 301 Moved Permanently response.
-    return 301 https://$host$request_uri;
-}
-```
 
 We will add a couple of useful configuration helpers inside `/etc/nginx/conf.d/`
 
@@ -152,7 +157,21 @@ We will modify `/etc/nginx/nginx.conf` slightly.
 
 Also: Add ``tcpnopush on; under `sendfile on` This is an optimisation.``
 
-## LAN-specific Configuration
+### Passwords
+
+We will set up a username/passwords for services that don't manage it themselves. We will create the admin username/password
+
+```console
+sudo mkdir /etc/nginx/auth
+sudo chown root:http /etc/nginx/auth
+sudo chmod 0750 /etc/nginx/auth
+
+echo "admin:"(openssl passwd -apr1) | sudo tee --append /etc/nginx/auth/admin > /dev/null
+sudo chown root:http /etc/nginx/auth/admin
+sudo chmod 0640 /etc/nginx/auth/admin
+```
+
+### LAN-specific Configuration
 
 LAN applications will be served at `piserver.local`. TLS encryption will be done with self-signed certificate which must be installed on your devices.
 
@@ -187,7 +206,7 @@ sudo trust extract-compat
 sudo update-ca-certificates
 ```
 
-## Internet-specific Configuration
+### Internet-specific Configuration
 
 WWW applications will be served at `<DOMAIN>`. TLS encryption will be done using [Letsencrypt](https://letsencrypt.org/) which provides free certificates.
 
@@ -198,6 +217,7 @@ We do not backup the self-signed certificate.
 ```
     /etc/tmpfiles.d/ \
     /etc/nginx/nginx.conf \
+    /etc/nginx/auth/ \
     /etc/nginx/conf.d/ \
     /etc/nginx/snippets/ \
     /etc/nginx/sites-available/ \
@@ -248,6 +268,9 @@ We configure `/etc/nginx/sites-available/netdata.conf`
 # netdata.conf
 
 location /netdata/api/ {
+    auth_basic "netdata";
+    auth_basic_user_file auth/admin;
+
     proxy_pass http://unix:///run/netdata-http/netdata.sock:/api/;
     proxy_http_version 1.1;
 
@@ -265,6 +288,9 @@ location /netdata/api/ {
 }
 
 location /netdata/ {
+    auth_basic "netdata";
+    auth_basic_user_file "auth/admin";
+
     alias /usr/share/netdata/web/;
     disable_symlinks if_not_owner;  # Extra-security
     gzip_static on;
