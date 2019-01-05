@@ -39,28 +39,26 @@ http {
     default_type  application/octet-stream;
 
     sendfile        on;
-    tcp_nopush      on; 
-    tcp_nodelay     on; 
+    tcp_nopush      on;
+    tcp_nodelay     on;
 
-    keepalive_timeout  65; 
+    keepalive_timeout  65;
 
     include /etc/nginx/conf.d/*.conf;
 
-    # Redirect all HTTP -> HTTPS
-    server {
-        listen [::]:80 default_server ipv6only=off;
-        return 301 https://$host$request_uri;
-    }
-    
-    # Nginx Stats Server
-    server {
-        listen 127.0.0.1:80;
-        server_name 127.0.0.1;
+    server {                                                                                                                                                                                                                                                                              
+        listen [::]:80 ipv6only=off;                                                                                                                                                                                                                                                      
 
-        location /nginx_status {
+        # Nginx stats server
+        location = /nginx_status {
             stub_status on;
             allow 127.0.0.1;
             deny all;
+        }
+
+        # Redirect all other HTTP -> HTTPS
+        location / {
+            return 301 https://$host$request_uri;
         }
     }
 
@@ -70,11 +68,8 @@ http {
         deny all;
         server_name piserver.local;
 
-        allow 192.168.1.1/24;
-
-        allow 192.168.1.1/24;
         include snippets/self-signed-cert.conf;
-        include /etc/nginx/locations-enabled-lan/*.conf;
+        include locations-enabled-lan/*.conf;
     }
 }
 ```
