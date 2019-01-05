@@ -234,7 +234,9 @@ These temporary files are normally created on boot, but we will manually refresh
 
 ```ini
 [Service]
-ExecStartPost=/usr/bin/chmod 0770 /run/netdata-http/netdata.sock
+# Netdata could take a second to create the socket
+ExecStartPost=/usr/bin/sleep 1
+ExecStartPost=/usr/bin/chmod 0660 /run/netdata-http/netdata.sock
 ExecStartPost=/usr/bin/chown :http /run/netdata-http/netdata.sock
 ```
 
