@@ -278,6 +278,8 @@ location /netdata/ {
 ```console
 sudo ln -s /etc/nginx/locations-available/netdata.conf /etc/nginx/locations-enabled-lan/
 sudo systemctl reload nginx
+cd /usr/share/netdata/web
+sudo find -L . -type f ! -iname "*.gz" ! -iname "*.png" ! -iname "*.jpg" ! -iname "*.jpeg" ! -iname "*.gif" ! -iname "*.webp" ! -iname "*.heif" -exec gzip --best -kf "{}" \;
 ```
 
 ### Transmission
