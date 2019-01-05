@@ -17,8 +17,8 @@ We can use Nginx to serve other applications that we have set up using TLS encry
 ```
 sudo pacmatic -S --needed nginx
 sudo openssl dhparam -out /etc/ssl/certs/dhparam.pem 2048 creates=/etc/ssl/certs/dhparam.pem
-sudo mkdir /etc/nginx/sites-available
-sudo mkdir /etc/nginx/sites-enabled
+sudo mkdir /etc/nginx/locations-available
+sudo mkdir /etc/nginx/locations-available-lan
 ```
 
 > We generate fresh Diffie-Hellman parameters. This is an important security step, though it takes a while.
@@ -76,7 +76,7 @@ http {
 
 This allows us to configure each application as its own component.
 
-We have configured access on the LAN 192.168.1.1/24, which may need to be altered for your subnet. If you have IPv6 addresses, you will need to figure out the subnet for it, e.g. `allow fdaa:bbcc:ddee:0::/48;`. You can list your ip addresses with `ip addr list`.
+We have configured access on the LAN 192.168.1.1/24, which may need to be altered for your subnet. If you have IPv6 addresses, you will need to figure out the subnet for it, e.g. `allow fdaa:bbcc:ddee:0::/48;`. You can list your ip addresses with `ip addr list`. \(For IPv6 you could use `fd00::/8` which is all of the private \(LAN\) addresses/subnets/networks. All. Of. Them.\)
 
 ## Configuration
 
@@ -172,13 +172,13 @@ LAN applications will be served at `piserver.local`. TLS encryption will be done
 
 The most significant field is Common Name \(CN\) which should be set to `piserver.local`.
 
-```
+```console
 sudo openssl req -x509 -nodes -days 3650 -newkey rsa:2048 -keyout /etc/ssl/private/nginx-selfsigned.key -out /etc/ssl/certs/nginx-selfsigned.crt
 ```
 
 We create a `/etc/nginx/snippets/self-signed-cert.conf`
 
-```
+```nginx
 ssl_certificate /etc/ssl/certs/nginx-selfsigned.crt;
 ssl_certificate_key /etc/ssl/private/nginx-selfsigned.key;
 ```
@@ -189,7 +189,7 @@ Install the crt on your devices...
 
 Linux:
 
-```
+```console
 scp piserver.local:/etc/ssl/certs/nginx-selfsigned.crt ~
 sudo chmod 644 nginx-selfsigned.crt
 sudo mv nginx-selfsigned.crt /usr/share/ca-certificates/trust-source/anchors/piserver-selfsigned.crt
@@ -215,8 +215,8 @@ We do not backup the self-signed certificate.
     /etc/nginx/auth/ \
     /etc/nginx/conf.d/ \
     /etc/nginx/snippets/ \
-    /etc/nginx/sites-available/ \
-    /etc/nginx/sites-enabled/ \
+    /etc/nginx/locations-available/ \
+    /etc/nginx/locations-enabled-lan/ \
 ```
 
 ### Restore
@@ -229,7 +229,7 @@ Gzip files again for each application again.
 
 ### Netdata
 
-We [**configured Netdata**](/system-monitoring-netdata.md) to listen on `localhost:19999` but it would be useful for it to be [accessible over the LAN](https://docs.netdata.cloud/docs/running-behind-nginx/) on `piserver.local/netdata`. It does not have any authentication built-in, so we will set up a username/password with Nginx.
+We [**configured Netdata**](/system-monitoring-netdata.md) to listen on `localhost:19999` but it would be useful for it to be [accessible over the LAN](https://docs.netdata.cloud/docs/running-behind-nginx/) on `piserver.local/netdata`. It does not have any authentication built-in, so we will set up HTTP basic authentication via Nginx.
 
 We configure netdata to listen on a secure Unix socket only accessible to Nginx via the `http` group by modifying `/etc/netdata/netdata.conf`
 
@@ -255,9 +255,9 @@ ExecStartPost=/usr/bin/chmod 0660 /run/netdata-http/netdata.sock
 ExecStartPost=/usr/bin/chown :http /run/netdata-http/netdata.sock
 ```
 
-We setup a username and password using
+We previously configured an admin username/password, which we will re-use here.
 
-We configure `/etc/nginx/sites-available/netdata.conf`
+We configure `/etc/nginx/locations-available/netdata.conf`
 
 ```nginx
 # netdata.conf
@@ -297,6 +297,8 @@ location /netdata/ {
 ```
 
 > The trailing : separates the path of the unix socket. The trailing slash in proxy\_pass effectively removes our /netdata/ sub-path from the URL that we send to netdata.
+
+Start and optimise:
 
 ```console
 sudo ln -s /etc/nginx/locations-available/netdata.conf /etc/nginx/locations-enabled-lan/
