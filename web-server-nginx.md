@@ -245,8 +245,8 @@ We configure `/etc/nginx/sites-available/netdata.conf`
 ```nginx
 # netdata.conf
 
-location /netdata/ {
-    proxy_pass http://unix:///run/netdata-http/netdata.sock:/;
+location /netdata/api/ {
+    proxy_pass http://unix:///run/netdata-http/netdata.sock:/api/;
     proxy_http_version 1.1;
 
     proxy_set_header Host $host;
@@ -260,6 +260,16 @@ location /netdata/ {
     proxy_hide_header X-Content-Type-Options;
     proxy_hide_header X-Frame-Options;
     proxy_hide_header X-XSS-Protection;
+}
+
+location /netdata/ {
+    alias /usr/share/netdata/weebb/;
+    disable_symlinks if_not_owner;  # Extra-security
+    gzip_static on;
+
+    access_log off;
+    open_file_cache         max=100;
+    open_file_cache_errors  on;
 }
 ```
 
