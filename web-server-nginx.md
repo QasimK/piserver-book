@@ -76,7 +76,7 @@ http {
 
 This allows us to configure each application as its own component.
 
-We have configured access on the LAN 192.168.1.1/24, which may need to be altered for your subnet.
+We have configured access on the LAN 192.168.1.1/24, which may need to be altered for your subnet. If you have IPv6 addresses, you will need to figure out the subnet for it, e.g. `allow fdaa:bbcc:ddee:0::/48;`. You can list your ip addresses with `ip addr list`.
 
 ## Configuration
 

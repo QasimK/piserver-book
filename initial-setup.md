@@ -193,6 +193,8 @@ There are further steps that we can take, however they offer increasingly dimini
 
 ...
 
+Or https://firehol.org/
+
 ### umask 027
 
 [https://wiki.archlinux.org/index.php/Umask\#Set\_the\_mask\_value](https://wiki.archlinux.org/index.php/Umask#Set_the_mask_value). However, it might be really inconvenient.
