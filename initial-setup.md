@@ -174,6 +174,16 @@ sudo systemctl enable --now fstrim.timer
 
 > On encrypted file systems, this will leak which areas of the drive are empty.
 
+## Misc
+
+* [ ] Fix network issues reported by netdata:
+
+```
+sudo sysctl -a | grep netdev
+sudo sysctl net.core.netdev_budget=3000
+sudo sysctl net.core.netdev_budget_usecs=4000
+```
+
 ## Simple Outbound Mail
 
 mstmp.
@@ -193,7 +203,7 @@ There are further steps that we can take, however they offer increasingly dimini
 
 ...
 
-Or https://firehol.org/
+Or [https://firehol.org/](https://firehol.org/)
 
 ### umask 027
 
