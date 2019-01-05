@@ -73,13 +73,33 @@ Edit the transmission service `sudo systemctl edit transmission`
 [Unit]
 BindsTo=netns-openvpn@vpn.service
 After=netns-openvpn@vpn.service
+Before=transmission-socket.service
+Wants=transmission-socket.service
 JoinsNamespaceOf=netns@vpn.service
 
 [Service]
 PrivateNetwork=true
+
 ```
 
 Now start the service.
+
+Note to see logs alter override of transmission with the following two extra lines: \(--log-error, --log-info, --log-debug\)
+
+```ini
+[Service]
+ExecStart=
+ExecStart=/usr/bin/transmission-daemon -f --log-debug
+```
+
+If we look at the logs we might see: https://falkhusemann.de/blog/2012/07/transmission-utp-and-udp-buffer-optimizations/
+
+Therefore, we should increase these buffer sizes `sudoedit /etc/sysctl.d/90-transmission-buffer.conf`
+
+```ini
+net.core.rmem_max = 4194304
+net.core.wmem_max = 1048576
+```
 
 ## PiStorage/Torrent
 
@@ -89,7 +109,22 @@ mkfs.f2fs needs benchmarking for optimal settings if you want. Otherwise -d lets
 
 `socat`, like the name suggests, can connect sockets together. A socket could be a TCP socket, a Unix socket, or something else.
 
-We'll create a systemd service that will
+Hmm, maybe just see Nginx?
+
+* [ ] TODO: Change this to TCP localhost:9091
+* [ ] Harden Systemd - Add to Nginx.
+
+```ini
+[Unit]
+Description=Connect Transmission
+BindsTo=transmission.service
+After=transmission.service
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/socat -d UNIX-LISTEN:'/run/transmission.sock,mode=0770,group=http,fork' exec:'ip netns exec vpn "socat STDIO TCP-CONNECT:127.0.0.1:9091,nodelay",nofork,pipes'                                 
+Restart=on-failure
+```
 
 ## Port Fowarding
 
