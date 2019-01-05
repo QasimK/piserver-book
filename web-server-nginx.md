@@ -1,5 +1,7 @@
 # Web Server \(with Nginx\)
 
+> We note that `listen [::]:443 ssl http2 ipv6only=off;` is currently buggy ~2019.
+
 A web server allows us to securely host web applications over the internet, or on the local LAN.
 
 We can use Nginx to serve other applications that we have set up using TLS encryption over the local network and/or over the internet on our domain. In addition, we can set up basic username/password authentication for any web services without authentication \(e.g. [**System Monitoring \(Netdata\)**](/system-monitoring-netdata.md)\).
@@ -19,8 +21,7 @@ sudo mkdir /etc/nginx/sites-enabled
 
 Edit `/etc/nginx/nginx.conf`
 
-```ini
-#user html;
+```nginx
 worker_processes  1;  
 
 events {
@@ -32,15 +33,34 @@ http {
     default_type  application/octet-stream;
 
     sendfile        on;
-    tcp_nopush      on;
-    tcp_nodelay     on;
+    tcp_nopush      on; 
+    tcp_nodelay     on; 
 
-    keepalive_timeout  65;
+    keepalive_timeout  65; 
 
     include /etc/nginx/conf.d/*.conf;
-    include sites-enabled/*;
+
+    # Redirect all HTTP -> HTTPS
+    server {
+        listen [::]:80 default_server ipv6only=off;
+
+        # Redirect all HTTP requests to HTTPS with a 301 Moved Permanently response.
+        return 301 https://$host$request_uri;
+    }
+
+    server {
+        listen [::]:443 ssl http2 ipv6only=off;
+        server_name piserver.local;
+        charset utf-8;
+
+        include snippets/self-signed-cert.conf;
+
+        include /etc/nginx/locations-enabled-lan/*.conf;
+    }   
 }
 ```
+
+This allows us to configure each application as its own component.
 
 > We generate fresh Diffie-Hellman parameters. This is an important security step, though it takes a while.
 >
@@ -176,6 +196,7 @@ WWW applications will be served at `<DOMAIN>`. TLS encryption will be done using
 We do not backup the self-signed certificate.
 
 ```
+    /etc/tmpfiles.d/ \
     /etc/nginx/nginx.conf \
     /etc/nginx/conf.d/ \
     /etc/nginx/snippets/ \
@@ -191,70 +212,109 @@ Gzip files again for each application again.
 
 ## Applications
 
+### Netdata
+
+We [**configured Netdata**](/system-monitoring-netdata.md) to listen on `localhost:19999` but it would be useful for it to be [accessible over the LAN](https://docs.netdata.cloud/docs/running-behind-nginx/) on `piserver.local/netdata`. It does not have any authentication built-in, so we will set up a username/password with Nginx.
+
+We configure netdata to listen on a secure Unix socket only accessible to Nginx via the `http` group by modifying `/etc/netdata/netdata.conf`
+
+```ini
+[web]
+    bind to = unix:/run/netdata-http/netdata.sock
+```
+
+Modify the systemd service to allow Nginx to read the file and also for netdata to write to the file, `sudoedit /etc/tmpfiles.d/netdata.conf`
+
+```
+# Type  Path                    Mode UID     GID     Age     Argument
+d       /run/netdata-http       0750 netdata http    -       -
+```
+
+These temporary files are normally created on boot, but we will manually refresh with `sudo systemd-tmpfiles --create`
+
+```ini
+[Service]
+ExecStartPost=/usr/bin/chmod 0770 /run/netdata-http/netdata.sock
+ExecStartPost=/usr/bin/chown :http /run/netdata-http/netdata.sock
+```
+
+We setup a username and password using
+
+We configure `/etc/nginx/sites-available/netdata.conf`
+
+```nginx
+# netdata.conf
+
+location /netdata/ {
+    proxy_pass http://unix:///run/netdata-http/netdata.sock:/;
+    proxy_http_version 1.1;
+
+    proxy_set_header Host $host;
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header X-Forwarded-Host $server_name;
+    proxy_set_header X-Forwarded-Proto $scheme;
+    proxy_set_header X-Forwarded-Port $server_port;
+    # Correct handling of fallbacks for security headers
+    proxy_hide_header Referrer-Policy;
+    proxy_hide_header X-Content-Type-Options;
+    proxy_hide_header X-Frame-Options;
+    proxy_hide_header X-XSS-Protection;
+}
+```
+
+> The trailing : separates the path of the unix socket. The trailing slash in proxy\_pass effectively removes our /netdata/ sub-path from the URL that we send to netdata.
+
+```console
+sudo ln -s /etc/nginx/locations-available/netdata.conf /etc/nginx/locations-enabled-lan/
+sudo systemctl reload nginx
+```
+
 ### Transmission
 
-We [**configured transmission**](/torrent-transmission.md) to run a web socket to `/run/transmission.sock`.
+We [**configured Transmission**](/torrent-transmission.md) to run a web socket to `/run/transmission.sock`
 
 ```nginx
 # transmission.conf
 
-upstream transmission {
-    server unix:/run/transmission.sock;
+location ~ ^/transmission/web/(style|images|javascript)/ {
+    root /usr/share/;
+    disable_symlinks if_not_owner;  # Extra-security
+    gzip_static on;
+
+    access_log off;
+    open_file_cache         max=100;
+    open_file_cache_errors  on;
 }
 
-server {
-    listen 443 ssl http2  i;
-    listen [::]:443 ssl http2;
-    server_name piserver.local;
-    charset utf-8;
+location ~* ^/transmission/?$ {
+    return 301 https://$server_name/transmission/web/;
+}
 
-    # Check if this certificate is really served for this server_name
-    # http://serverfault.com/questions/578648/properly-setting-up-a-default-nginx-server-for-https
-    if ($host != $server_name) {
-        return 444;
-    }
+location ~ ^/transmission/ {
+    proxy_pass http:///unix:/run/transmission.sock;
+    proxy_redirect http://127.0.0.1:9091 https://piserver.local;
+    proxy_read_timeout 60;
+    proxy_http_version 1.1;
 
-    include snippets/self-signed-cert.conf;
-
-    location ~ ^/transmission/web/(style|images|javascript)/ {
-        root /usr/share/;
-        disable_symlinks if_not_owner;  # Extra-security
-        gzip_static on; 
-
-        access_log off;
-        open_file_cache         max=100;
-        open_file_cache_errors  on; 
-    }
-
-    location ~ ^/transmission/ {
-        proxy_pass http://transmission;
-        proxy_redirect http://127.0.0.1:9091 https://piserver.local;
-        proxy_read_timeout 60; 
-        proxy_http_version 1.1;
-
-        proxy_set_header Host $host;
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Host $server_name;
-        proxy_set_header X-Forwarded-Proto $scheme;
-        proxy_set_header X-Forwarded-Port $server_port;
-        # Correct handling of fallbacks for HTTP headers
-        proxy_hide_header Referrer-Policy;
-        proxy_hide_header X-Content-Type-Options;
-        proxy_hide_header X-Frame-Options;
-        proxy_hide_header X-XSS-Protection;
-    }
-
-    location ~* ^/transmission/?$ {
-        return 301 https://$server_name/transmission/web/;
-    }
+    proxy_set_header Host $host;
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header X-Forwarded-Host $server_name;
+    proxy_set_header X-Forwarded-Proto $scheme;
+    proxy_set_header X-Forwarded-Port $server_port;
+    # Correct handling of fallbacks for HTTP headers
+    proxy_hide_header Referrer-Policy;
+    proxy_hide_header X-Content-Type-Options;
+    proxy_hide_header X-Frame-Options;
+    proxy_hide_header X-XSS-Protection;
 }
 ```
 
 Start & Optimise:
 
 ```console
-ln -s /etc/nginx/sites-available/transmission.conf /etc/nginx/sites-enabled/transmission.conf
+ln -s /etc/nginx/locations-available/transmission.conf /etc/nginx/locations-enabled-lan/
 sudo find -L . -type f ! -iname "*.gz" ! -iname "*.png" ! -iname "*.jpg" ! -iname "*.jpeg" ! -iname "*.gif" ! -iname "*.webp" ! -iname "*.heif" -exec gzip --best -kf "{}" \;
 ```
 
