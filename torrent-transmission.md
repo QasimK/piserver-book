@@ -79,20 +79,20 @@ JoinsNamespaceOf=netns@vpn.service
 
 [Service]
 PrivateNetwork=true
-
+EnvironmentFile=/run/openvpn-port-netns-vpn.env
+ExecStart=
+ExecStart=/usr/bin/transmission-daemon --foreground --log-error --peerport ${openport}
 ```
 
 Now start the service.
 
-Note to see logs alter override of transmission with the following two extra lines: \(--log-error, --log-info, --log-debug\)
+Note to see logs alter override of transmission with: \(--log-error, --log-info, --log-debug\)
 
 ```ini
-[Service]
-ExecStart=
-ExecStart=/usr/bin/transmission-daemon -f --log-debug
+ExecStart=/usr/bin/transmission-daemon --foreground --log-debug --peerport ${openport}
 ```
 
-If we look at the logs we might see: https://falkhusemann.de/blog/2012/07/transmission-utp-and-udp-buffer-optimizations/
+If we look at the logs we might see: [https://falkhusemann.de/blog/2012/07/transmission-utp-and-udp-buffer-optimizations/](https://falkhusemann.de/blog/2012/07/transmission-utp-and-udp-buffer-optimizations/)
 
 Therefore, we should increase these buffer sizes `sudoedit /etc/sysctl.d/90-transmission-buffer.conf`
 
@@ -129,6 +129,8 @@ Restart=on-failure
 ## Port Fowarding
 
 The torrent client can seed much more effectively  if you have an open port that allows new, incoming connections from other peers.
+
+...
 
 ## Remote File Access
 
