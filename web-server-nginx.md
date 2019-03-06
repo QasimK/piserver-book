@@ -1,5 +1,7 @@
 # Web Server \(with Nginx\)
 
+> WARNING: This page currently uses a single \(sub\)domain across all services. But this is not necessarily secure, and I will revert to using separate sites.
+>
 > We note that `listen [::]:443 ssl http2 ipv6only=off;` is currently buggy ~2019.
 
 A web server allows us to securely host web applications over the internet, or on the local LAN.
