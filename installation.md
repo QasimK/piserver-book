@@ -24,6 +24,7 @@ Encryption is tricky because you'll need to physically enter the password if you
 
 **Encryption after SSH? **Worth looking into:
 
+* [https://gist.github.com/gea0/4fc2be0cb7a74d0e7cc4322aed710d38](https://gist.github.com/gea0/4fc2be0cb7a74d0e7cc4322aed710d38)
 * [http://blog.nguyenvq.com/blog/2011/09/13/remote-unlocking-luks-encrypted-lvm-using-dropbear-ssh-in-ubuntu/](http://blog.nguyenvq.com/blog/2011/09/13/remote-unlocking-luks-encrypted-lvm-using-dropbear-ssh-in-ubuntu/)
 * [https://security.stackexchange.com/q/46548](https://security.stackexchange.com/q/46548)
 * [https://esther.codes/post-cryptsetup\_raspberry/](https://esther.codes/post-cryptsetup_raspberry/)
