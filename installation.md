@@ -35,6 +35,10 @@ Encryption is tricky because you'll need to physically enter the password if you
 
 > Note: `badblocks -wsv /dev/...` can be used to check each storage device you are using is okay.
 
+### Steps
+
+1. Follow the instructions on the wiki page, using 250 MB for boot, 16 GB for root, and keeping the rest as spare.
+2. 
 ### Hardware Optimisation
 
 #### Raspberry Pi 3
@@ -83,4 +87,12 @@ Note LVM can actually raid, but the tooling is more opaque and there is less com
 Well we're using Arch, so why not a slightly dodgy filesystem? It has cool features like copy-on-write, snapshots, fast backups, and... RAID5 corrupting your data.
 
 [https://github.com/NicoHood/NicoHood.github.io/wiki/Raspberry-Pi-Encrypted-Btrfs-Root](https://github.com/NicoHood/NicoHood.github.io/wiki/Raspberry-Pi-Encrypted-Btrfs-Root)
+
+### f2fs
+
+f2fs encryption info: https://www.kernel.org/doc/html/v4.15/filesystems/fscrypt.html
+
+Per-Directory. Encrypt file + filename. Not file size, timestamps, permissions, extended attributes. Uses fscrypt, kernel-tool.
+
+
 
