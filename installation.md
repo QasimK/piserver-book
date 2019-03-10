@@ -12,7 +12,7 @@ The initial installation is carried out on our computer following the correct va
 
 * [Raspberry Pi](https://archlinuxarm.org/platforms/armv6/raspberry-pi)
 * [Raspberry Pi 2](https://archlinuxarm.org/platforms/armv7/broadcom/raspberry-pi-2)
-* [Raspberry Pi 3](https://archlinuxarm.org/platforms/armv8/broadcom/raspberry-pi-3)
+* [Raspberry Pi 3](https://archlinuxarm.org/platforms/armv8/broadcom/raspberry-pi-3) \(or, the ARMv7 instructions for the Raspberry Pi 2 may also be followed\)
 
 See [_File System Variations_](#file-system-variations). It's easier to vary this now rather than later.
 
