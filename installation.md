@@ -34,12 +34,13 @@ Encryption is tricky because you'll need to physically enter the password if you
 **Create an image for easy future use... \(after initial setup... hmm\)**
 
 > Note: `badblocks -wsv /dev/...` can be used to check each storage device you are using is okay.
+>
+> **WARNING** -w = destructive read-write test.
 
 ### Steps
 
 1. Follow the instructions on the wiki page, using 250 MB for boot, 16 GB for root, and keeping the rest as spare.
-2. 
-### Hardware Optimisation
+2. ### Hardware Optimisation
 
 #### Raspberry Pi 3
 
@@ -90,9 +91,7 @@ Well we're using Arch, so why not a slightly dodgy filesystem? It has cool featu
 
 ### f2fs
 
-f2fs encryption info: https://www.kernel.org/doc/html/v4.15/filesystems/fscrypt.html
+f2fs encryption info: [https://www.kernel.org/doc/html/v4.15/filesystems/fscrypt.html](https://www.kernel.org/doc/html/v4.15/filesystems/fscrypt.html)
 
 Per-Directory. Encrypt file + filename. Not file size, timestamps, permissions, extended attributes. Uses fscrypt, kernel-tool.
-
-
 
