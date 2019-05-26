@@ -36,6 +36,10 @@ Encryption is tricky because you'll need to physically enter the password if you
 > Note: `badblocks -wsv /dev/...` can be used to check each storage device you are using is okay.
 >
 > **WARNING** -w = destructive read-write test.
+>
+> List bad blocks: `dumpe2fs -b /dev/sdX1`
+>
+> Find new bad blocks: `fsck -vcck /dev/sdX1`
 
 ### Steps
 
