@@ -174,6 +174,26 @@ sudo systemctl enable --now fstrim.timer
 
 > On encrypted file systems, this will leak which areas of the drive are empty.
 
+### SD Card Longevity
+
+Figure out writes with: `iotop -bktoqqq`
+
+Flash NAND storage has limited write durability. Note: even a tiny 1 byte write can cause an entire erase-block \(maybe 2MB\) to be re-written.
+
+mount with = noatime, lazytime
+
+Don't do this: Because /var/tmp is across reboots: Mount tmp in 50MB RAM: `tmpfs /var/tmp tmpfs nodev,nosuid,size=50M 0 0`
+
+Keep swap off.
+
+Consider tmpfs for `/var/log`, `/var/cache/samba`
+
+Consider mount option `commit=1800`.
+
+Leave plenty of free space for wear-levelling.
+
+TODO: Systemd write-batching, and log file size limit.
+
 ## Misc
 
 * [ ] Fix network issues reported by netdata:
