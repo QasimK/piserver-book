@@ -53,7 +53,7 @@ The initial installation onto these devices will be different, but after that it
 
 We don't worry about physical security too much as the Raspberry Pi is not well-suited for this. It does not have a TPM or other forms of boot-time protection, so we are limited in how far we can go if the device is powered off \(perhaps you could try to monitor for those events\).
 
-However, it is possible to upgrade the physical security \(i.e. when they can hold the device\) from "someone can copy the data from the attached storage devices without me knowing/just straight up steal the device" to "someone can modify the Pi without me knowing aboutit to steal my encryption password". The latter reduces certain opportunistic attacks.
+However, it is possible to upgrade the physical security \(i.e. when they can hold the device\) from "someone can copy the data from the attached storage devices without me knowing/just straight up steal the device" to "someone can modify the Pi without me knowing about it to steal my encryption password". The latter reduces certain opportunistic attacks.
 
 * [ ] I would and should encrypt the filesystem at least, but did not originally due to performance concerns, which can be tested.
 * [ ] It's possible to use a small SSH server with the boot loader that lets you decrypt the OS via SSH \(Drop Bear SSH\).
