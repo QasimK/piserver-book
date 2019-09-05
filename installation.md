@@ -62,6 +62,10 @@ dtoverlay=pi3-disable-bt
 # Disable unused HDMI port to save power (undocumented - need source link)
 hdmi_blanking=2
 
+# Improve the boot time
+disable_splash=1
+boot_delay=0
+
 # Reduce minimum frequency of processor (to save power?)
 arm_freq_min=300
 ```
