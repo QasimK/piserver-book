@@ -46,6 +46,8 @@ We install some basic tools:
 * `vim` is the one true text editor.
 
 ```console
+pacman-key --init
+pacman-key --populate archlinuxarm
 pacman -Syu --needed sudo pacmatic vim
 ```
 
@@ -82,8 +84,10 @@ The only way to login as root is to switch to it with `sudo su - root`.
 
 We set a hostname, and our locale. We may also set a non-UTC timezone if we like that kind of thing for our servers.
 
-```
+```console
+# Modify the file to select your locale
 vim /etc/locale.gen
+
 locale-gen
 localectl set-locale <LOCALE>
 
