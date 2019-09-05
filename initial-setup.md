@@ -44,12 +44,12 @@ We install some basic tools:
 * `sudo` is used for security, allowing us to execute root commands without logging in as root.
 * `pacmatic` is a simple wrapper around `pacman` which can give warnings when doing system upgrades.
 * `vim` is the one true text editor.
-* `htop` is an excellent, basic monitoring tool
+* `htop` is an excellent, intuitive monitoring tool.
 
 ```console
 pacman-key --init
 pacman-key --populate archlinuxarm
-pacman -Syu --needed sudo pacmatic vim
+pacman -Syu --needed sudo pacmatic vim htop
 ```
 
 We create our adminstrative user and set its password, substituting `<YOU>` for the username we like the most
@@ -126,8 +126,6 @@ chsh -s /usr/bin/fish $USER
 ## SSH
 
 Change port to 22, forbid root, etc. etc.
-
-
 
 ## System
 
