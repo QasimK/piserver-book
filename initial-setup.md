@@ -22,12 +22,12 @@ Substituting in the IP address of the Raspberry Pi. We could:
 
 ## Users and Sudo
 
-The system comes with two users:
+The Arch Linux ARM OS comes with two users:
 
 * `root` with password `root` \(the super-user\), and
 * `alarm` with password `alarm`.
 
-This is insecure, so we will remove access to both accounts.
+This is very easy to use but ultimately insecure, so we will remove access to both accounts.
 
 We need to SSH into the piserver and switch to the root account.
 
