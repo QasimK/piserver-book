@@ -102,7 +102,7 @@ echo "KEYMAP=uk" | sudo tee /etc/vconsole.conf
 sudo timedatectl set-timezone $(tzselect)
 ```
 
-* The keymap is useful if you ever need to plug in a keyboard.
+Setting the keymap now is helpful if you ever need to plug in a keyboard.
 
 ### Personal Preferences \(Completely Optional\)
 
