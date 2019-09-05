@@ -14,10 +14,11 @@ Host piserver
 Substituting in the IP address of the Raspberry Pi. We could:
 
 * Try lots of random IP addresses until we find the right one \(they're usually `192.168.1.x`, and we can `ping` to narrow down the list\),
+* Search for machines with `nmap 192.168.1.0/24 -sL | grep pi`
 * Use the MAC address on the Raspberry Pi obtained from `ip link list` and look at the list of devices on our DHCP server \(i.e. our router\),
 * Set a static IP address on the Raspberry Pi,
 * Set a static IP address for the Raspberry Pi on our DHCP server,
-* Set up [**Service Discovery \(Avahi\)**](/service-discovery-avahi.md) so that we can set `HostName piserver.local` which works no matter what IP address the router has.
+* Set up [**Service Discovery \(Avahi\)**](/service-discovery-avahi.md) so that we can set `HostName piserver.local` which works no matter what IP address the was given to the RPi from the DHCP server.
 
 ## Users and Sudo
 
