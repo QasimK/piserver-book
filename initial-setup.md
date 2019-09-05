@@ -44,6 +44,7 @@ We install some basic tools:
 * `sudo` is used for security, allowing us to execute root commands without logging in as root.
 * `pacmatic` is a simple wrapper around `pacman` which can give warnings when doing system upgrades.
 * `vim` is the one true text editor.
+* `htop` is an excellent, basic monitoring tool
 
 ```console
 pacman-key --init
@@ -51,10 +52,11 @@ pacman-key --populate archlinuxarm
 pacman -Syu --needed sudo pacmatic vim
 ```
 
-We create our adminstrative user, substiting `<YOU>` for the username we like the most
+We create our adminstrative user and set its password, substituting `<YOU>` for the username we like the most
 
 ```console
 useradd --groups wheel --create-home <YOU>
+passwd <YOU>
 ```
 
 We give the adminstrative group `wheel` sudo privileges by properly using `visudo -f /etc/sudoers.d/wheel`
@@ -66,7 +68,7 @@ We give the adminstrative group `wheel` sudo privileges by properly using `visud
 We add our SSH key
 
 ```console
-ssh-copy-id
+ssh-copy-id <YOU>@piserver
 ```
 
 Now we should logout, and SSH in as our new user to test everything is working.
@@ -85,20 +87,20 @@ The only way to login as root is to switch to it with `sudo su - root`.
 We set a hostname, and our locale. We may also set a non-UTC timezone if we like that kind of thing for our servers.
 
 ```console
-# Modify the file to select your locale
-vim /etc/locale.gen
+sudo hostnamectl set-hostname piserver
 
-locale-gen
-localectl set-locale <LOCALE>
+# Set the locale - view a list of locales with:
+# cat /etc/locale.gen
+sudo localectl set-locale LANG=en_GB.UTF-8
+sudo locale-gen
 
-hostnamectl set-hostname piserver
+# Set the timezone
+sudo timedatectl set-timezone $(tzselect)
 
-timedatectl set-timezone $(tzselect)
+# Set the keymap - view a list of keymaps with:
+# ls /usr/share/kbd/keymaps/**/*.map.gz
+echo "KEYMAP=uk" | sudo tee /etc/vconsole.conf
 ```
-
-* [ ] [https://wiki.archlinux.org/index.php/Installation\_guide\#Localization](https://wiki.archlinux.org/index.php/Installation_guide#Localization)
-* [ ] Font & Keymap
-* [ ] Does /etc/hosts need to be updated, or does hostnamectl do it?
 
 ### Personal Preferences
 
