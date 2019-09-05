@@ -125,7 +125,23 @@ chsh -s /usr/bin/fish $USER
 
 ## SSH
 
-Change port to 22, forbid root, etc. etc.
+We can make SSH more secure with some minor tweaks using `sudoedit /etc/ssh/sshd_config`.
+
+```
+PermitRootLogin no
+AllowGroups wheel
+PasswordAuthentication no
+AllowGroups wheel
+```
+
+> Ensure you used ssh-copy-id to copy over your SSH key before enabling `PasswordAuthentication no`
+
+Then, we can test our changes are valid and restart the service:
+
+```console
+sudo sshd -T
+sudo systemctl reload sshd
+```
 
 ## System
 
