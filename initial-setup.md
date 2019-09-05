@@ -17,7 +17,7 @@ Substituting in the IP address of the Raspberry Pi. We could:
 * Search for machines with `nmap 192.168.1.0/24 -sL | grep pi`
 * Use the MAC address on the Raspberry Pi obtained from `ip link list` and look at the list of devices on our DHCP server \(i.e. our router\),
 * Set a static IP address on the Raspberry Pi with `ip addr add`,
-* Set a static IP address for the Raspberry Pi on our DHCP server,
+* Set a static IP address for the Raspberry Pi on our DHCP server, or
 * Set up [**Service Discovery \(Avahi\)**](/service-discovery-avahi.md) so that we can `ssh piserver.local` which works no matter what IP address the was given to the RPi from the DHCP server.
 
 ## Users and Sudo
@@ -226,7 +226,7 @@ We can mount the filesystem to reduce metadata writes with `noatime` and `lazyti
 In addition to this, we can add a more dangerous mount option `commit=3600`. This batches up all writes to the storage to commit every hour. Generally, this should not be used if you are storing or modifying any files on the RPi—which is certainly the case for our PiServer.
 
 > Check the validity of `/etc/fstab` with `sudo mount -a`.
-
+>
 > We can commit all changes to the filesystem using `sync`.
 
 #### Journaling Options
