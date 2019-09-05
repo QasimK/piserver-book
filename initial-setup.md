@@ -211,7 +211,7 @@ Flash NAND storage has limited write durability. This can be worse than we think
 
 In general, leaving plenty of free space allows wear-levelling to function more effectively and increases the speed of the storage.
 
-We can figure out what is writing to the disk with `iotop -bktoqqq`.
+We can figure out what is writing to the disk with `sudo iotop -bktoqqq`.
 
 #### Filesystem Options
 
