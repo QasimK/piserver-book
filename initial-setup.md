@@ -133,9 +133,9 @@ AllowGroups wheel
 PasswordAuthentication no
 ```
 
-> Ensure you used ssh-copy-id to copy over your SSH key before enabling `PasswordAuthentication no`
+> Ensure you used `ssh-copy-id` to copy over your SSH key before enabling `PasswordAuthentication no` or else you will lose SSH access to the RPi.
 
-Then, we can test our changes are valid and restart the service:
+Then, we can test our changes are valid and reload the service to pick up the new config:
 
 ```console
 sudo sshd -T
