@@ -208,23 +208,52 @@ sudo systemctl enable --now fstrim.timer
 
 ### SD Card Longevity
 
-Figure out writes with: `iotop -bktoqqq`
+Flash NAND storage has limited write durability. This can be worse than we think since even a tiny 1 byte write can cause an entire erase-block to be re-written, which might be 2 MB.
 
-Flash NAND storage has limited write durability. Note: even a tiny 1 byte write can cause an entire erase-block \(maybe 2MB\) to be re-written.
+In general, leaving plenty of free space allows wear-levelling to function more effectively and increases the speed of the storage.
 
-mount with = noatime, lazytime
+We can figure out what is writing to the disk with `iotop -bktoqqq`.
+
+#### Filesystem Options
+
+We can mount the filesystem to reduce metadata writes with `noatime` and `lazytime`. The former stops writing file access times entirely, and the latter batches all file time updates to every minute.
+
+```
+/dev/mmcblk0p2  /       ext4    rw,noatime,lazytime     0 0
+```
+
+> View existing mounts with their options with `cat /proc/mounts`.
+
+In addition to this, we can add a more dangerous mount option `commit=3600`. This batches up all writes to the storage to commit every hour. Generally, this should not be used if you are storing or modifying any files on the RPi—which is certainly the case for our PiServer.
+
+> Check the validity of `/etc/fstab` with `sudo mount -a`.
+
+#### Journaling Options
+
+The journal size for systemd is 10% of the filesystem, capped at 4 GiB. This is almost certainly fine for most situations, but it can be reduced in order to leave more free space for very small microSD cards.
+
+The journal normally syncs to disk every 5 minutes for non-critical messages, this can be increased to batch up writes further. This is not recommended as it is likely to make debugging more difficult.
+
+```console
+sudo mkdir -p /etc/systemd/journald.conf.d/
+sudoedit /etc/systemd/journald.conf.d/00-journal-sdcard.conf
+```
+
+```ini
+[Journal]
+SystemMaxUse=100M
+SyncIntervalSec=1h
+```
+
+It is also possible to keep log entries entirely in-memory with  `Storage=volatile`, but this is likely to make debugging more difficult.
+
+#### Other Options
+
+We can keep swap disabled both because it is very slow on an RPi, and also because when it is in use it causes a lot of writes.
 
 Don't do this: Because /var/tmp is across reboots: Mount tmp in 50MB RAM: `tmpfs /var/tmp tmpfs nodev,nosuid,size=50M 0 0`
 
-Keep swap off.
-
 Consider tmpfs for `/var/log`, `/var/cache/samba`
-
-Consider mount option `commit=1800`.
-
-Leave plenty of free space for wear-levelling.
-
-TODO: Systemd write-batching, and log file size limit.
 
 ## Misc
 
