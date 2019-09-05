@@ -90,13 +90,13 @@ We set a hostname, locale, keymap, and, if we don't want to use UTC, our local t
 sudo hostnamectl set-hostname piserver
 
 # Set the locale - view a list of locales with:
-# cat /etc/locale.gen
-sudo localectl set-locale LANG=en_GB.UTF-8
+# cat /etc/locale.gen or maybe localectl list-locales
+sudo localectl set-locale en_GB.UTF-8
 sudo locale-gen
 
 # Set the keymap - view a list of keymaps with:
-# ls /usr/share/kbd/keymaps/**/*.map.gz
-echo "KEYMAP=uk" | sudo tee /etc/vconsole.conf
+# localectl list-keymaps
+sudo localectl set-keymap uk
 
 # Optionally, set our local timezone
 sudo timedatectl set-timezone $(tzselect)
