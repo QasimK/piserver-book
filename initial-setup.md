@@ -248,11 +248,11 @@ It is also possible to keep log entries entirely in-memory with  `Storage=volati
 
 #### Other Options
 
-We can keep swap disabled both because it is very slow on an RPi, and also because when it is in use it causes a lot of writes.
+We can keep swap disabled both because it is very slow on an RPi, and also because when it is in-use it causes a lot of writes.
 
-Don't do this: Because /var/tmp is across reboots: Mount tmp in 50MB RAM: `tmpfs /var/tmp tmpfs nodev,nosuid,size=50M 0 0`
+* [ ] Consider setting up a tmpfs for `/var/log`, `/var/cache/samba`.
 
-Consider tmpfs for `/var/log`, `/var/cache/samba`
+I would not recommend doing the following suggestion because `/var/tmp` is supposed to survive reboots: mount `/var/tmp` in-memory with `tmpfs /var/tmp tmpfs nodev,nosuid,size=50M 0 0`.
 
 ## Misc
 
