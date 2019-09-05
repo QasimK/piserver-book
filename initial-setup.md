@@ -227,6 +227,8 @@ In addition to this, we can add a more dangerous mount option `commit=3600`. Thi
 
 > Check the validity of `/etc/fstab` with `sudo mount -a`.
 
+> We can commit all changes to the filesystem using `sync`.
+
 #### Journaling Options
 
 The journal size for systemd is 10% of the filesystem, capped at 4 GiB. This is almost certainly fine for most situations, but it can be reduced in order to leave more free space for very small microSD cards.
