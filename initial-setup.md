@@ -80,7 +80,7 @@ sudo userdel --remove alarm
 sudo passwd --lock root
 ```
 
-The only way to login as root is to switch to it with `sudo su - root`.
+The only way to login as root is to switch to it with `sudo su - root` from your new administrative user account.
 
 ## Hostname, Locale, Keymap, Timezone
 
