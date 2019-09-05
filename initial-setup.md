@@ -131,7 +131,6 @@ We can make SSH more secure with some minor tweaks using `sudoedit /etc/ssh/sshd
 PermitRootLogin no
 AllowGroups wheel
 PasswordAuthentication no
-AllowGroups wheel
 ```
 
 > Ensure you used ssh-copy-id to copy over your SSH key before enabling `PasswordAuthentication no`
