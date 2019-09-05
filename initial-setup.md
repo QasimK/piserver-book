@@ -256,6 +256,14 @@ We can keep swap disabled both because it is very slow on an RPi, and also becau
 
 I would not recommend doing the following suggestion because `/var/tmp` is supposed to survive reboots: mount `/var/tmp` in-memory with `tmpfs /var/tmp tmpfs nodev,nosuid,size=50M 0 0`.
 
+## Boot Time
+
+We can improve the boot time by disabling unnecessary systemd services using `systemd-analyze blame` and `systemd-analyze critical-chain`.
+
+For example, disabling:
+
+* `lvm2-monitor.service`
+
 ## Misc
 
 * [ ] Fix network issues reported by netdata:
