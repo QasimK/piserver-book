@@ -82,9 +82,9 @@ sudo passwd --lock root
 
 The only way to login as root is to switch to it with `sudo su - root`.
 
-## Hostname, Locale, Timezone
+## Hostname, Locale, Keymap, Timezone
 
-We set a hostname, and our locale. We may also set a non-UTC timezone if we like that kind of thing for our servers.
+We set a hostname, locale, keymap, and, if we don't want to use UTC, our local timezone.
 
 ```console
 sudo hostnamectl set-hostname piserver
@@ -94,31 +94,40 @@ sudo hostnamectl set-hostname piserver
 sudo localectl set-locale LANG=en_GB.UTF-8
 sudo locale-gen
 
-# Set the timezone
-sudo timedatectl set-timezone $(tzselect)
-
 # Set the keymap - view a list of keymaps with:
 # ls /usr/share/kbd/keymaps/**/*.map.gz
 echo "KEYMAP=uk" | sudo tee /etc/vconsole.conf
+
+# Optionally, set our local timezone
+sudo timedatectl set-timezone $(tzselect)
 ```
 
-### Personal Preferences
+* The keymap is useful if you ever need to plug in a keyboard.
+
+### Personal Preferences \(Completely Optional\)
 
 * [ ] Move into the appendix and expand out.
 
 Configure `~/.pam_environment` for cross-shell environment variables.
 
-```
+```ini
 VISUAL=/usr/bin/vim
 ```
 
 This is a little more annoying than just using `.bashrc`, but it does let us switch between shells more easily.
 
-Install the fish shell :\)
+Install the [fish shell](https://fishshell.com/) and enable it for our user:
+
+```console
+sudo pacmatic -S --needed fish
+chsh -s /usr/bin/fish $USER
+```
 
 ## SSH
 
 Change port to 22, forbid root, etc. etc.
+
+
 
 ## System
 
