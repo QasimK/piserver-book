@@ -44,13 +44,14 @@ Encryption is tricky because you'll need to physically enter the password if you
 ### Steps
 
 1. Follow the instructions on the wiki page, using 250 MB for boot, 16 GB for root, and keeping the rest as spare.
-2. ### Hardware Optimisation
+
+### Hardware Optimisation and Issues
 
 #### Raspberry Pi 3
 
 Edit `/boot/config.txt`
 
-```
+```ini
 # Reduce memory allocation to unused GPU, increasing RAM available to OS
 gpu_mem=16
 
@@ -66,6 +67,16 @@ arm_freq_min=300
 ```
 
 > Note that the status of the HDMI port can be checked at /opt/vc/bin/tvservice.
+
+#### Booting up with HDMI plugged in
+
+> This likely affects ARMv6 devices including the Raspberry Pi, Raspberry Pi Zero, and Raspberry Pi Zero W.
+
+Some Raspberry Pi boards including the Raspberry Pi Zero W [will not boot up properly](https://www.raspberrypi.org/forums/viewtopic.php?f=28&t=11259) without an HDMI display plugged in. To fix this, add this line to `/boot/config.txt`
+
+```ini
+hdmi_force_hotplug=1
+```
 
 ## File System Variations
 
