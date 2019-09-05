@@ -263,6 +263,7 @@ We can improve the boot time by disabling unnecessary systemd services using `sy
 For example, disabling:
 
 * `lvm2-monitor.service`
+* `lvm2-lvmetad.service`
 
 ## Misc
 
