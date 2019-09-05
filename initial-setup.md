@@ -147,10 +147,10 @@ sudo systemctl reload sshd
 
 ### Time
 
-We enable time synchronisation because it is important for many different services. The built-in systemd-timesyncd service is easy to use.
+We enable time synchronisation because it is important for many different services. The built-in `systemd-timesyncd` service is easy to use.
 
 ```console
-sudo systemctl enable systemd-timesyncd.service
+sudo systemctl enable --now systemd-timesyncd.service
 sudo timedatectl set-ntp true
 ```
 
@@ -160,13 +160,15 @@ Pacman will build up an infinite collection of cached system packages in `/etc/c
 
 Keeping some old versions is useful for the \(very\) rare occasion that you want to downgrade.
 
+Ensure the hooks directory is created `sudo mkdir -p /etc/pacman.d/hooks`.
+
 To remove all versions of an uninstalled package, we `sudoedit /etc/pacman.d/hooks/paccache-remove.hook`
 
 ```ini
 [Trigger]
 Operation = Remove
 Type = Package
-Target = * 
+Target = *
 
 [Action]
 Description = Removing package cache for uninstalled packages...
@@ -180,7 +182,7 @@ To keep the last 3 versions of each package we still have installed, we `sudoedi
 [Trigger]
 Operation = Upgrade
 Type = Package
-Target = * 
+Target = *
 
 [Action]
 Description = Removing old cached packages...
