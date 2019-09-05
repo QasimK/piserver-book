@@ -1,6 +1,6 @@
 # Initial Setup \(Arch Linux\)
 
-> If at any point it is impossible to access your Raspberry Pi, then connect the micro SD card \(containing your operating system\) back to your main computer and edit any files necessary to get it to work again.
+> If at any point it is impossible to access your Raspberry Pi, then connect the micro SD card \(containing your operating system\) back to your main computer and edit any files necessary to get working again.
 
 We can now insert the SD card into the Raspberry Pi, and connect the power \(there is no on/off switch\).
 
