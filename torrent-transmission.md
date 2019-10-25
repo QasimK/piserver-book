@@ -35,7 +35,6 @@ RemainAfterExit=yes
 # Ask systemd to create a network namespace
 PrivateNetwork=yes
 
-
 # Ask ip netns to create a named network namespace
 # (This ensures that things like /var/run/netns are properly setup)
 ExecStart=/sbin/ip netns add %i
