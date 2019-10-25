@@ -85,7 +85,7 @@ ExecStart=/usr/bin/transmission-daemon --foreground --log-error --peerport ${ope
 
 Now start the service.
 
-Note to see logs alter override of transmission with: \(--log-error, --log-info, --log-debug\)
+Note to see logs alter override of transmission with `--log-error`, `--log-info`, or `--log-debug`, for example:
 
 ```ini
 ExecStart=/usr/bin/transmission-daemon --foreground --log-debug --peerport ${openport}
