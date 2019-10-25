@@ -9,7 +9,7 @@ We can set up _systemd_ to notify us by email if it fails. _Systemd_ actually do
 
 We can create the service at `/etc/systemd/system/notify-email@.service`
 
-```
+```ini
 [Unit]
 Description=Send email
 
