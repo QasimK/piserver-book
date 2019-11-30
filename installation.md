@@ -76,7 +76,7 @@ arm_freq_min=300
 
 > This likely affects ARMv6 devices including the Raspberry Pi, Raspberry Pi Zero, and Raspberry Pi Zero W.
 
-Some Raspberry Pi boards including the Raspberry Pi Zero W [will not boot up properly](https://www.raspberrypi.org/forums/viewtopic.php?f=28&t=11259) without an HDMI display plugged in. To fix this, add this line to `/boot/config.txt`
+Some Raspberry Pi boards including the Raspberry Pi Zero W [will not boot up properly](https://www.raspberrypi.org/forums/viewtopic.php?f=28&t=11259) without a HDMI display plugged in. To fix this, add this line to `/boot/config.txt`
 
 ```ini
 hdmi_force_hotplug=1
