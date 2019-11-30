@@ -38,7 +38,7 @@ I personally use a 64GB microSD card and a single compact 64 GB USB flash drive.
 
 The Raspberry Pi is highly IO constrained - both the ethernet and USB devices share the same USB2 Bus \(480Mbps inc. overhead\). SD cards usually have very poor performance for general purpose computing \(they are optimised for reading and writing large files, rather than a lot of random small ones\). Therefore, I recommend using a high quality microSD card. TBD: Does the microSD card share the USB2 Bus?
 
-> The microSD card makes quite a lot of difference. This is good resource for benchmarks: [http://www.pidramble.com/wiki/benchmarks/microsd-cards](http://www.pidramble.com/wiki/benchmarks/microsd-cards)
+> The microSD card makes a big difference. This is good resource for benchmarks: [http://www.pidramble.com/wiki/benchmarks/microsd-cards](http://www.pidramble.com/wiki/benchmarks/microsd-cards)
 >
 > You can benchmark yourself: [https://github.com/geerlingguy/raspberry-pi-dramble/blob/master/setup/benchmarks/microsd-benchmarks.sh](https://github.com/geerlingguy/raspberry-pi-dramble/blob/master/setup/benchmarks/microsd-benchmarks.sh)
 
