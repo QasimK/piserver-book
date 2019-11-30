@@ -19,7 +19,7 @@ We have the following assumptions, but they are not pre-requisites if you're wil
 
 As we are making a Linux server more than using device for hardware or electronics work, we can actually use anything in place of the Raspberry Pi - like an old PC, laptop or another ARM device. We use the Raspberry Pi because it is inexpensive, low-electricity consuming, compact, and has good-enough performance.
 
-We'll stick to a headless server, i.e. without a connected monitor, keyboard or mouse, but stuff works either way.
+We'll stick to a headless server, i.e. without a connected monitor, keyboard or mouse, but everything works either way.
 
 \(We won't worry about Denial of Service attacks from the device itself, e.g. bad users or malware taking up all the disk space or CPU.\)
 
