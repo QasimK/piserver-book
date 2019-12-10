@@ -4,3 +4,5 @@ Pi-Hole will allow us to, optionally, secure the DNS, blocks ads, monitor DNS qu
 
 Unfortunately it doesn't offer DNS-over-TLS or DNS-over-HTTPS out of the box, so we're not gonna bother with it until it does.
 
+https://github.com/notasausage/pi-hole-unbound-wireguard
+
