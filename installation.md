@@ -49,7 +49,7 @@ Encryption is tricky because you'll need to physically enter the password if you
 
 #### Raspberry Pi 3
 
-Edit `/boot/config.txt`
+Edit `/boot/config.txt` with some or all of these options.
 
 ```ini
 # Reduce memory allocation to unused GPU, increasing RAM available to OS
@@ -65,6 +65,8 @@ hdmi_blanking=2
 hdmi_force_hotplug=1
 # Disable DVI mode over HDMI
 hdmi_drive=2
+# Disable overscan for TVs
+disable_overscan=1
 
 # Improve the boot time
 disable_splash=1
