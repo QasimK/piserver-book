@@ -130,6 +130,8 @@ Per-Directory. Encrypt file + filename. Not file size, timestamps, permissions, 
 
 In this brief example of an installation, we will install **Arch Linux ARMv7** on a **Raspberry Pi 3B+**  with a **headless** installation via **ethernet**. We start up by following [the standard instructions](https://archlinuxarm.org/platforms/armv8/broadcom/raspberry-pi-3).
 
+This is not quite the most minimal set of instructions.
+
 1. Verify the SD Card: `badblocks -wsv /dev/sdX`.
 
 2. Partition the SD Card: `fdisk /dev/sdX`

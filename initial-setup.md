@@ -268,6 +268,10 @@ For example, disabling:
 * `lvm2-monitor.service`
 * `lvm2-lvmetad.service`
 
+## Unused Services
+
+   pacman -Rs net-tools netctl wireless_tools vi wpa_supplicant
+
 ## Misc
 
 * [ ] Fix network issues reported by netdata:
@@ -299,6 +303,7 @@ There are further steps that we can take, however they offer increasingly dimini
 ...
 
 Or [https://firehol.org/](https://firehol.org/)
+
 
 ### umask 027
 
