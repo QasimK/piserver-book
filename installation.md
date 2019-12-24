@@ -124,3 +124,16 @@ f2fs encryption info: [https://www.kernel.org/doc/html/v4.15/filesystems/fscrypt
 
 Per-Directory. Encrypt file + filename. Not file size, timestamps, permissions, extended attributes. Uses fscrypt, kernel-tool.
 
+## Example Installation: ARMv7 Encrypted Root
+
+In this brief example of an installation, we will install **Arch Linux ARMv7** on a **Raspberry Pi 3B+**  with a **headless **installation method.
+
+1. On your PC:
+   ```console
+   wget http://os.archlinuxarm.org/os/ArchLinuxARM-rpi-3-latest.tar.gz.sig
+   wget http://os.archlinuxarm.org/os/ArchLinuxARM-rpi-3-latest.tar.gz
+   gpg --verify ArchLinuxARM-rpi-3-latest.tar.gz.sig
+   ```
+
+
+
