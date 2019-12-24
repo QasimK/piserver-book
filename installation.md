@@ -1,5 +1,3 @@
-# 
-
 # Installation
 
 We're going to use Arch Linux ARM not because we like to move fast and break things, but because it is a minimal base that will let us make the most of the diminuitive hardware and learn more about Linux, the operating system, and commonly used programs.
