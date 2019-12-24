@@ -130,23 +130,17 @@ Per-Directory. Encrypt file + filename. Not file size, timestamps, permissions, 
 
 In this brief example of an installation, we will install **Arch Linux ARMv7** on a **Raspberry Pi 3B+**  with a **headless **installation method. We start up by following [the standard instructions](https://archlinuxarm.org/platforms/armv8/broadcom/raspberry-pi-3).
 
-1. On your PC:
-   ```console
-   wget http://os.archlinuxarm.org/os/ArchLinuxARM-rpi-2-latest.tar.gz.sig
-   wget http://os.archlinuxarm.org/os/ArchLinuxARM-rpi-2-latest.tar.gz
-   gpg --verify ArchLinuxARM-rpi-2-latest.tar.gz.sig
-   ```
-2. Verify the SD Card: `badblocks -wsv /dev/sdX`.
+1. Verify the SD Card: `badblocks -wsv /dev/sdX`.
 
-3. Partition the SD Card using `fdisk /dev/sdX`:
+2. Partition the SD Card: `fdisk /dev/sdX`
 
-   1. 250 MB _boot_ FAT32 primary partition.
+  1. 250 MB _W95 FAT32 (LBA)_ primary partition.
 
-   2. 3750 MB _clearroot_ primary partition.
+  2. 3750 MB primary partition.
 
-   3. The remaining space will be our encrypted root later, and so should also be partitioned.
+  3. The remaining space will be our encrypted root later, and should also be partitioned now.
 
-4. Create and mount the filesystems
+3. Create and mount the filesystems
 
    ```console
    mkfs.vfat -n boot /dev/sdX1
@@ -158,7 +152,37 @@ In this brief example of an installation, we will install **Arch Linux ARMv7** o
    mount /dev/sdX2 root
    ```
 
-5. Download and install Arch Linux ARM:  
+4. Download and install Arch Linux ARM:
 
+   ```console
+   wget http://os.archlinuxarm.org/os/ArchLinuxARM-rpi-2-latest.tar.gz.sig
+   wget http://os.archlinuxarm.org/os/ArchLinuxARM-rpi-2-latest.tar.gz
+   gpg --verify ArchLinuxARM-rpi-2-latest.tar.gz.sig
+   
+   bsdtar -xpf ArchLinuxARM-rpi-2-latest.tar.gz -C root
+   sync
+   mv root/boot/* boot
 
+   umount boot root
+   ```
 
+5. Determine the IP address using `sudo nmap -sT --open -p 22 192.168.1.0/24`.
+ 
+  Connect and login to the RPi: `ssh alarm@<ip-address>`. The password is root.
+
+6. Do the minimal steps to be able to configure the encrypted partition:
+
+   ```console
+   # Root password is root
+   su - root
+
+   pacman-key --init
+   pacman-key --populate archlinuxarm
+   pacman -Rs netctl wpa_supplicant wireless_tools uboot-tools net-tools
+   pacman -Syu
+   pacman -S --needed sudo git rsync base-devel dropbear
+
+   # Using visudo add the line:
+   # alarm ALL=(ALL) ALL
+   visudo
+   ```
