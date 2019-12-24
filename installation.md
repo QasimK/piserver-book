@@ -212,11 +212,30 @@ This is not quite the most minimal set of instructions.
 
    pacman-key --init
    pacman-key --populate archlinuxarm
-   pacman -Rs net-tools netctl wireless_tools vi wpa_supplicant
    pacman -Syu
-   pacman -S --needed sudo git vim rsync base-devel dropbear
+   pacman -S --needed sudo git rsync base-devel dropbear
 
    # Using visudo add the line:
    # alarm ALL=(ALL) ALL
    visudo
    ```
+
+7. Now return to **alarm**:
+
+   ```console
+   git clone https://aur.archlinux.org/yay.git
+   cd yay
+   makepkg -sirc
+   yay -S mkinitcpio-utils mkinitcpio-netconf mkinitcpio-dropbear
+   ```
+ 
+8. Backup files... Just in case...:
+
+   ```console
+   sudo su - root
+ 
+   cp /etc/mkinitcpio.conf /etc/mkinitcpio.conf.clearroot
+   cp /boot/boot.txt /boot/boot.txt.clearroot
+   cp -r /boot /root/boot_clearroot
+   ```
+
