@@ -128,8 +128,6 @@ Per-Directory. Encrypt file + filename. Not file size, timestamps, permissions, 
 
 In this brief example of an installation, we will install **Arch Linux ARMv7** on a **Raspberry Pi 3B+** using an **ext4** filesystem installed **headlessly** via **ethernet**. We start up by following [the standard instructions](https://archlinuxarm.org/platforms/armv8/broadcom/raspberry-pi-3).
 
-This is not quite the most minimal set of instructions.
-
 1. Verify the SD Card: `badblocks -wsv /dev/sdX`.
 
 2. Partition the SD Card: `fdisk /dev/sdX`
@@ -138,9 +136,7 @@ This is not quite the most minimal set of instructions.
 
   2. 3750 MB primary partition.
 
-  3. 20GB encrypted root partition, to be configured later.
-  
-  4. The remaining space will be a data partition, to be configured later.
+  3. The remainder should be another primary partition; this will be the encrypted root.
 
 3. Create and mount the filesystems:
 
@@ -188,13 +184,18 @@ This is not quite the most minimal set of instructions.
 
 8. Determine the IP address: `sudo nmap -sT --open -p 22 192.168.1.0/24`.
  
-  Connect and login to the RPi: `ssh alarm@<ip-address>`.
-  
-  The user password is `alarm`. The root password is `root`.
+9. Copy over the decryptor SSH key (alarm user password is alarm):
+
+   ```console
+   ssh-copy-id -i ~/.ssh/piserver_decryptor_key.pub alarm@<ip-address>
+   ```
+ 
+10. Connect and login to the RPi: `ssh alarm@<ip-address>`.
 
 9. Do the minimal steps to be able to configure the encrypted partition:
 
    ```console
+   # The root password is root
    su - root
 
    pacman-key --init
