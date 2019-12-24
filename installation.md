@@ -126,7 +126,7 @@ Per-Directory. Encrypt file + filename. Not file size, timestamps, permissions, 
 
 ## Example Installation: Headless ARMv7 Encrypted Root on RPi 3B+
 
-In this brief example of an installation, we will install **Arch Linux ARMv7** on a **Raspberry Pi 3B+**  with a **headless** installation via **ethernet**. We start up by following [the standard instructions](https://archlinuxarm.org/platforms/armv8/broadcom/raspberry-pi-3).
+In this brief example of an installation, we will install **Arch Linux ARMv7** on a **Raspberry Pi 3B+** using an **ext4** filesystem installed **headlessly** via **ethernet**. We start up by following [the standard instructions](https://archlinuxarm.org/platforms/armv8/broadcom/raspberry-pi-3).
 
 This is not quite the most minimal set of instructions.
 
@@ -173,7 +173,7 @@ This is not quite the most minimal set of instructions.
    hdmi_force_hotplug=1
    ```
 
-6. As your own user, generate and copy over the SSH key we will use to decrypt the root partition:
+6. As your own user, generate and copy over the SSH key we will use to login to the PiServer in order to decrypt the root partition:
 
    ```console
    ssh-keygen -t rsa -b 4096 -f ~/.ssh/piserver_clearroot_key
@@ -201,13 +201,15 @@ This is not quite the most minimal set of instructions.
    pacman-key --populate archlinuxarm
    pacman -Syu
    pacman -S --needed sudo git rsync base-devel dropbear
+   ```
 
-   # Using visudo add the line:
-   # alarm ALL=(ALL) ALL
+10. Add the line `alarm ALL=(ALL) ALL` using to sudoers:
+
+   ```console
    visudo
    ```
 
-10. Now return to **alarm**:
+11. Now return to **alarm**:
 
    ```console
    git clone https://aur.archlinux.org/yay.git
@@ -216,7 +218,7 @@ This is not quite the most minimal set of instructions.
    yay -S mkinitcpio-utils mkinitcpio-netconf mkinitcpio-dropbear
    ```
  
-11. Return to **root** and backup files... Just in case...:
+12. Now return to **root** and backup files... Just in case:
 
    ```console
    sudo su - root
@@ -227,7 +229,7 @@ This is not quite the most minimal set of instructions.
    sync
    ```
 
-12. Edit `/etc/mkinitcpio.conf`, ensuring the following lines are something like:
+13. Edit `/etc/mkinitcpio.conf`, ensuring the following configuration is included:
 
    ```
    MODULES=(g_cdc usb_f_acm usb_f_ecm smsc95xx g_ether)
@@ -235,13 +237,13 @@ This is not quite the most minimal set of instructions.
    HOOKS=(base udev autodetect modconf block sleep netconf dropbear encryptssh filesystems keyboard fsck)
    ```
 
-13. Copy over the SSH key for the initial decryption:
+14. Copy over the SSH key for the initial decryption:
 
    ```console
    cp /home/alarm/.ssh/authorized_keys /etc/dropbear/root_key
    ```
 
-14. Configure at least one SSH key for dropbear, install dropbear, and regenerate the kernel image:
+15. Configure at least one SSH key for the dropbear , install dropbear, and regenerate the kernel image:
 
    ```console
    cd /etc/ssh
@@ -250,7 +252,7 @@ This is not quite the most minimal set of instructions.
    yay -S mkinitcpio-utils mkinitcpio-netconf mkinitcpio-dropbear
    ```
 
-15. Setup the encrypted partition:
+16. Setup the encrypted partition:
 
    ```console
    cryptsetup luksFormat --cipher aes-xts-plain64 --key-size 512 --hash sha512 --iter-time 1000 --use-random /dev/mmcblk0p3
