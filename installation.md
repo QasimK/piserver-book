@@ -171,28 +171,8 @@ This is not quite the most minimal set of instructions.
 5. Edit `boot/config.txt` with the additional lines:
 
    ```ini
-   # Reduce memory allocation to unused GPU, increasing RAM available to OS
-   gpu_mem=16
-   
-   # Disable unused WiFi and Bluetooth hardware to save power
-   dtoverlay=pi3-disable-wifi
-   dtoverlay=pi3-disable-bt
-   
-   # Disable unused HDMI port to save power (undocumented - need source link)
-   hdmi_blanking=2
-   # Force normal boots without HDMI cable connected
+   # Ensure we can boot without a HDMI cable connected
    hdmi_force_hotplug=1
-   # Disable DVI mode over HDMI
-   hdmi_drive=2
-   # Disable overscan for TVs
-   disable_overscan=1
-   
-   # Improve the boot time
-   disable_splash=1
-   boot_delay=0
-   
-   # Reduce minimum frequency of processor (to save power?)
-   arm_freq_min=300
    ```
 
 6. As your own user, generate and copy over the SSH key we will use to decrypt the root partition:
@@ -271,3 +251,12 @@ This is not quite the most minimal set of instructions.
    ssh-keygen -t rsa -b 4096 -f ssh_host_rsa_key -N "" -m PEM < /dev/null
    yay -S mkinitcpio-utils mkinitcpio-netconf mkinitcpio-dropbear
    ```
+
+15. Setup the encrypted partition:
+
+   ```console
+   cryptsetup luksFormat --cipher aes-xts-plain64 --key-size 512 --hash sha512 --iter-time 1000 --use-random /dev/mmcblk0p3
+   sudo cryptsetup luksOpen /dev/mmcblk0p3 cryptroot
+   sudo mkfs.ext4 -L cryptroot /dev/mapper/cryptroot
+   sudo mount /dev/mapper/cryptroot /mnt
+   ```   
