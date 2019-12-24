@@ -243,7 +243,7 @@ This is not quite the most minimal set of instructions.
    cp /home/alarm/.ssh/authorized_keys /etc/dropbear/root_key
    ```
 
-15. Configure at least one SSH key for the dropbear , install dropbear, and regenerate the kernel image:
+15. Configure at least one SSH key for the dropbear SSH server, install dropbear, and regenerate the boot image:
 
    ```console
    cd /etc/ssh
