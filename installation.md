@@ -144,7 +144,7 @@ This is not quite the most minimal set of instructions.
   
   4. The remaining space will be a data partition, to be configured later.
 
-3. Create and mount the filesystems
+3. Create and mount the filesystems:
 
    ```console
    mkfs.vfat -n BOOT /dev/sdX1
@@ -195,19 +195,26 @@ This is not quite the most minimal set of instructions.
    arm_freq_min=300
    ```
 
-6. Umount, disconnect, and plug everything into the RPi:
+6. As your own user, generate and copy over the SSH key we will use to decrypt the root partition:
+
+   ```console
+   ssh-keygen -t rsa -b 4096 -f ~/.ssh/piserver_clearroot_key
+   sudo cp ~/.ssh/piserver_clearroot_key.pub /mnt/root/home/alarm/.ssh/authorized_keys
+   ```
+
+7. Umount, disconnect, and plug everything into the RPi:
 
    ```console
    umount boot root
    ```
 
-5. Determine the IP address: `sudo nmap -sT --open -p 22 192.168.1.0/24`.
+8. Determine the IP address: `sudo nmap -sT --open -p 22 192.168.1.0/24`.
  
   Connect and login to the RPi: `ssh alarm@<ip-address>`.
   
   The alarm user password is `alarm`. The root password is `root`.
 
-6. Do the minimal steps to be able to configure the encrypted partition:
+9. Do the minimal steps to be able to configure the encrypted partition:
 
    ```console
    su - root
@@ -222,7 +229,7 @@ This is not quite the most minimal set of instructions.
    visudo
    ```
 
-7. Now return to **alarm**:
+10. Now return to **alarm**:
 
    ```console
    git clone https://aur.archlinux.org/yay.git
@@ -231,7 +238,7 @@ This is not quite the most minimal set of instructions.
    yay -S mkinitcpio-utils mkinitcpio-netconf mkinitcpio-dropbear
    ```
  
-8. Backup files... Just in case...:
+11. Return to **root** and backup files... Just in case...:
 
    ```console
    sudo su - root
@@ -242,7 +249,7 @@ This is not quite the most minimal set of instructions.
    sync
    ```
 
-9. Edit `/etc/mkinitcpio.conf`, ensuring the following lines are something like:
+12. Edit `/etc/mkinitcpio.conf`, ensuring the following lines are something like:
 
    ```
    MODULES=(g_cdc usb_f_acm usb_f_ecm smsc95xx g_ether)
@@ -250,21 +257,14 @@ This is not quite the most minimal set of instructions.
    HOOKS=(base udev autodetect modconf block sleep netconf dropbear encryptssh filesystems keyboard fsck)
    ```
 
-10. On your **PC**:
-
-   ```console
-   ssh-keygen -t rsa -b 4096 -f piserver_clearroot_key
-   ssh-copy-id -i ~/.ssh/piserver_clearroot_key.pub alarm@<ip-address>
-   ```
-
-11. Back on the **PiServer**:
+13. Copy over the SSH key for the initial decryption:
 
    ```console
    sudo su - root
    cp /home/alarm/.ssh/authorized_keys /etc/dropbear/root_key
    ```
 
-12. Configure at least one SSH key for dropbear, install dropbear, and regenerate the kernel image:
+14. Configure at least one SSH key for dropbear, install dropbear, and regenerate the kernel image:
 
    ```console
    cd /etc/ssh
