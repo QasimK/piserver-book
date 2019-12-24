@@ -128,7 +128,7 @@ Per-Directory. Encrypt file + filename. Not file size, timestamps, permissions, 
 
 ## Example Installation: Headless ARMv7 Encrypted Root on RPi 3B+
 
-In this brief example of an installation, we will install **Arch Linux ARMv7** on a **Raspberry Pi 3B+**  with a **headless** installation method. We start up by following [the standard instructions](https://archlinuxarm.org/platforms/armv8/broadcom/raspberry-pi-3).
+In this brief example of an installation, we will install **Arch Linux ARMv7** on a **Raspberry Pi 3B+**  with a **headless** installation via **ethernet**. We start up by following [the standard instructions](https://archlinuxarm.org/platforms/armv8/broadcom/raspberry-pi-3).
 
 1. Verify the SD Card: `badblocks -wsv /dev/sdX`.
 
@@ -164,25 +164,55 @@ In this brief example of an installation, we will install **Arch Linux ARMv7** o
    bsdtar -xpf ArchLinuxARM-rpi-2-latest.tar.gz -C root
    sync
    mv root/boot/* boot
+   ```
 
+5. Edit `boot/config.txt` with the additional lines:
+
+   ```ini
+   # Reduce memory allocation to unused GPU, increasing RAM available to OS
+   gpu_mem=16
+   
+   # Disable unused WiFi and Bluetooth hardware to save power
+   dtoverlay=pi3-disable-wifi
+   dtoverlay=pi3-disable-bt
+   
+   # Disable unused HDMI port to save power (undocumented - need source link)
+   hdmi_blanking=2
+   # Force normal boots without HDMI cable connected
+   hdmi_force_hotplug=1
+   # Disable DVI mode over HDMI
+   hdmi_drive=2
+   # Disable overscan for TVs
+   disable_overscan=1
+   
+   # Improve the boot time
+   disable_splash=1
+   boot_delay=0
+   
+   # Reduce minimum frequency of processor (to save power?)
+   arm_freq_min=300
+   ```
+
+6. Umount, disconnect, and plug everything into the RPi:
+
+   ```console
    umount boot root
    ```
 
 5. Determine the IP address using `sudo nmap -sT --open -p 22 192.168.1.0/24`.
  
-  Connect and login to the RPi: `ssh alarm@<ip-address>`. The password is root.
+  Connect and login to the RPi: `ssh alarm@<ip-address>`. The password is `alarm`. The root password is `root`.
 
 6. Do the minimal steps to be able to configure the encrypted partition:
 
    ```console
-   # Root password is root
    su - root
 
    pacman-key --init
    pacman-key --populate archlinuxarm
-   pacman -Rs netctl wpa_supplicant wireless_tools uboot-tools net-tools
+   pacman -Rs net-tools netctl wireless_tools vi wpa_supplicant
    pacman -Syu
-   pacman -S --needed sudo git rsync base-devel dropbear
+   pacman -S --needed sudo git vim rsync base-devel dropbear
 
    # Using visudo add the line:
    # alarm ALL=(ALL) ALL
