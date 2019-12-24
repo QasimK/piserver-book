@@ -259,4 +259,18 @@ This is not quite the most minimal set of instructions.
    cryptsetup luksOpen /dev/mmcblk0p3 cryptroot
    mkfs.ext4 -L cryptroot /dev/mapper/cryptroot
    mount /dev/mapper/cryptroot /mnt
-   ```   
+   
+   sudo rsync --info=progress2 -axHAX / /mnt/
+   ```
+
+17. Adjust the partition in cryptroot:
+
+   ```text
+   # /mnt/etc/fstab
+   /dev/mapper/cryptroot / ext4 defaults,noatime,lazytime 0 1
+   # /mnt/etc/crypttab
+   cryptroot /dev/mmcblk0p3 none luks
+   ```
+18. 
+
+**Note:** No additional partition, using QEMU - https://wiki.polaire.nl/doku.php?id=archlinux-raspberry-encrypted.
