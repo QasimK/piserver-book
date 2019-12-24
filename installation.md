@@ -176,8 +176,8 @@ This is not quite the most minimal set of instructions.
 6. As your own user, generate and copy over the SSH key we will use to login to the PiServer in order to decrypt the root partition:
 
    ```console
-   ssh-keygen -t rsa -b 4096 -f ~/.ssh/piserver_clearroot_key
-   sudo cp ~/.ssh/piserver_clearroot_key.pub /mnt/root/home/alarm/.ssh/authorized_keys
+   ssh-keygen -t rsa -b 4096 -f ~/.ssh/piserver_decryptor_key
+   sudo cp ~/.ssh/piserver_decryptor_key.pub /mnt/root/home/alarm/.ssh/authorized_keys
    ```
 
 7. Umount, disconnect, and plug everything into the RPi:
