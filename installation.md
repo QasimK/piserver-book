@@ -145,7 +145,7 @@ In this brief example of an installation, we will install **Arch Linux ARMv7** o
 3. Create and mount the filesystems
 
    ```console
-   mkfs.vfat -n boot /dev/sdX1
+   mkfs.vfat -n BOOT /dev/sdX1
    mkdir boot
    mount /dev/sdX1 boot
 
