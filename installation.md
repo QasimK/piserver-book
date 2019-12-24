@@ -190,7 +190,7 @@ This is not quite the most minimal set of instructions.
  
   Connect and login to the RPi: `ssh alarm@<ip-address>`.
   
-  The alarm user password is `alarm`. The root password is `root`.
+  The user password is `alarm`. The root password is `root`.
 
 9. Do the minimal steps to be able to configure the encrypted partition:
 
