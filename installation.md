@@ -1,3 +1,5 @@
+# 
+
 # Installation
 
 We're going to use Arch Linux ARM not because we like to move fast and break things, but because it is a minimal base that will let us make the most of the diminuitive hardware and learn more about Linux, the operating system, and commonly used programs.
@@ -126,7 +128,7 @@ Per-Directory. Encrypt file + filename. Not file size, timestamps, permissions, 
 
 ## Example Installation: ARMv7 Encrypted Root
 
-In this brief example of an installation, we will install **Arch Linux ARMv7** on a **Raspberry Pi 3B+**  with a **headless **installation method.
+In this brief example of an installation, we will install **Arch Linux ARMv7** on a **Raspberry Pi 3B+**  with a **headless **installation method. We start up by following [the standard instructions](https://archlinuxarm.org/platforms/armv8/broadcom/raspberry-pi-3).
 
 1. On your PC:
    ```console
@@ -134,6 +136,29 @@ In this brief example of an installation, we will install **Arch Linux ARMv7** o
    wget http://os.archlinuxarm.org/os/ArchLinuxARM-rpi-2-latest.tar.gz
    gpg --verify ArchLinuxARM-rpi-2-latest.tar.gz.sig
    ```
+2. Verify the SD Card: `badblocks -wsv /dev/sdX`.
+
+3. Partition the SD Card using `fdisk /dev/sdX`:
+
+   1. 250 MB _boot_ FAT32 primary partition.
+
+   2. 3750 MB _clearroot_ primary partition.
+
+   3. The remaining space will be our encrypted root later, and so should also be partitioned.
+
+4. Create and mount the filesystems
+
+   ```console
+   mkfs.vfat -n boot /dev/sdX1
+   mkdir boot
+   mount /dev/sdX1 boot
+
+   mkfs.ext4 -L clearroot /dev/sdX2
+   mkdir root
+   mount /dev/sdX2 root
+   ```
+
+5. Download and install Arch Linux ARM:  
 
 
 
