@@ -271,6 +271,12 @@ This is not quite the most minimal set of instructions.
    # /mnt/etc/crypttab
    cryptroot /dev/mmcblk0p3 none luks
    ```
-18. 
+18. Configure the bootloader `/boot/cmdline.txt`:
+
+   ```text
+   cryptdevice=/dev/mmcblk0p3:cryptroot root=/dev/mapper/cryptroot ip=::::piserver_decryptor:eth0:none rw rootwait console=ttyAMA0,115200 console=tty1 selinux=0 plymouth.enable=0 smsc95xx.turbo_mode=N dwc_otg.lpm_enable=0 kgdboc=ttyAMA0,115200 elevator=noop
+   ```
+
+That's it. Reboot; Find `piserver_decryptor`; Login to root@<ip-address> using the piserver_decryptor SSH key; Decrypt; Login again into the encrypted partition. Configure everything.
 
 **Note:** No additional partition, using QEMU - https://wiki.polaire.nl/doku.php?id=archlinux-raspberry-encrypted.
