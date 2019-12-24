@@ -201,9 +201,11 @@ This is not quite the most minimal set of instructions.
    umount boot root
    ```
 
-5. Determine the IP address using `sudo nmap -sT --open -p 22 192.168.1.0/24`.
+5. Determine the IP address: `sudo nmap -sT --open -p 22 192.168.1.0/24`.
  
-  Connect and login to the RPi: `ssh alarm@<ip-address>`. The password is `alarm`. The root password is `root`.
+  Connect and login to the RPi: `ssh alarm@<ip-address>`.
+  
+  The alarm user password is `alarm`. The root password is `root`.
 
 6. Do the minimal steps to be able to configure the encrypted partition:
 
@@ -235,7 +237,38 @@ This is not quite the most minimal set of instructions.
    sudo su - root
  
    cp /etc/mkinitcpio.conf /etc/mkinitcpio.conf.clearroot
-   cp /boot/boot.txt /boot/boot.txt.clearroot
+   cp /boot/cmdline.txt /boot/cmdline.txt.clearroot
    cp -r /boot /root/boot_clearroot
+   sync
    ```
 
+9. Edit `/etc/mkinitcpio.conf`, ensuring the following lines are something like:
+
+   ```
+   MODULES=(g_cdc usb_f_acm usb_f_ecm smsc95xx g_ether)
+   FILES=(/usr/lib/libgcc_s.so.1)
+   HOOKS=(base udev autodetect modconf block sleep netconf dropbear encryptssh filesystems keyboard fsck)
+   ```
+
+10. On your **PC**:
+
+   ```console
+   ssh-keygen -t rsa -b 4096 -f piserver_clearroot_key
+   ssh-copy-id -i ~/.ssh/piserver_clearroot_key.pub alarm@<ip-address>
+   ```
+
+11. Back on the **PiServer**:
+
+   ```console
+   sudo su - root
+   cp /home/alarm/.ssh/authorized_keys /etc/dropbear/root_key
+   ```
+
+12. Configure at least one SSH key for dropbear, install dropbear, and regenerate the kernel image:
+
+   ```console
+   cd /etc/ssh
+   rm ssh_host_rsa_key
+   ssh-keygen -t rsa -b 4096 -f ssh_host_rsa_key -N "" -m PEM < /dev/null
+   yay -S mkinitcpio-utils mkinitcpio-netconf mkinitcpio-dropbear
+   ```
