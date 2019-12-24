@@ -72,7 +72,6 @@ boot_delay=0
 
 # Reduce minimum frequency of processor (to save power?)
 arm_freq_min=300
-
 ```
 
 > Note that the status of the HDMI port can be checked at /opt/vc/bin/tvservice.
@@ -86,6 +85,10 @@ Some Raspberry Pi boards including the Raspberry Pi Zero W [will not boot up pro
 ```ini
 hdmi_force_hotplug=1
 ```
+
+#### Power
+
+Watch out for `Under-voltage detected!` system logs.
 
 ## File System Variations
 
