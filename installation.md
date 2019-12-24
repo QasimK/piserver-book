@@ -260,7 +260,6 @@ This is not quite the most minimal set of instructions.
 13. Copy over the SSH key for the initial decryption:
 
    ```console
-   sudo su - root
    cp /home/alarm/.ssh/authorized_keys /etc/dropbear/root_key
    ```
 
