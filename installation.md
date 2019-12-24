@@ -126,9 +126,9 @@ f2fs encryption info: [https://www.kernel.org/doc/html/v4.15/filesystems/fscrypt
 
 Per-Directory. Encrypt file + filename. Not file size, timestamps, permissions, extended attributes. Uses fscrypt, kernel-tool.
 
-## Example Installation: ARMv7 Encrypted Root
+## Example Installation: Headless ARMv7 Encrypted Root on RPi 3B+
 
-In this brief example of an installation, we will install **Arch Linux ARMv7** on a **Raspberry Pi 3B+**  with a **headless **installation method. We start up by following [the standard instructions](https://archlinuxarm.org/platforms/armv8/broadcom/raspberry-pi-3).
+In this brief example of an installation, we will install **Arch Linux ARMv7** on a **Raspberry Pi 3B+**  with a **headless** installation method. We start up by following [the standard instructions](https://archlinuxarm.org/platforms/armv8/broadcom/raspberry-pi-3).
 
 1. Verify the SD Card: `badblocks -wsv /dev/sdX`.
 
@@ -138,7 +138,9 @@ In this brief example of an installation, we will install **Arch Linux ARMv7** o
 
   2. 3750 MB primary partition.
 
-  3. The remaining space will be our encrypted root later, and should also be partitioned now.
+  3. 20GB encrypted root partition, to be configured later.
+  
+  4. The remaining space will be a data partition, to be configured later.
 
 3. Create and mount the filesystems
 
