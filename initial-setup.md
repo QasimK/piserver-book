@@ -14,7 +14,8 @@ Host piserver
 Substituting in the IP address of the Raspberry Pi. We could:
 
 * Try lots of random IP addresses until we find the right one \(they're usually `192.168.1.x`, and we can `ping` to narrow down the list\),
-* Search for machines with `nmap 192.168.1.0/24 -sL | grep pi`
+* Search for machines with `nmap 192.168.1.0/24 -sL | grep -i pi`
+* Search for machines with open Port 22 with `sudo nmap -sT --open -p 22 192.168.1.0/24`
 * Use the MAC address on the Raspberry Pi obtained from `ip link list` and look at the list of devices on our DHCP server \(i.e. our router\),
 * Set a static IP address on the Raspberry Pi with `ip addr add`,
 * Set a static IP address for the Raspberry Pi on our DHCP server, or
