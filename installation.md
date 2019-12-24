@@ -256,7 +256,7 @@ This is not quite the most minimal set of instructions.
 
    ```console
    cryptsetup luksFormat --cipher aes-xts-plain64 --key-size 512 --hash sha512 --iter-time 1000 --use-random /dev/mmcblk0p3
-   sudo cryptsetup luksOpen /dev/mmcblk0p3 cryptroot
-   sudo mkfs.ext4 -L cryptroot /dev/mapper/cryptroot
-   sudo mount /dev/mapper/cryptroot /mnt
+   cryptsetup luksOpen /dev/mmcblk0p3 cryptroot
+   mkfs.ext4 -L cryptroot /dev/mapper/cryptroot
+   mount /dev/mapper/cryptroot /mnt
    ```   
