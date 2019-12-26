@@ -8,3 +8,27 @@ We use WireGuard because it is easier to configure, more secure, more reliable a
 
 \(Alternatives include OpenVPN.\)
 
+## Security
+
+Wireguard has not been audited yet.
+
+TODO: Use preshared keys.
+
+## Installation
+
+```console
+sudo pacmatic -S --needed wireguard-tools wireguard-dkms
+```
+
+## Server Setup
+
+```
+cd /etc/wireguard
+wg genkey > privatekey
+chmod 0600 privatekey
+wg pubkey < privatekey > publickey
+chmod 0644 publickey
+```
+
+
+
