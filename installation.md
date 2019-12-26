@@ -274,6 +274,8 @@ In this brief example of an installation, we will install **Arch Linux ARMv7** o
    cryptdevice=/dev/mmcblk0p3:cryptroot root=/dev/mapper/cryptroot ip=::::piserver_decryptor:eth0:dhcp rw rootwait console=ttyAMA0,115200 console=tty1 selinux=0 plymouth.enable=0 smsc95xx.turbo_mode=N dwc_otg.lpm_enable=0 kgdboc=ttyAMA0,115200 elevator=noop
    ```
 
-That's it. Reboot; Find `piserver_decryptor`; Login to root@<ip-address> using the piserver_decryptor SSH key; Decrypt; Login again into the encrypted partition. Configure everything.
+That's it. Reboot; Find `piserver_decryptor`; Login to root@<ip-address> using the piserver_decryptor SSH key; Decrypt; You will be disconnected as it reboots - now, login again into the encrypted partition.
+
+Move on to the Initial Setup!
 
 **Note:** No additional partition, using QEMU - https://wiki.polaire.nl/doku.php?id=archlinux-raspberry-encrypted.
