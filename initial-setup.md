@@ -72,7 +72,7 @@ We give the adminstrative group `wheel` sudo privileges by properly using `visud
 %wheel ALL=(ALL) NOPASSWD:ALL
 ```
 
-We add our SSH key
+We add our SSH key **from our PC**:
 
 ```console
 ssh-copy-id <YOU>@piserver
