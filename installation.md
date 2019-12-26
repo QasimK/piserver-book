@@ -226,7 +226,6 @@ In this brief example of an installation, we will install **Arch Linux ARMv7** o
    cp /etc/mkinitcpio.conf /etc/mkinitcpio.conf.clearroot
    cp /boot/cmdline.txt /boot/cmdline.txt.clearroot
    cp -r /boot /root/boot_clearroot
-   sync
    ```
 
 13. Edit `/etc/mkinitcpio.conf`, ensuring the following configuration is included:
