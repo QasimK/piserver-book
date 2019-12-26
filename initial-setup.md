@@ -43,14 +43,20 @@ su - root
 We install some basic tools:
 
 * `sudo` is used for security, allowing us to execute root commands without logging in as root.
-* `pacmatic` is a simple wrapper around `pacman` which can give warnings when doing system upgrades.
+* `pacmatic` is a simple wrapper around `pacman` which can give warnings when doing system upgrades. `python-html2text` is an optional dependency that formats some news items better.
 * `vim` is the one true text editor.
 * `htop` is an excellent, intuitive monitoring tool.
 
 ```console
 pacman-key --init
 pacman-key --populate archlinuxarm
-pacman -Syu --needed sudo pacmatic vim htop
+pacman -Syu --needed sudo pacmatic python-html2text vim htop
+```
+
+We can delete some unnecessary tools \(find them with `pacman -Qe`:
+
+```
+pacman -Rs 
 ```
 
 We create our adminstrative user and set its password, substituting `<YOU>` for the username we like the most
@@ -270,7 +276,7 @@ For example, disabling:
 
 ## Unused Services
 
-   pacman -Rs net-tools netctl wireless_tools vi wpa_supplicant
+pacman -Rs net-tools netctl wireless\_tools vi wpa\_supplicant
 
 ## Misc
 
@@ -303,7 +309,6 @@ There are further steps that we can take, however they offer increasingly dimini
 ...
 
 Or [https://firehol.org/](https://firehol.org/)
-
 
 ### umask 027
 
