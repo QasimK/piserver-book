@@ -173,7 +173,6 @@ In this brief example of an installation, we will install **Arch Linux ARMv7** o
 
    ```console
    ssh-keygen -t rsa -b 4096 -f ~/.ssh/piserver_decryptor_key
-   sudo cp ~/.ssh/piserver_decryptor_key.pub /mnt/root/home/alarm/.ssh/authorized_keys
    ```
 
 7. Umount, disconnect, and plug everything into the RPi:
