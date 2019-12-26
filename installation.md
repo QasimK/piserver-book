@@ -208,17 +208,8 @@ In this brief example of an installation, we will install **Arch Linux ARMv7** o
    ```console
    visudo
    ```
-
-11. Now return to **alarm**:
-
-   ```console
-   git clone https://aur.archlinux.org/yay.git
-   cd yay
-   makepkg -sirc
-   yay -S mkinitcpio-utils mkinitcpio-netconf mkinitcpio-dropbear
-   ```
  
-12. Now return to **root** and backup files... Just in case:
+12. Backup some files... Just in case:
 
    ```console
    sudo su - root
@@ -236,22 +227,31 @@ In this brief example of an installation, we will install **Arch Linux ARMv7** o
    HOOKS=(base udev autodetect modconf block sleep netconf dropbear encryptssh filesystems keyboard fsck)
    ```
 
-14. Copy over the SSH key for the initial decryption:
+13. Copy over the SSH key for the initial decryption:
 
    ```console
+   mkdir /etc/dropbear
    cp /home/alarm/.ssh/authorized_keys /etc/dropbear/root_key
    ```
 
-15. Configure at least one SSH key for the dropbear SSH server, install dropbear, and regenerate the boot image:
+14. Configure at least one SSH key for the dropbear SSH server, install dropbear, and regenerate the boot image:
 
    ```console
    cd /etc/ssh
    rm ssh_host_rsa_key
    ssh-keygen -t rsa -b 4096 -f ssh_host_rsa_key -N "" -m PEM < /dev/null
+   ```
+
+15. Now return to **alarm**:
+
+   ```console
+   git clone https://aur.archlinux.org/yay.git
+   cd yay
+   makepkg -sirc
    yay -S mkinitcpio-utils mkinitcpio-netconf mkinitcpio-dropbear
    ```
 
-16. Setup the encrypted partition:
+16. Now return to **root**, and setup the encrypted partition:
 
    ```console
    cryptsetup luksFormat --cipher aes-xts-plain64 --key-size 512 --hash sha512 --iter-time 1000 --use-random /dev/mmcblk0p3
