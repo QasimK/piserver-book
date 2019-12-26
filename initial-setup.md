@@ -1,6 +1,3 @@
-
----
-
 # Initial Setup \(Arch Linux\)
 
 > If at any point it is impossible to access your Raspberry Pi, then connect the micro SD card \(containing your operating system\) back to your main computer and edit any files necessary to get working again.
