@@ -189,9 +189,9 @@ In this brief example of an installation, we will install **Arch Linux ARMv7** o
    ssh-copy-id -i ~/.ssh/piserver_decryptor_key.pub alarm@<ip-address>
    ```
  
-10. Connect and login to the RPi: `ssh alarm@<ip-address>`.
+10. **Connect and login to the RPi**: `ssh alarm@<ip-address>`.
 
-9. Do the minimal steps to be able to configure the encrypted partition:
+11. Do the minimal steps to be able to configure the encrypted partition:
 
    ```console
    # The root password is root
@@ -203,13 +203,13 @@ In this brief example of an installation, we will install **Arch Linux ARMv7** o
    pacman -S --needed sudo git rsync base-devel dropbear
    ```
 
-10. Add the line `alarm ALL=(ALL) ALL` using to sudoers:
+12. Add the line `alarm ALL=(ALL) ALL` using to sudoers:
 
    ```console
    visudo
    ```
  
-12. Backup some files... Just in case:
+13. Backup some files... Just in case:
 
    ```console
    sudo su - root
@@ -219,7 +219,7 @@ In this brief example of an installation, we will install **Arch Linux ARMv7** o
    cp -r /boot /root/boot_clearroot
    ```
 
-13. Edit `/etc/mkinitcpio.conf`, ensuring the following configuration is included:
+14. Edit `/etc/mkinitcpio.conf`, ensuring the following configuration is included:
 
    ```
    MODULES=(g_cdc usb_f_acm usb_f_ecm smsc95xx g_ether)
@@ -227,14 +227,14 @@ In this brief example of an installation, we will install **Arch Linux ARMv7** o
    HOOKS=(base udev autodetect modconf block sleep netconf dropbear encryptssh filesystems keyboard fsck)
    ```
 
-13. Copy over the SSH key for the initial decryption:
+15. Copy over the SSH key for the initial decryption:
 
    ```console
    mkdir /etc/dropbear
    cp /home/alarm/.ssh/authorized_keys /etc/dropbear/root_key
    ```
 
-14. Configure at least one SSH key for the dropbear SSH server, install dropbear, and regenerate the boot image:
+16. Configure at least one SSH key for the dropbear SSH server, install dropbear, and regenerate the boot image:
 
    ```console
    cd /etc/ssh
@@ -242,7 +242,7 @@ In this brief example of an installation, we will install **Arch Linux ARMv7** o
    ssh-keygen -t rsa -b 4096 -f ssh_host_rsa_key -N "" -m PEM < /dev/null
    ```
 
-15. Now return to **alarm**:
+17. Now return to **alarm**:
 
    ```console
    git clone https://aur.archlinux.org/yay.git
@@ -251,7 +251,7 @@ In this brief example of an installation, we will install **Arch Linux ARMv7** o
    yay -S mkinitcpio-utils mkinitcpio-netconf mkinitcpio-dropbear
    ```
 
-16. Now return to **root**, and setup the encrypted partition:
+18. Now return to **root**, and setup the encrypted partition:
 
    ```console
    cryptsetup luksFormat --cipher aes-xts-plain64 --key-size 512 --hash sha512 --iter-time 1000 --use-random /dev/mmcblk0p3
@@ -262,7 +262,7 @@ In this brief example of an installation, we will install **Arch Linux ARMv7** o
    sudo rsync --info=progress2 -axHAX / /mnt/
    ```
 
-17. Adjust the partition in cryptroot:
+19. Adjust the partition in cryptroot:
 
    ```text
    # /mnt/etc/fstab
@@ -270,7 +270,7 @@ In this brief example of an installation, we will install **Arch Linux ARMv7** o
    # /mnt/etc/crypttab
    cryptroot /dev/mmcblk0p3 none luks
    ```
-18. Configure the bootloader `/boot/cmdline.txt`:
+20. Configure the bootloader `/boot/cmdline.txt`:
 
    ```text
    cryptdevice=/dev/mmcblk0p3:cryptroot root=/dev/mapper/cryptroot ip=::::piserver_decryptor:eth0:none rw rootwait console=ttyAMA0,115200 console=tty1 selinux=0 plymouth.enable=0 smsc95xx.turbo_mode=N dwc_otg.lpm_enable=0 kgdboc=ttyAMA0,115200 elevator=noop
