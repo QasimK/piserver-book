@@ -225,6 +225,8 @@ In this brief example of an installation, we will install **Arch Linux ARMv7** o
    HOOKS=(base udev autodetect modconf block sleep netconf dropbear encryptssh filesystems keyboard fsck)
    ```
 
+(<https://github.com/grazzolini/mkinitcpio-utils/issues/13>)
+
 15. Copy over the SSH key for the initial decryption:
 
    ```console
