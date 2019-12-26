@@ -212,8 +212,6 @@ In this brief example of an installation, we will install **Arch Linux ARMv7** o
 13. Backup some files... Just in case:
 
    ```console
-   sudo su - root
- 
    cp /etc/mkinitcpio.conf /etc/mkinitcpio.conf.clearroot
    cp /boot/cmdline.txt /boot/cmdline.txt.clearroot
    cp -r /boot /root/boot_clearroot
