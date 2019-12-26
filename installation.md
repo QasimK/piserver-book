@@ -257,7 +257,7 @@ In this brief example of an installation, we will install **Arch Linux ARMv7** o
    mkfs.ext4 -L cryptroot /dev/mapper/cryptroot
    mount /dev/mapper/cryptroot /mnt
    
-   sudo rsync --info=progress2 -axHAX / /mnt/
+   rsync --info=progress2 -axHAX / /mnt/
    ```
 
 19. Adjust the partition in cryptroot:
