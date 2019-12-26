@@ -78,9 +78,9 @@ We add our SSH key **from our PC**:
 ssh-copy-id <YOU>@piserver
 ```
 
-Now we should logout, and SSH in as our new user to test everything is working.
+Now we should logout, and SSH in as our new user to test everything is working including doing a sudo command.
 
-Then we proced to remove the default `alarm` user and lock `root`.
+Then we proceed to remove the default `alarm` user and lock `root`.
 
 ```console
 sudo userdel --remove alarm
