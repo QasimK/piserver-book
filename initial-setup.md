@@ -96,8 +96,8 @@ We set a hostname, locale, keymap, and, if we don't want to use UTC, our local t
 ```console
 sudo hostnamectl set-hostname piserver
 
-# Set the locale - view a list of locales with:
-# cat /etc/locale.gen or maybe localectl list-locales
+# Set the locale - uncomment the locale:
+sudoedit /etc/locale.gen
 sudo localectl set-locale en_GB.UTF-8
 sudo locale-gen
 
@@ -109,9 +109,9 @@ sudo localectl set-keymap uk
 sudo timedatectl set-timezone $(tzselect)
 
 # Set /etc/hosts
-127.0.0.1	localhost
-::1		localhost
-127.0.1.1	piserver.localdomain	piserver
+127.0.0.1    localhost
+::1          localhost
+127.0.1.1    piserver.localdomain piserver
 ```
 
 Setting the keymap now is helpful if you ever need to plug in a keyboard.
