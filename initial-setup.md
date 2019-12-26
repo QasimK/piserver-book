@@ -53,10 +53,10 @@ pacman-key --populate archlinuxarm
 pacman -Syu --needed sudo pacmatic python-html2text vim htop
 ```
 
-We can delete some unnecessary tools \(find them with `pacman -Qe`:
+We can optionally delete some unnecessary tools \(find them with `pacman -Qe`:
 
 ```
-pacman -Rs 
+pacman -Rs net-tools netctl wireless_tools wpa_supplicant
 ```
 
 We create our adminstrative user and set its password, substituting `<YOU>` for the username we like the most
