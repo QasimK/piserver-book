@@ -56,7 +56,7 @@ pacman -Syu --needed sudo pacmatic python-html2text vim htop
 We can optionally delete some unnecessary tools \(find them with `pacman -Qent`:
 
 ```
-pacman -Rs net-tools netctl wireless_tools wpa_supplicant
+pacman -Rs net-tools netctl vi wireless_tools wpa_supplicant
 ```
 
 We create our \(adminstrative\) user and set its password, substituting `<YOU>` for the username we like the most
