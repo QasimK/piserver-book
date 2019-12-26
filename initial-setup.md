@@ -107,6 +107,11 @@ sudo localectl set-keymap uk
 
 # Optionally, set our local timezone
 sudo timedatectl set-timezone $(tzselect)
+
+# Set /etc/hosts
+127.0.0.1	localhost
+::1		localhost
+127.0.1.1	piserver.localdomain	piserver
 ```
 
 Setting the keymap now is helpful if you ever need to plug in a keyboard.
