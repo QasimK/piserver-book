@@ -203,7 +203,12 @@ Exec = /usr/bin/paccache -rk3
 
 ### Trim Flash Drives
 
-> If trim is supported: `sudo hdparm -I /dev/sda | grep "TRIM supported"`
+> Check if trim is supported:
+>
+> ```console
+> sudo lsblk --discard
+> sudo hdparm -I /dev/sda | grep "TRIM supported"
+> ```
 
 Flash-based systems should be "trimmed" regularly to ensure optimal performance. This process physically clears the flash blocks for deleted files, which allows writes to those blocks to happen faster in the future.
 
