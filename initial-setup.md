@@ -300,12 +300,6 @@ sudo sysctl net.core.netdev_budget=3000
 sudo sysctl net.core.netdev_budget_usecs=4000
 ```
 
-## Simple Outbound Mail
-
-mstmp.
-
-* [ ] Migrate from blog. Move to "Things we can do".
-
 ## Extra Security
 
 There are further steps that we can take, however they offer increasingly diminishing returns. We do not consider MAC/ACLs/SELinux because they are, apparently, a PITA.
