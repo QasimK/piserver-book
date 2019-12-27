@@ -1,6 +1,6 @@
 # System Monitoring \(with Netdata\)
 
-Setting up a comprehensive system monitoring tool can be quite involved. Please see the separate guide: System Monitoring \(Netdata\).
+Netdata allows us to monitor the historical and real-time resources used by the PiServer with a visual dashboard in the browser.
 
 ## Security
 
