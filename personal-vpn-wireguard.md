@@ -154,7 +154,7 @@ Notify on failure with email `systemctl edit wg-quick@`
 
 ```ini
 [Unit]
-OnFailure=notify-email@%N
+OnFailure=notify-email@%N.service
 ```
 
 ## Backup
