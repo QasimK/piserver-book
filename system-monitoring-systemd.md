@@ -2,6 +2,8 @@
 
 **Prerequisites: Email \(msmtp\)**
 
+see System Alerting 
+
 We can set up _systemd_ to notify us by email if it fails. _Systemd_ actually does this by starting another service.
 
 * [ ] Add instructions on setting up server emailing from: [http://qasimk.io/2018/linux-email/](http://qasimk.io/2018/linux-email/)

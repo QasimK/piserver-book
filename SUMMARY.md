@@ -24,7 +24,7 @@
 * [Service Discovery \(Avahi\)](service-discovery-avahi.md)
 * [System Monitoring \(systemd\)](system-monitoring-systemd.md)
 * [System Monitoring \(Netdata\)](system-monitoring-netdata.md)
-* [System Alerting \(mstmp\)](system-alerting-mstmp.md)
+* [Email \(msmtp\)](system-alerting-mstmp.md)
 * [Web Server \(Nginx\)](web-server-nginx.md)
 * [Pi-Hole](pi-hole.md)
 * [IPFS](ipfs.md)
