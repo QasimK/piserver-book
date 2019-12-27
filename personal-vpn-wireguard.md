@@ -38,6 +38,14 @@ net.ipv4.ip_forward = 1
 net.ipv6.conf.all.forwarding=1
 ```
 
+Or more limited
+
+sysctl -w net.ipv4.conf.eth0.forwarding=1
+
+sysctl -w net.ipv4.conf.pivpn.forwarding=1
+
+Can also do PreUp, PreDown.
+
 ## Port Forwarding
 
 Ensure UDP Port 50000 is forwarded to your PiServer on your home router.
@@ -59,8 +67,6 @@ nc -vv -u <IP-ADDRESS> 50000
 > Get your IP address with `curl ifconfig.co`
 
 ## Server Setup
-
-
 
 ```
 cd /etc/wireguard
