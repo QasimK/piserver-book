@@ -88,7 +88,7 @@ PrivateMounts=yes
 PrivateTmp=yes
 # We need the internet
 # PrivateNetwork=yes
-ProtectSystem=Strict
+ProtectSystem=strict
 ProtectHome=yes
 ProtectKernelTunables=yes
 ProtectKernelModules=yes
