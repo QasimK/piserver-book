@@ -52,8 +52,6 @@ nc -vv -u <IP-ADDRESS> 51820
 cd /etc/wireguard
 umask 077
 wg genkey | tee privatekey | wg pubkey > publickey
-chmod 0600 privatekey
-chmod 0644 publickey
 ```
 
 Configure the server \(with no peers\) `/etc/wireguard/pivpn.conf`
@@ -100,6 +98,8 @@ systemctl enable --now wg-quick@pivpn.service
 We can create the private keys on the server, and use QR codes to add them to our smartphones.
 
 ```console
+cd /etc/wireguard
+umask 077
 wg genkey | tee name.privatekey | wg pubkey > name.publickey
 wg genpsk > name.psk
 ```
