@@ -88,9 +88,13 @@ ListenPort = 51820
 PrivateKey = <INSERT FROM ABOVE>
 Address = 10.200.200.1/24
 
-# Forward traffic
-PostUp = iptables -A FORWARD -i %i -j ACCEPT; iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE 
-PostDown = iptables -D FORWARD -i %i -j ACCEPT; iptables -t nat -D POSTROUTING -o eth0 -j MASQUERADE/
+# Forward traffic (replace eth0 with internet-interface name)
+PostUp = iptables -A FORWARD -i %i -j ACCEPT; iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
+PostUp = sysctl -w net.ipv4.conf.%i.forwarding=1
+PostUp = sysctl -w net.ipv4.conf.eth0.forwarding=1
+PreDown = sysctl -w net.ipv4.conf.eth0.forwarding=0
+PreDown = sysctl -w net.ipv4.conf.%i.forwarding=0
+PostDown = iptables -D FORWARD -i %i -j ACCEPT; iptables -t nat -D POSTROUTING -o eth0 -j MASQUERADE
 ```
 
 To enable/disable the network interface:
@@ -105,6 +109,13 @@ Finally, enable the service with:
 ```console
 systemctl enable --now wg-quick@pivpn.service
 ```
+
+> An alternative to temporary and possible-conflicting sysctl IP packet forwarding is to permanently add to `/etc/sysctl.d/99-pivpn.conf`:
+>
+> ```ini
+> net.ipv4.ip_forward = 1
+> net.ipv6.conf.all.forwarding = 1
+> ```
 
 ## Client Setup \(For Each Client\)
 
