@@ -130,7 +130,7 @@ We'll start the timer 30 seconds after boot to let the system settle, and therea
 
 ## Port-Forwarding & Testing
 
-* We can test the DNS records using `dig example.duckdns.org` and  `dig piserver.example.com`.
+* We can test the DNS records using `drill example.duckdns.org` and  `drill piserver.example.com`.
 * We will almost certainly need to port-forward incoming connections to the PiServer on our router, for example port-forward port 24 on the router to port 22 on the PiServer to allow us to SSH-in from the internet.
 * We may not be able to SSH in to our router's public IP address, so we could try using a mobile connection instead \(e.g. our phone with a WiFi hotspot\).
   * [ ] What is the cause of this problem?
