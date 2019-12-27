@@ -8,6 +8,8 @@ We use WireGuard because it is easier to configure, more secure, more reliable a
 
 \(Alternatives include OpenVPN.\)
 
+There is useful documentation available at: <https://github.com/pirate/wireguard-docs>
+
 ## Security
 
 Wireguard has not been audited yet.
