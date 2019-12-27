@@ -24,29 +24,7 @@ sudo pacmatic -S --needed linux-headers wireguard-tools wireguard-dkms
 
 I selected `linux-raspberrypi-headers` when prompted during the installation of `linux-headers`.
 
-We need to translate packets from the Virtual Private Network to/from the Local Area Network. The PiServer will act as a router.
 
-Ensure IPv4 forwarding is enabled:
-
-```
-sysctl -w net.ipv4.ip_forward=1
-sysctl -w net.ipv6.conf.all.forwarding=1
-```
-
-`/etc/sysctl.d/99-sysctl.conf`
-
-```
-net.ipv4.ip_forward = 1
-net.ipv6.conf.all.forwarding=1
-```
-
-Or more limited
-
-sysctl -w net.ipv4.conf.eth0.forwarding=1
-
-sysctl -w net.ipv4.conf.pivpn.forwarding=1
-
-Can also do PreUp, PreDown.
 
 ## Port Forwarding
 
@@ -96,6 +74,8 @@ PreDown = sysctl -w net.ipv4.conf.eth0.forwarding=0
 PreDown = sysctl -w net.ipv4.conf.%i.forwarding=0
 PostDown = iptables -D FORWARD -i %i -j ACCEPT; iptables -t nat -D POSTROUTING -o eth0 -j MASQUERADE
 ```
+
+The "forward traffic" configuration translates packets from the Virtual Private Network to/from the Local Area Network - the PiServer will be a router.
 
 To enable/disable the network interface:
 
