@@ -127,7 +127,7 @@ DNS = 192.168.1.1
 PublicKey = <CONTENTS OF SERVER publickey HERE>
 PreSharedKey = <CONTENTS OF name.psk HERE>
 AllowedIPs = 0.0.0.0/0, ::/0
-Endpoint = piserver.example.com:51820
+EndPoint = piserver.example.com:51820
 PersistentKeepalive = 60
 ```
 
