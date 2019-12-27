@@ -12,7 +12,8 @@ There is useful documentation available at: [https://github.com/pirate/wireguard
 
 ## Security
 
-Wireguard has not been audited yet.
+* Wireguard is in beta, and has not been audited.
+* Wireguard private keys are secured under `/etc/wireguard`.
 
 TODO: Use preshared keys for improved security?
 
@@ -146,3 +147,6 @@ There are several levels of testing that we can do:
 * Try `drill google.com` or `curl google.com`.
 * Try to browse the internet.
 * Look at logs in the Wireguard app.
+
+
+
