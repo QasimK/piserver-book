@@ -175,6 +175,8 @@ Keeping some old versions is useful for the \(very\) rare occasion that you want
 
 Ensure the hooks directory is created `sudo mkdir -p /etc/pacman.d/hooks`.
 
+Install `sudo pacman -S --needed pacman-contrib`.
+
 To remove all versions of an uninstalled package, we `sudoedit /etc/pacman.d/hooks/paccache-remove.hook`
 
 ```ini
