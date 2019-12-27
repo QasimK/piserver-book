@@ -141,7 +141,6 @@ Append the client peer to the server configuration `/etc/wireguard/pivpn.conf`:
 ```ini
 [Peer]
 # Name = name client
-AllowedIPs = 10.0.0.2/32
 PublicKey = <CONTENTS OF name.publickey HERE>
 PreSharedKey = <CONTENTS OF name.psk HERE>
 AllowedIPs = 10.0.0.2/32
