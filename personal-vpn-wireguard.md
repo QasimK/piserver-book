@@ -8,7 +8,7 @@ We use WireGuard because it is easier to configure, more secure, more reliable a
 
 \(Alternatives include OpenVPN.\)
 
-There is useful documentation available at: <https://github.com/pirate/wireguard-docs>
+There is useful documentation available at: [https://github.com/pirate/wireguard-docs](https://github.com/pirate/wireguard-docs)
 
 ## Security
 
@@ -67,6 +67,8 @@ nc -vv -u <IP-ADDRESS> 51820
 ```
 
 > Get your IP address with `curl ifconfig.co`
+>
+> Any port can be used, but usually port 51820 is used for Wireguard.
 
 ## Server Setup
 
@@ -88,12 +90,17 @@ Address = 10.200.200.1/24
 
 # Forward traffic
 PostUp = iptables -A FORWARD -i %i -j ACCEPT; iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE 
-PostDown = iptables -D FORWARD -i %i -j ACCEPT; iptables -t nat -D POSTROUTING -o eth0 -j MASQUERADE
+PostDown = iptables -D FORWARD -i %i -j ACCEPT; iptables -t nat -D POSTROUTING -o eth0 -j MASQUERADE/
 ```
 
-wg-quick up down pivpn
+To enable/disable the network interface:
 
-Finally enable with:
+```
+wg-quick up pivpn
+wg-quick down pivpn
+```
+
+Finally, enable the service with:
 
 ```
 systemctl enable --now wg-quick@pivpn.service
@@ -101,27 +108,41 @@ systemctl enable --now wg-quick@pivpn.service
 
 ## Client Setup
 
-I strongly recommend using qrencode!
+We can create the private keys on the server, and use QR codes to add them to our smartphones.
 
 ```
 wg genkey | tee name.privatekey | wg pubkey > name.publickey
 ```
 
-Generate client conf.
+Generate the client configuration `name.conf`:
 
-DNS = 192.168.1.1 - whatever it would be on local network. Note - you can combine ths with Pi-Hole.
+```ini
+[Interface]
+Address = 10.0.0.2/32
+PrivateKey = <CONTENTS OF CLIENT name.privatekey HERE>
+DNS = 192.168.1.1
 
-Add to device.
-
+[Peer]
+PublicKey = <CONTENTS OF SERVER publickey HERE>
+AllowedIPs = 0.0.0.0/0, ::/0
+Endpoint = piserver.example.com:51820
+PersistentKeepalive = 60
 ```
+
+* The DNS is set to the DNS server on the LAN. We could set up a [local DNS resolver](/pi-hole.md). By default, Wireguard prevents DNS leaks.
+* We direct all IPv4 and IPv6 internet traffic to the VPN, even if the server cannot send IPv6 traffic over the internet. This prevents IPv6 leaks.
+* The endpoint is a [Dynamic DNS](/dynamic-dns-duckdns.md) URL.
+* We use `PersistentKeepalive` because the _client_ might be behind a NAT, and this will keep the connection open.
+
+Now generate a QR code which can be used by the smartphone Wireguard app:
+
+```console
 qrencode -t ansiutf8 < name.conf
 ```
 
-Testing:
+There are several levels of testing that we can do:
 
-Ping.
-
-Browse website.
-
-Look at logs in Wireguard application.
-
+* Ping the server, DNS host, and the internet `1.1.1.1`.
+* Try `drill google.com` or `curl google.com`.
+* Try to browse the internet.
+* Look at logs in the Wireguard app.
