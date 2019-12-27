@@ -78,10 +78,6 @@ SyslogIdentifier=duckdns
 Nice=19
 
 # Additional Security:
-
-#* PrivateTmp=yes
-#* RemoveIPC=yes
-ProtectHome=yes
 PrivateDevices=yes
 PrivateUsers=yes
 PrivateMounts=yes
