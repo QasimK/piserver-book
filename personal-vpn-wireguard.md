@@ -91,6 +91,12 @@ PostDown = iptables -D FORWARD -i %i -j ACCEPT; iptables -t nat -D POSTROUTING -
 
 wg-quick up down pivpn
 
+Finally enable with:
+
+```
+systemctl enable --now wg-quick@pivpn.service
+```
+
 ## Client Setup
 
 I strongly recommend using qrencode!
@@ -99,11 +105,21 @@ I strongly recommend using qrencode!
 wg genkey | tee name.privatekey | wg pubkey > name.publickey
 ```
 
+Generate client conf.
+
+DNS = 192.168.1.1 - whatever it would be on local network. Note - you can combine ths with Pi-Hole.
+
 Add to device.
 
 ```
 qrencode -t ansiutf8 < name.conf
 ```
 
+Testing:
 
+Ping.
+
+Browse website.
+
+Look at logs in Wireguard application.
 
