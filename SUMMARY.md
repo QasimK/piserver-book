@@ -16,8 +16,9 @@
 * [Dynamic DNS \(DuckDNS\)](dynamic-dns-duckdns.md)
 * [Dynamic DNS \(Tor\)](dynamic-dns-ssh-over-tor.md)
 * [Email \(msmtp\)](email-msmtp.md)
-* [Torrent \(Transmission\)](torrent-transmission.md)
 * [File Sync \(Resilio\)](file-sync-resilio.md)
+* [System Monitoring \(systemd\)](system-monitoring-systemd.md)
+* [Torrent \(Transmission\)](torrent-transmission.md)
 * [Forum \(FlaskBB\)](forum-flaskbb.md)
 * [Cloud \(NextCloud\)](cloud-nextcloud.md)
 * [NAS \(Samba\)](nas-samba.md)
@@ -27,7 +28,7 @@
 * [Pi-Hole](pi-hole.md)
 * [IPFS](ipfs.md)
 * [Blog \(Jekyll\)](blog-jekyll.md)
-* [Git \(Pure\)](git.md)
+* [System Monitoring \(systemd\)](system-monitoring-systemd.md)
 
 ## Appendix
 
