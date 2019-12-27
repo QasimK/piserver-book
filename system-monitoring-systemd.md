@@ -19,7 +19,14 @@ ExecStart=/usr/bin/sh -c 'printf "Subject: [systemd] %i Failed" | /usr/bin/msmtp
 
 This can easily be tested with `systemctl start notify-email@test`.
 
-This notification method will be used by our other systemd services.
+## Usage
+
+This notification method can be used by our other systemd services by adding the line:
+
+```ini
+[Unit]
+OnFailure=notify-failed@%n
+```
 
 ## Backup
 
