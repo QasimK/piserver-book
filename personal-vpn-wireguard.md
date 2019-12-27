@@ -24,8 +24,6 @@ sudo pacmatic -S --needed linux-headers wireguard-tools wireguard-dkms
 
 I selected `linux-raspberrypi-headers` when prompted during the installation of `linux-headers`.
 
-
-
 ## Port Forwarding
 
 Ensure UDP Port 51820 is forwarded to your PiServer on your home router.
