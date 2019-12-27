@@ -12,7 +12,7 @@ We use WireGuard because it is easier to configure, more secure, more reliable a
 
 Wireguard has not been audited yet.
 
-TODO: Use preshared keys.
+TODO: Use preshared keys for improved security?
 
 ## Installation
 
@@ -20,15 +20,18 @@ TODO: Use preshared keys.
 sudo pacmatic -S --needed linux-headers wireguard-tools wireguard-dkms
 ```
 
+I selected `linux-raspberrypi-headers` when prompted during the installation of `linux-headers`.
+
 ## Server Setup
 
 ```
 cd /etc/wireguard
-wg genkey > privatekey
+wg genkey | tee privatekey | wg pubkey > publickey
 chmod 0600 privatekey
-wg pubkey < privatekey > publickey
 chmod 0644 publickey
 ```
+
+
 
 
 
