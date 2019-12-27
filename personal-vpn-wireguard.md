@@ -14,8 +14,7 @@ There is useful documentation available at: [https://github.com/pirate/wireguard
 
 * Wireguard is in beta, and has not been audited.
 * Wireguard private keys are secured under `/etc/wireguard`.
-
-TODO: Use preshared keys for improved security?
+* We use pre-shared keys for post-quantum resistance.
 
 ## Installation
 
@@ -73,7 +72,7 @@ nc -vv -u <IP-ADDRESS> 51820
 
 ## Server Setup
 
-```
+```console
 cd /etc/wireguard
 umask 077
 wg genkey | tee privatekey | wg pubkey > publickey
@@ -83,7 +82,7 @@ chmod 0644 publickey
 
 Configure the server \(with no peers\) `/etc/wireguard/pivpn.conf`
 
-```
+```ini
 [Interface]
 ListenPort = 51820
 PrivateKey = <INSERT FROM ABOVE>
@@ -96,23 +95,24 @@ PostDown = iptables -D FORWARD -i %i -j ACCEPT; iptables -t nat -D POSTROUTING -
 
 To enable/disable the network interface:
 
-```
+```console
 wg-quick up pivpn
 wg-quick down pivpn
 ```
 
 Finally, enable the service with:
 
-```
+```console
 systemctl enable --now wg-quick@pivpn.service
 ```
 
-## Client Setup
+## Client Setup \(For Each Client\)
 
 We can create the private keys on the server, and use QR codes to add them to our smartphones.
 
 ```
 wg genkey | tee name.privatekey | wg pubkey > name.publickey
+wg genpsk > name.psk
 ```
 
 Generate the client configuration `name.conf`:
@@ -125,6 +125,7 @@ DNS = 192.168.1.1
 
 [Peer]
 PublicKey = <CONTENTS OF SERVER publickey HERE>
+PreSharedKey = <CONTENTS OF name.psk HERE>
 AllowedIPs = 0.0.0.0/0, ::/0
 Endpoint = piserver.example.com:51820
 PersistentKeepalive = 60
@@ -134,6 +135,17 @@ PersistentKeepalive = 60
 * We direct all IPv4 and IPv6 internet traffic to the VPN, even if the server cannot send IPv6 traffic over the internet. This prevents IPv6 leaks.
 * The endpoint is a [Dynamic DNS](/dynamic-dns-duckdns.md) URL.
 * We use `PersistentKeepalive` because the _client_ might be behind a NAT, and this will keep the connection open.
+
+Append the client peer to the server configuration `/etc/wireguard/pivpn.conf`:
+
+```ini
+[Peer]
+# Name = name client
+AllowedIPs = 10.0.0.2/32
+PublicKey = <CONTENTS OF name.publickey HERE>
+PreSharedKey = <CONTENTS OF name.psk HERE>
+AllowedIPs = 10.0.0.2/32
+```
 
 Now generate a QR code which can be used by the smartphone Wireguard app:
 
