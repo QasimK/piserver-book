@@ -25,7 +25,7 @@ This notification method can be used by our other systemd services by adding the
 
 ```ini
 [Unit]
-OnFailure=notify-email@%n
+OnFailure=notify-email@%N
 ```
 
 ## Backup
