@@ -137,8 +137,6 @@ chsh -s /usr/bin/fish $USER
 
 ## SSH
 
-> This is for OpenSSH. TODO: Dropbear?
-
 We should make SSH more secure with some minor tweaks using `sudoedit /etc/ssh/sshd_config`.
 
 ```
