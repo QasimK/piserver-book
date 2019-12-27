@@ -1,6 +1,6 @@
 # Git \(Just By Itself\)
 
-There's plain git, and then there's GitLab.
+Stub.
 
-See alternatives: Git \(Gitlab\)
+Or with Gitea, or with GitLab.
 

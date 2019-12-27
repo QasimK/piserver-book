@@ -29,6 +29,7 @@
 * [Pi-Hole](pi-hole.md)
 * [IPFS](ipfs.md)
 * [Blog \(Jekyll\)](blog-jekyll.md)
+* [Git](git.md)
 
 ## Appendix
 
