@@ -13,7 +13,9 @@ TODO: Further explanation can be found [https://qasimk.io/2018/linux-email/](htt
 
 ## Third-Party Service
 
-We will need a third-party service to send emails, for example Sendgrid or Gmail. In this example, we use Sendgrid.
+Residential IPs have very poor reputation amongst email providers, therefore we will use a third-party service to send emails, for example Sendgrid, or Gmail.
+
+\(In this example, we use Sendgrid.\)
 
 ## Install & Configuration
 
