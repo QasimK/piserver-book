@@ -99,7 +99,6 @@ NoNewPrivileges=yes
 RestrictAddressFamilies=
 MemoryDenyWriteExecute=yes
 SystemCallArchitectures=native
-#* RemoveIPC=yes
 RestrictRealtime=yes
 RestrictAddressFamilies=
 SystemCallFilter=@system-service
