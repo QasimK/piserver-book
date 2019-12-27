@@ -1,14 +1,14 @@
 # Personal VPN \(with WireGuard\)
 
-We can create a personal VPN to securely gain remote access to your home network.
+We can create a personal VPN to securely gain remote access to our home network.
 
-Maybe also: Device -&gt; Personal VPN \(access home network\) -&gt; VPN provider \(access internet\)?
-
-We use WireGuard because it is easier to configure, more secure, more reliable and more performant, than OpenVPN. However, it is currently in beta, so I guess it's a good thing this guide is a placeholder right now ;\)
+We use WireGuard because it is easier to configure, more secure, more reliable and more performant, than OpenVPN.
 
 \(Alternatives include OpenVPN.\)
 
-There is useful documentation available at: [https://github.com/pirate/wireguard-docs](https://github.com/pirate/wireguard-docs)
+There is useful documentation available at: [https://github.com/pirate/wireguard-docs](https://github.com/pirate/wireguard-docs).
+
+TODO: Internet via VPN, DNS via Pi-Hole.
 
 ## Security
 
@@ -22,7 +22,7 @@ There is useful documentation available at: [https://github.com/pirate/wireguard
 sudo pacmatic -S --needed linux-headers wireguard-tools wireguard-dkms
 ```
 
-I selected `linux-raspberrypi-headers` when prompted during the installation of `linux-headers`.
+We select `linux-raspberrypi-headers` when prompted during the installation of `linux-headers`.
 
 ## Port Forwarding
 
@@ -30,14 +30,14 @@ Ensure UDP Port 51820 is forwarded to your PiServer on your home router.
 
 Test this with:
 
-```
+```console
 sudo pacmatic -S --needed openbsd-netcat
 nc -vv -u -l 51820
 ```
 
 Then on a different machine, try to connect to the PiServer and type anything to send messages back and forth.
 
-```
+```console
 curl iconfig.co
 nc -vv -u <IP-ADDRESS> 51820
 ```
