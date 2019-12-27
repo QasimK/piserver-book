@@ -4,8 +4,7 @@ We can sync our own contacts & calenders. I wouldn't recommend it :\) I forgot w
 
 Radicale is pretty great though.
 
-* [ ] Migrate from blog: ...
-* [ ] Link blog in above task \(lol\)
+* [ ] Migrate from blog: https://qasimk.io/2017/radicale-server/
 
-See alternative: NextCloud
+See alternative: [NextCloud](/cloud-nextcloud.md).
 
