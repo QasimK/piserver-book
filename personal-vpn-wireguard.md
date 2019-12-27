@@ -99,7 +99,7 @@ systemctl enable --now wg-quick@pivpn.service
 
 We can create the private keys on the server, and use QR codes to add them to our smartphones.
 
-```
+```console
 wg genkey | tee name.privatekey | wg pubkey > name.publickey
 wg genpsk > name.psk
 ```
@@ -129,7 +129,7 @@ Append the client peer to the server configuration `/etc/wireguard/pivpn.conf`:
 
 ```ini
 [Peer]
-# Name = name client
+# Name = client-name-here
 PublicKey = <CONTENTS OF name.publickey HERE>
 PreSharedKey = <CONTENTS OF name.psk HERE>
 AllowedIPs = 10.0.0.2/32
