@@ -159,5 +159,22 @@ There are several levels of testing that we can do:
 * Try to browse the internet.
 * Look at logs in the Wireguard app.
 
+## Backup
+
+Update the backup file:
+
+```
+    /etc/wireguard/ \
+    /etc/systemd/system/multi-user.target.wants/wg-quick@pivpn.service \
+```
+
+## Conclusion
+
+We set up a VPN to our home LAN:
+
+* that provides access to our home LAN, and
+* that is private and secure, and
+* that will backup the configuration files for easy restore.
+
 
 
