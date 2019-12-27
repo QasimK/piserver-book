@@ -23,7 +23,6 @@
 * [NAS \(Samba\)](nas-samba.md)
 * [Personal VPN \(WireGuard\)](personal-vpn-wireguard.md)
 * [Service Discovery \(Avahi\)](service-discovery-avahi.md)
-* [Email \(msmtp\)](email-msmtp.md)
 * [Web Server \(Nginx\)](web-server-nginx.md)
 * [Pi-Hole](pi-hole.md)
 * [IPFS](ipfs.md)
