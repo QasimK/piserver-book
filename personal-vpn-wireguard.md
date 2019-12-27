@@ -148,12 +148,23 @@ There are several levels of testing that we can do:
 * Try to browse the internet.
 * Look at logs in the Wireguard app.
 
+## Monitoring
+
+Notify on failure with email `systemctl edit wg-quick@`
+
+```ini
+[Unit]
+OnFailure=notify-email@%N
+```
+
 ## Backup
 
 Update the backup file:
 
 ```
     /etc/wireguard/ \
+    /etc/systemd/system/wg-quick@.service \
+    /etc/systemd/system/wg-quick@.service.d/override.conf \
     /etc/systemd/system/multi-user.target.wants/wg-quick@pivpn.service \
 ```
 
