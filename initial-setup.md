@@ -46,11 +46,12 @@ We install some basic tools:
 * `pacmatic` is a simple wrapper around `pacman` which can give warnings when doing system upgrades. `python-html2text` is an optional dependency that formats some news items better.
 * `vim` is the one true text editor.
 * `htop` is an excellent, intuitive monitoring tool.
+* `mosh` is an excellent, secure SSH-esque connection that works better on a poor connection and when roaming.
 
 ```console
 pacman-key --init
 pacman-key --populate archlinuxarm
-pacman -Syu --needed sudo pacmatic python-html2text vim htop
+pacman -Syu --needed sudo pacmatic python-html2text vim htop mosh
 ```
 
 We can optionally delete some unnecessary tools \(find them with `pacman -Qent`:

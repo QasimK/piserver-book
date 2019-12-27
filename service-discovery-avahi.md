@@ -4,11 +4,11 @@ We can broadcast services like SSH over the _local network_, so that if we forgo
 
 To broadcast the hostname `piserver.local`, and the SSH service on port 22:
 
-```
-sudo pacmatic -S --needed avahi
-sudo cp /usr/share/doc/avahi/ssh.service /etc/avahi/services
-sudo systemctl enable --now avahi-daemon.service
-sudo systemctl restart dbus.service
+```console
+pacman -S --needed avahi
+cp /usr/share/doc/avahi/ssh.service /etc/avahi/services
+systemctl enable --now avahi-daemon.service
+systemctl restart dbus.service
 ```
 
 \(I had to restart dbus for whatever reason on my PC.\)
