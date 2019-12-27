@@ -17,7 +17,7 @@ TODO: Use preshared keys.
 ## Installation
 
 ```console
-sudo pacmatic -S --needed wireguard-tools wireguard-dkms
+sudo pacmatic -S --needed linux-headers wireguard-tools wireguard-dkms
 ```
 
 ## Server Setup
