@@ -15,7 +15,7 @@ See alternative: Tor.
 
 ## DNS and Custom Domains
 
-A custom domain is not necessary, because our Dynamic DNS provider will \(usually?\) give us one. For example,  `example.duckdns.org`.
+A custom domain is not necessary, because our Dynamic DNS provider will give us one. For example,  `example.duckdns.org`.
 
 However, if we have one then we can add a `CNAME` record for our nicer domain, e.g. `piserver.example.com` to point to the uglier domain.
 
