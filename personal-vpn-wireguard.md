@@ -48,20 +48,20 @@ Can also do PreUp, PreDown.
 
 ## Port Forwarding
 
-Ensure UDP Port 50000 is forwarded to your PiServer on your home router.
+Ensure UDP Port 51820 is forwarded to your PiServer on your home router.
 
 Test this with:
 
 ```
 sudo pacmatic -S --needed openbsd-netcat
-nc -vv -u -l 50000
+nc -vv -u -l 51820
 ```
 
 Then on a different machine, try to connect to the PiServer and type anything to send messages back and forth.
 
 ```
 curl iconfig.co
-nc -vv -u <IP-ADDRESS> 50000
+nc -vv -u <IP-ADDRESS> 51820
 ```
 
 > Get your IP address with `curl ifconfig.co`
@@ -80,7 +80,7 @@ Configure the server \(with no peers\) `/etc/wireguard/pivpn.conf`
 
 ```
 [Interface]
-ListenPort = 50000
+ListenPort = 51820
 PrivateKey = <INSERT FROM ABOVE>
 Address = 10.200.200.1/24
 
