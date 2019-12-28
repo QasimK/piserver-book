@@ -134,6 +134,8 @@ PreSharedKey = <CONTENTS OF name.psk HERE>
 AllowedIPs = 10.0.0.2/32
 ```
 
+* AllowedIPs is /32 because it is a single machine, not another network, on the other side.
+
 Now generate a QR code which can be used by the smartphone Wireguard app:
 
 ```console
