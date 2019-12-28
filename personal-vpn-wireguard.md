@@ -118,6 +118,7 @@ EndPoint = piserver.example.com:51820
 PersistentKeepalive = 60
 ```
 
+* The Address is set to the server only, which means...
 * The DNS is set to the DNS server on the LAN. We could set up a [local DNS resolver](/pi-hole.md). By default, Wireguard prevents DNS leaks.
 * We direct all IPv4 and IPv6 internet traffic to the VPN, even if the server cannot send IPv6 traffic over the internet. This prevents IPv6 leaks. By setting `AllowedIPs = 192.168.1.0/24` the LAN will be accessible, while internet traffic will remain unaffected \(Split tunnelling\).
 * The endpoint is a [Dynamic DNS](/dynamic-dns-duckdns.md) URL.
