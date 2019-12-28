@@ -183,5 +183,5 @@ We set up a VPN to our home LAN:
 
 [https://emanuelduss.ch/2018/09/wireguard-vpn-road-warrior-setup/](https://emanuelduss.ch/2018/09/wireguard-vpn-road-warrior-setup/)
 
-https://www.sethenoka.com/build-your-own-wireguard-vpn-server-with-pi-hole-for-dns-level-ad-blocking/
+[https://www.sethenoka.com/build-your-own-wireguard-vpn-server-with-pi-hole-for-dns-level-ad-blocking/](https://www.sethenoka.com/build-your-own-wireguard-vpn-server-with-pi-hole-for-dns-level-ad-blocking/)
 
