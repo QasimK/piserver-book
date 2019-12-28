@@ -121,7 +121,7 @@ PersistentKeepalive = 60
 ```
 
 * The DNS is set to the DNS server on the LAN. We could set up a [local DNS resolver](/pi-hole.md). By default, Wireguard prevents DNS leaks.
-* We direct all IPv4 and IPv6 internet traffic to the VPN, even if the server cannot send IPv6 traffic over the internet. This prevents IPv6 leaks.
+* We direct all IPv4 and IPv6 internet traffic to the VPN, even if the server cannot send IPv6 traffic over the internet. This prevents IPv6 leaks. By setting `AllowedIPs = 192.168.1.0/24` the LAN will be accessible, while internet traffic will remain unaffected.
 * The endpoint is a [Dynamic DNS](/dynamic-dns-duckdns.md) URL.
 * We use `PersistentKeepalive` because the _client_ might be behind a NAT, and this will keep the connection open.
 
