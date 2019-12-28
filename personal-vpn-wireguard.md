@@ -6,9 +6,7 @@ We use WireGuard because it is easier to configure, more secure, more reliable a
 
 \(Alternatives include OpenVPN.\)
 
-There is useful documentation available at: [https://github.com/pirate/wireguard-docs](https://github.com/pirate/wireguard-docs).
-
-TODO: Internet via VPN, DNS via Pi-Hole.
+TODO: Internet via VPN & DNS via Pi-Hole. Both Optional?
 
 ## Security
 
@@ -176,5 +174,9 @@ We set up a VPN to our home LAN:
 * that is private and secure, and
 * that will backup the configuration files for easy restore.
 
+### Alternate Resources
 
+[https://github.com/pirate/wireguard-docs](https://github.com/pirate/wireguard-docs)
+
+https://emanuelduss.ch/2018/09/wireguard-vpn-road-warrior-setup/
 
