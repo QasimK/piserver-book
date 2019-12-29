@@ -8,7 +8,7 @@ TODO: Further explanation can be found [https://qasimk.io/2018/linux-email/](htt
 
 ## Security
 
-* Secret keys in the configuration is secured under root.
+* Secret keys in the configuration is secured under the `mail` group.
 * Only users in the `mail` group can send emails.
 
 ## Third-Party Service
