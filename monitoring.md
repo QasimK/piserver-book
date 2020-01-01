@@ -16,7 +16,5 @@ As it is both important and involved, we note down here that we should do this, 
 
 ## Commands
 
-Listening services: `ss -alnrp` or variants of it.
-
-
+Listening services: `sudo ss -alnrp` or variants of it.
 
