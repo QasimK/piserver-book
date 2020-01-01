@@ -6,7 +6,7 @@ To broadcast the hostname `piserver.local`, and the SSH service on port 22:
 
 ```console
 pacman -S --needed avahi
-cp /usr/share/doc/avahi/ssh.service /etc/avahi/services
+ln -s /usr/share/doc/avahi/ssh.service /etc/avahi/services
 systemctl enable --now avahi-daemon.service
 ```
 
