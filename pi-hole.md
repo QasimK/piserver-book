@@ -6,9 +6,7 @@ Unfortunately it doesn't offer DNS-over-TLS or DNS-over-HTTPS out of the box, so
 
 [https://github.com/notasausage/pi-hole-unbound-wireguard](https://github.com/notasausage/pi-hole-unbound-wireguard)
 
-
-
-## cloudflared adblocker \(not with PiHole\)
+## cloudflared adblocker \(not with PiHole\) - does not work
 
 yay -S --needed cloudflared-bin
 
