@@ -14,5 +14,9 @@ As it is both important and involved, we note down here that we should do this, 
 * [**System Monitoring \(systemd\)**](/system-monitoring-systemd.md)
 * [**System Monitoring \(Netdata\)**](/system-monitoring-netdata.md)
 
+## Commands
+
+Listening services: `ss -alnrp` or variants of it.
+
 
 
