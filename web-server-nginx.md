@@ -50,26 +50,30 @@ http {
 
     include /etc/nginx/conf.d/*.conf;
     include /etc/nginx/sites-enabled/*.conf;
-
-    server {
-        listen [::]:80 ipv6only=off;
-
-        # Nginx stats server
-        location = /nginx_status {
-            stub_status on;
-            allow 127.0.0.1;
-            deny all;
-        }
-
-        # Redirect all other HTTP -> HTTPS
-        location / {
-            return 301 https://$host$request_uri;
-        }
-    }
 }
 ```
 
 This allows us to configure each application as its own component.
+
+For example `/etc/nginx/sites-available/http.conf`:
+
+```nginx
+server {
+    listen [::]:80 ipv6only=off;
+
+    # Nginx stats server
+    location = /nginx_status {
+        stub_status on;
+        allow 127.0.0.1;
+        deny all;
+    }
+
+    # Redirect all other HTTP -> HTTPS
+    location / {
+        return 301 https://$host$request_uri;
+    }
+}
+```
 
 We have configured access on the LAN 192.168.1.1/24, which may need to be altered for your subnet. If you have IPv6 addresses, you will need to figure out the subnet for it, e.g. `allow fdaa:bbcc:ddee:0::/48;`. You can list your ip addresses with `ip addr list`. \(For IPv6 you could use `fd00::/8` which is all of the private \(LAN\) addresses/subnets/networks. All. Of. Them.\)
 
