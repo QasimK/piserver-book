@@ -58,6 +58,15 @@ Modify /etc/pihole/setupVars.conf
 
 `DNSMASQ_LISTENING=local`
 
+Except that ^ doesn't seem to work reliably. So override /etc/dnsmasq.d/99-override.conf
+
+```ini
+interface=eth0
+interface=pivpn
+```
+
+
+
 TODO: Backup - /etc/pihole/setupVars.conf, /etc/php/php.ini, nginx stuff, /etc/pihole/pihole-FTL.conf.
 
 Security issues:
