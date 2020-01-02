@@ -23,6 +23,23 @@ pacmatic -S --needed php-fpm php-sqlite
 # configured separately.
 ```
 
+Enable extensions in /etc/php/php.ini
+
+```
+[...]
+extension=pdo_sqlite
+[...]
+extension=sockets
+extension=sqlite3
+[...]
+```
+
+TODO: open\_basedir
+
+password-protect interface:
+
+pihole -a -p
+
 ## cloudflared adblocker \(not with PiHole\) - does not work
 
 yay -S --needed cloudflared-bin
