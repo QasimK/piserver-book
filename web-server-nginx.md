@@ -77,6 +77,13 @@ server {
 
 We have configured access on the LAN 192.168.1.1/24, which may need to be altered for your subnet. If you have IPv6 addresses, you will need to figure out the subnet for it, e.g. `allow fdaa:bbcc:ddee:0::/48;`. You can list your ip addresses with `ip addr list`. \(For IPv6 you could use `fd00::/8` which is all of the private \(LAN\) addresses/subnets/networks. All. Of. Them.\)
 
+```nginx
+listen [::]:443 ssl http2 ipv6only=off;
+allow 192.168.1.0/24;
+allow fdaa:bbcc:ddee:0::/48;
+deny all;
+```
+
 We will add a couple of useful configuration helpers inside `/etc/nginx/conf.d/`
 
 ```nginx
@@ -165,7 +172,7 @@ LAN applications will be served at `piserver.local`. TLS encryption will be done
 The most significant field is Common Name \(CN\) which should be set to `piserver.local`.
 
 ```console
-sudo openssl req -x509 -nodes -days 3650 -newkey rsa:2048 -keyout /etc/ssl/private/nginx-selfsigned.key -out /etc/ssl/certs/nginx-selfsigned.crt
+openssl req -x509 -nodes -days 3650 -newkey rsa:2048 -keyout /etc/ssl/private/nginx-selfsigned.key -out /etc/ssl/certs/nginx-selfsigned.crt
 ```
 
 We create a `/etc/nginx/conf.d/self-signed-cert.conf`
