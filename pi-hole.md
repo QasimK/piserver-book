@@ -11,6 +11,9 @@ Unfortunately it doesn't offer DNS-over-TLS or DNS-over-HTTPS out of the box, so
 We will use Nginx.
 
 ```
+systemctl disable --now systemd-resolved
+
+# As user not root
 yay -S --needed pi-hole-server
 ```
 
