@@ -60,13 +60,13 @@ DNSMASQ\_LISTENING=local
 
 Backup - /etc/pihole/setupVars.conf, /etc/php/php.ini, nginx stuff, /etc/pihole/pihole-FTL.conf.
 
-
-
 Security issues:
 
 PiHole FTL has open port on localhost:4711 for statistics
 
-## cloudflared adblocker \(not with PiHole\) - does not work
+TODO: Nginx gzip config.
+
+## cloudflared adblocker with pihole
 
 yay -S --needed cloudflared-bin
 
@@ -79,8 +79,8 @@ proxy-dns-upstream:
  - https://1.1.1.1/.well-known/dns-query
  - https://2606:4700:4700::1111/.well-known/dns-query
  - https://2606:4700:4700::1001/.well-known/dns-query
-proxy-dns-port: 53
-proxy-dns-address: 0.0.0.0
+proxy-dns-port: 5053
+proxy-dns-address: 127.0.0.1
 ```
 
 Override service
