@@ -27,6 +27,8 @@ mkdir /etc/nginx/sites-enabled
 >
 > Normally we would suggest 2048-bit, but the Raspberry Pi is a little underpowered :\) It takes fooorrrreevverrr just to generate the 2048-bit file.
 
+## Configuration
+
 Edit `/etc/nginx/nginx.conf`
 
 ```nginx
@@ -47,7 +49,7 @@ http {
     keepalive_timeout  65;
 
     include /etc/nginx/conf.d/*.conf;
-    include /etc/nginx/locations-enabled/*.conf;
+    include /etc/nginx/siitteess-enabled/*.conf;
 
     server {
         listen [::]:80 ipv6only=off;
@@ -70,8 +72,6 @@ http {
 This allows us to configure each application as its own component.
 
 We have configured access on the LAN 192.168.1.1/24, which may need to be altered for your subnet. If you have IPv6 addresses, you will need to figure out the subnet for it, e.g. `allow fdaa:bbcc:ddee:0::/48;`. You can list your ip addresses with `ip addr list`. \(For IPv6 you could use `fd00::/8` which is all of the private \(LAN\) addresses/subnets/networks. All. Of. Them.\)
-
-## Configuration
 
 We will add a couple of useful configuration helpers inside `/etc/nginx/conf.d/`
 
