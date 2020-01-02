@@ -49,7 +49,7 @@ http {
     keepalive_timeout  65;
 
     include /etc/nginx/conf.d/*.conf;
-    include /etc/nginx/siitteess-enabled/*.conf;
+    include /etc/nginx/sites-enabled/*.conf;
 
     server {
         listen [::]:80 ipv6only=off;
@@ -87,8 +87,7 @@ We will add a couple of useful configuration helpers inside `/etc/nginx/conf.d/`
 # 1MB = 4000 sessions
 ssl_session_cache shared:SSL:1M;
 ssl_session_timeout 1d;
-# Session Tickets are a privacy leak
-ssl_session_tickets off;
+ssl_session_tickets off;  # Session Tickets are a privacy leak
 
 # Secure SSL config - https://mozilla.github.io/server-side-tls/ssl-config-generator/
 ssl_protocols TLSv1.2 TLSv1.3;
@@ -99,7 +98,7 @@ ssl_prefer_server_ciphers on;
 # SSL OSCP Stapling
 ssl_stapling on;
 ssl_stapling_verify on;
-resolver 8.8.8.8 8.8.4.4;
+resolver 8.8.8.8 8.8.4.4;  # Non-blocking resolver
 
 # Force SSL to this domain (+subdomains) for 6 months (+ preload list)
 add_header Strict-Transport-Security "max-age=15768000; includeSubDomains; preload" always;
@@ -140,10 +139,6 @@ add_header X-Content-Type-Options $x_content_type_options always;
 add_header X-Frame-Options $x_frame_options always;
 add_header X-XSS-Protection $x_xss_protection always;
 ```
-
-We will modify `/etc/nginx/nginx.conf` slightly.
-
-Also: Add ``tcpnopush on; under `sendfile on` This is an optimisation.``
 
 ### Passwords
 
