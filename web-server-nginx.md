@@ -17,10 +17,10 @@ We can use Nginx to serve other applications that we have set up using TLS encry
 * [ ] TODO: Ciphers suitable for RPi
 
 ```
-sudo pacmatic -S --needed nginx-mainline
-sudo openssl dhparam -out /etc/ssl/certs/dhparam.pem 2048 creates=/etc/ssl/certs/dhparam.pem
-sudo mkdir /etc/nginx/locations-available
-sudo mkdir /etc/nginx/locations-available-lan
+pacmatic -S --needed nginx-mainline
+openssl dhparam -out /etc/ssl/certs/dhparam.pem 2048 creates=/etc/ssl/certs/dhparam.pem
+mkdir /etc/nginx/sites-available
+mkdir /etc/nginx/sites-enabled
 ```
 
 > We generate fresh Diffie-Hellman parameters. This is an important security step, though it takes a while.
@@ -217,15 +217,15 @@ We do not backup the self-signed certificate.
     /etc/nginx/auth/ \
     /etc/nginx/conf.d/ \
     /etc/nginx/snippets/ \
-    /etc/nginx/locations-available/ \
-    /etc/nginx/locations-enabled-lan/ \
+    /etc/nginx/sites-available/ \
+    /etc/nginx/sites-enabled/ \
 ```
 
 ### Restore
 
 Reinstall Nginx section - dhparam, certifications.
 
-Gzip files again for each application again.
+Gzip files for each application again.
 
 ## Applications
 
