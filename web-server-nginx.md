@@ -91,8 +91,6 @@ allow fdaa:bbcc:ddee:0::/48;
 deny all;
 ```
 
-
-
 We will add a couple of useful configuration helpers inside `/etc/nginx/conf.d/`
 
 ```nginx
