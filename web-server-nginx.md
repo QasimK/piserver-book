@@ -47,9 +47,10 @@ http {
     keepalive_timeout  65;
 
     include /etc/nginx/conf.d/*.conf;
+    include /etc/nginx/locations-enabled/*.conf;
 
-    server {                                                                                                                                                                                                                                                                              
-        listen [::]:80 ipv6only=off;                                                                                                                                                                                                                                                      
+    server {
+        listen [::]:80 ipv6only=off;
 
         # Nginx stats server
         location = /nginx_status {
@@ -62,16 +63,6 @@ http {
         location / {
             return 301 https://$host$request_uri;
         }
-    }
-
-    server {
-        listen [::]:443 ssl http2 ipv6only=off;
-        allow 192.168.1.1/24;
-        deny all;
-        server_name piserver.local;
-
-        include snippets/self-signed-cert.conf;
-        include locations-enabled-lan/*.conf;
     }
 }
 ```
