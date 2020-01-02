@@ -17,7 +17,7 @@ We can use Nginx to serve other applications that we have set up using TLS encry
 * [ ] TODO: Ciphers suitable for RPi
 
 ```
-sudo pacmatic -S --needed nginx
+sudo pacmatic -S --needed nginx-mainline
 sudo openssl dhparam -out /etc/ssl/certs/dhparam.pem 2048 creates=/etc/ssl/certs/dhparam.pem
 sudo mkdir /etc/nginx/locations-available
 sudo mkdir /etc/nginx/locations-available-lan
