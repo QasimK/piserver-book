@@ -206,7 +206,6 @@ We do not backup the self-signed certificate.
     /etc/nginx/nginx.conf \
     /etc/nginx/auth/ \
     /etc/nginx/conf.d/ \
-    /etc/nginx/snippets/ \
     /etc/nginx/sites-available/ \
     /etc/nginx/sites-enabled/ \
 ```
