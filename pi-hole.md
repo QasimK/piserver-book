@@ -40,6 +40,14 @@ password-protect interface:
 
 pihole -a -p
 
+nginx conf.: \(cp /usr/share/pihole/configs/nginx.example.conf pihole.conf\)
+
+```
+
+```
+
+systemctl enable --now php-fpm.service
+
 ## cloudflared adblocker \(not with PiHole\) - does not work
 
 yay -S --needed cloudflared-bin
