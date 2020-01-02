@@ -23,7 +23,7 @@ mkdir /etc/nginx/sites-enabled
 
 > We generate fresh Diffie-Hellman parameters. This is an important security step, though it takes a while.
 >
-> Normally we would suggest 2048-bit, but the Raspberry Pi is a little underpowered :\) It takes fooorrrreevverrr just to generate the 2048-bit file.
+> Normally we would suggest 4096-bit, but the Raspberry Pi is a little underpowered :\) It takes fooorrrreevverrr just to generate the 2048-bit file.
 
 ## Configuration
 
