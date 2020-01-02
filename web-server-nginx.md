@@ -75,6 +75,13 @@ server {
 }
 ```
 
+Enabled with:
+
+```console
+cd /etc/nginx/sites-enabled
+ln -s ../sites-available/http.conf
+```
+
 We have configured access on the LAN 192.168.1.1/24, which may need to be altered for your subnet. If you have IPv6 addresses, you will need to figure out the subnet for it, e.g. `allow fdaa:bbcc:ddee:0::/48;`. You can list your ip addresses with `ip addr list`. \(For IPv6 you could use `fd00::/8` which is all of the private \(LAN\) addresses/subnets/networks. All. Of. Them.\)
 
 ```nginx
@@ -83,6 +90,8 @@ allow 192.168.1.0/24;
 allow fdaa:bbcc:ddee:0::/48;
 deny all;
 ```
+
+
 
 We will add a couple of useful configuration helpers inside `/etc/nginx/conf.d/`
 
