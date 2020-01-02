@@ -176,18 +176,8 @@ sudo chmod 0640 /etc/nginx/auth/admin
 
 LAN applications will be served at `piserver.local`. TLS encryption will be done with self-signed certificate which must be installed on your devices.
 
-The most significant field is Common Name \(CN\) which should be set to `*.piserver.local`.
-
-NB: Create openssl.cnf first, then
-
-```
-[req]
-distinguished_name = req_distinguished_name
-[req_distinguished_name]
-```
-
 ```console
-openssl req -x509 -nodes -newkey rsa:4096 -sha256 -days 3650 -out /etc/ssl/certs/nginx-selfsigned.crt -keyout /etc/ssl/private/nginx-selfsigned.key -subj "/C=GB/O=PiServer/CN=piserver.local" -addext "basicConstraints=critical,CA:FALSE" -addext "authorityKeyIdentifier=keyid,issuer" -addext "keyUsage=digitalSignature,nonRepudiation,keyEncipherment,dataEncipherment" -addext "subjectAltName=DNS:piserver.local,DNS:*.piserver.local" -config openssl.cnf
+openssl req -x509 -newkey rsa:4096 -sha256 -days 3650 -nodes -keyout /etc/ssl/private/nginx-selfsigned.key -out /etc/ssl/certs/nginx-selfsigned.crt -subj /CN=piserver.local -addext subjectAltName=DNS:piserver.local,DNS:*.piserver.local,IP:192.168.1.5
 ```
 
 We create a `/etc/nginx/conf.d/self-signed-cert.conf`
