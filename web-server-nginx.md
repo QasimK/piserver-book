@@ -206,8 +206,6 @@ WWW applications will be served at `<DOMAIN>`. TLS encryption will be done using
 
 ## Backup
 
-We do not backup the self-signed certificate.
-
 ```
     /etc/tmpfiles.d/ \
     /etc/nginx/nginx.conf \
@@ -215,6 +213,8 @@ We do not backup the self-signed certificate.
     /etc/nginx/conf.d/ \
     /etc/nginx/sites-available/ \
     /etc/nginx/sites-enabled/ \
+    /etc/ssl/private/nginx-selfsigned.key \
+    /etc/ssl/certs/nginx-selfsigned.crt \
 ```
 
 ### Restore
