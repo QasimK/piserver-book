@@ -1,5 +1,7 @@
 # Pi-Hole
 
+Prereqs: Nginx
+
 Pi-Hole will allow us to, optionally, secure the DNS, blocks ads, monitor DNS queries, and do all of that for the entire LAN.
 
 Unfortunately it doesn't offer DNS-over-TLS or DNS-over-HTTPS out of the box, so we're not gonna bother with it until it does.
@@ -15,6 +17,10 @@ systemctl disable --now systemd-resolved
 
 # As user not root
 yay -S --needed pi-hole-server
+
+pacmatic -S --needed php-fpm php-sqlite
+# pacmatic -S --needed nginx-mainline
+# configured separately.
 ```
 
 ## cloudflared adblocker \(not with PiHole\) - does not work
