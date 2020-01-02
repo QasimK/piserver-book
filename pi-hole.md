@@ -44,8 +44,6 @@ Edit /etc/pihole/pihole-FTL.conf:
 
 DBINTERVAL=60.0
 
-
-
 nginx conf.: \(cp /usr/share/pihole/configs/nginx.example.conf pihole.conf\)
 
 ```
@@ -60,7 +58,13 @@ Modify /etc/pihole/setupVars.conf
 
 DNSMASQ\_LISTENING=local
 
-Backup - /etc/pihole/setupVars.conf, /etc/php/php.ini, nginx stuff, /etc/pihole/pihole-FTL.conf
+Backup - /etc/pihole/setupVars.conf, /etc/php/php.ini, nginx stuff, /etc/pihole/pihole-FTL.conf.
+
+
+
+Security issues:
+
+PiHole FTL has open port on localhost:4711 for statistics
 
 ## cloudflared adblocker \(not with PiHole\) - does not work
 
