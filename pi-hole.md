@@ -38,11 +38,11 @@ TODO: open\_basedir
 
 password-protect interface:
 
-pihole -a -p
+`pihole -a -p`
 
 Edit /etc/pihole/pihole-FTL.conf:
 
-DBINTERVAL=60.0
+`DBINTERVAL=60.0`
 
 nginx conf.: \(cp /usr/share/pihole/configs/nginx.example.conf pihole.conf\)
 
@@ -54,11 +54,11 @@ systemctl enable --now php-fpm.service
 
 Modify /etc/pihole/setupVars.conf
 
-\# Overrides PIHOLE\_INTERFACE
+`# Overrides PIHOLE_INTERFACE`
 
-DNSMASQ\_LISTENING=local
+`DNSMASQ_LISTENING=local`
 
-Backup - /etc/pihole/setupVars.conf, /etc/php/php.ini, nginx stuff, /etc/pihole/pihole-FTL.conf.
+TODO: Backup - /etc/pihole/setupVars.conf, /etc/php/php.ini, nginx stuff, /etc/pihole/pihole-FTL.conf.
 
 Security issues:
 
@@ -68,7 +68,7 @@ TODO: Nginx gzip config.
 
 ## cloudflared adblocker with pihole
 
-yay -S --needed cloudflared-bin
+`yay -S --needed cloudflared-bin`
 
 Create example conf in /etc/cloudflared/pivpn.conf
 
