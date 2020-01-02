@@ -43,10 +43,16 @@ pihole -a -p
 nginx conf.: \(cp /usr/share/pihole/configs/nginx.example.conf pihole.conf\)
 
 ```
-
+TODO: COPY AND PASTE!
 ```
 
 systemctl enable --now php-fpm.service
+
+Modify /etc/pihole/setupVars.conf
+
+\# Overrides PIHOLE\_INTERFACE
+
+DNSMASQ\_LISTENING=local
 
 ## cloudflared adblocker \(not with PiHole\) - does not work
 
@@ -73,6 +79,12 @@ CapabilityBoundingSet=CAP_NET_BIND_SERVICE
 AmbientCapabilities=CAP_NET_BIND_SERVICE
 NoNewPrivileges=true
 ```
+
+
+
+Modify /etc/pihole/setupVars.conf
+
+PIHOLE\_DNS 1 with 127.0.0.1\#5053
 
 
 
