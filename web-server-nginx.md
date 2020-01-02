@@ -197,6 +197,7 @@ Linux:
 
 ```console
 scp piserver.local:/etc/ssl/certs/nginx-selfsigned.crt ~
+sudo chown root:root nginx-selfsigned.crt
 sudo chmod 644 nginx-selfsigned.crt
 sudo mv nginx-selfsigned.crt /usr/share/ca-certificates/trust-source/anchors/piserver-selfsigned.crt
 
