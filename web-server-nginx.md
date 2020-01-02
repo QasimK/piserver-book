@@ -178,8 +178,16 @@ LAN applications will be served at `piserver.local`. TLS encryption will be done
 
 The most significant field is Common Name \(CN\) which should be set to `*.piserver.local`.
 
+NB: Create openssl.cnf first, then
+
+```
+[req]
+distinguished_name = req_distinguished_name
+[req_distinguished_name]
+```
+
 ```console
-openssl req -x509 -nodes -addext "basicConstraints=CA:FALSE" -days 3650 -newkey rsa:2048 -keyout /etc/ssl/private/nginx-selfsigned.key -out /etc/ssl/certs/nginx-selfsigned.crt
+openssl req -x509 -nodes -newkey rsa:4096 -sha256 -days 3650 -out /etc/ssl/certs/nginx-selfsigned.crt -keyout /etc/ssl/private/nginx-selfsigned.key -subj "/C=GB/O=PiServer/CN=piserver.local" -addext "basicConstraints=critical,CA:FALSE" -addext "authorityKeyIdentifier=keyid,issuer" -addext "keyUsage=digitalSignature,nonRepudiation,keyEncipherment,dataEncipherment" -addext "subjectAltName=DNS:piserver.local,DNS:*.piserver.local" -config openssl.cnf
 ```
 
 We create a `/etc/nginx/conf.d/self-signed-cert.conf`
