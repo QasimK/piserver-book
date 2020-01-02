@@ -54,6 +54,8 @@ Modify /etc/pihole/setupVars.conf
 
 DNSMASQ\_LISTENING=local
 
+Backup - /etc/pihole/setupVars.conf, /etc/php/php.ini, nginx stuff
+
 ## cloudflared adblocker \(not with PiHole\) - does not work
 
 yay -S --needed cloudflared-bin
@@ -80,11 +82,7 @@ AmbientCapabilities=CAP_NET_BIND_SERVICE
 NoNewPrivileges=true
 ```
 
-
-
 Modify /etc/pihole/setupVars.conf
 
 PIHOLE\_DNS 1 with 127.0.0.1\#5053
-
-
 
