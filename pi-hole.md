@@ -65,13 +65,11 @@ interface=eth0
 interface=pivpn
 ```
 
-
-
 TODO: Backup - /etc/pihole/setupVars.conf, /etc/php/php.ini, nginx stuff, /etc/pihole/pihole-FTL.conf.
 
 Security issues:
 
-PiHole FTL has open port on localhost:4711 for statistics
+PiHole FTL has open port on localhost:4711 for statistics \(cannot just set to invalid value. Maybe mask it\)
 
 TODO: Nginx gzip config.
 
