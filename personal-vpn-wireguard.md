@@ -91,6 +91,8 @@ systemctl enable --now wg-quick@pivpn.service
 > net.ipv6.conf.all.forwarding = 1
 > ```
 
+> **Warning: Do not use wg-quick down if you are remote - use systemctl restart :\*\(**
+
 ## Client Setup \(For Each Client\)
 
 We can create the private keys on the server, and use QR codes to add them to our smartphones.
