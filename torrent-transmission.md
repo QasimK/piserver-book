@@ -104,6 +104,8 @@ net.core.wmem_max = 1048576
 
 mkfs.f2fs needs benchmarking for optimal settings if you want. Otherwise -d lets you use USB storage easily.
 
+Use +t sticky bit on shared folder.
+
 ## Web Interface
 
 `socat`, like the name suggests, can connect sockets together. A socket could be a TCP socket, a Unix socket, or something else.
