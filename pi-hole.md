@@ -50,7 +50,7 @@ nginx conf.: \(cp /usr/share/pihole/configs/nginx.example.conf pihole.conf\)
 TODO: COPY AND PASTE!
 ```
 
-systemctl enable --now php-fpm.service
+**systemctl enable --now php-fpm.service**
 
 Modify /etc/pihole/setupVars.conf
 
