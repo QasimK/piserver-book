@@ -58,3 +58,15 @@ X = hmac-sha256?--integrity hmac-sha512 and --cipher chacha20-random --integrity
 
 That detects failures. Use mdadm scrub to be able to fix them.
 
+\[0\]: https://securitypitfalls.wordpress.com/2018/05/08/raid-doesnt-work/
+
+\[1\]: https://archive.fosdem.org/2018/schedule/event/cryptsetup/
+
+Levels:
+
+\[mdadm - safe disk\]
+
+\[RAID dev1\] \[RAID dev2\]
+
+\[crypt-integrity-AEAD\] \[crypt-integrity-AEAD\]
+
