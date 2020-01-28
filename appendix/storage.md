@@ -2,6 +2,10 @@
 
 ## SMART
 
+> These are all safe to run without risk of data loss.
+>
+> Smart Data can be reset \(buyer beware\)
+
 Install:
 
 ```
@@ -35,6 +39,14 @@ sudo smartctl -H /dev/sdx
 ## Badblocks
 
 Run **destructive** read-write test of entire drive:
+
+```
+sudo badblocks -wsv -b 4096 -c 32768 /dev/sdx
+```
+
+> This runs 4 test patterns and then terminates. Block size 4k matches physical block size. Number of blocks = 128MB at time.
+
+## Performance Test
 
 
 
