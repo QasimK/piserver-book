@@ -72,13 +72,19 @@ Levels:
 
 Not the best idea to use the same disk - performance and disk-failure concerns.
 
+## Encyption
+
+Linux fscrypt - fs file encryption could be useful. Once decrypted \(key added to kernal keyring\), it uses usual unix file permissions to protect access.
+
+Otherwise dm-crypt.
+
 ## ext4
 
 -O 64bit,extent,metadata\_csum,discard
 
 -m 0 - for non-root drives, no performance impact unless nearly full and running for long time to cause fragmentation
 
--T largefile - 1MiB files average limit for inodes
+-T largefile - 1MiB files average limit for inodes \(for backups\).
 
-noatime,lazytime,
+noatime,lazytime
 
