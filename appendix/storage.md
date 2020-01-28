@@ -48,5 +48,13 @@ sudo badblocks -wsv -b 4096 -c 65536 /dev/sdx
 
 ## Performance Test
 
+## Bit Rot
 
+Parchive??
+
+cryptsetup --integrityX  --sector-size 4096 --label "" --allow-discards \(open only\)
+
+X = hmac-sha256?--integrity hmac-sha512 and --cipher chacha20-random --integrity poly1305
+
+That detects failures. Use mdadm scrub to be able to fix them.
 
