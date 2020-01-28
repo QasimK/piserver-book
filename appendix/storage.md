@@ -41,10 +41,10 @@ sudo smartctl -H /dev/sdx
 Run **destructive** read-write test of entire drive:
 
 ```
-sudo badblocks -wsv -b 4096 -c 32768 /dev/sdx
+sudo badblocks -wsv -b 4096 -c 65536 /dev/sdx
 ```
 
-> This runs 4 test patterns and then terminates. Block size 4k matches physical block size. Number of blocks = 128MB at time.
+> This runs 4 test patterns and then terminates. Block size 4k matches physical block size. Number of blocks = 256 MB at time.
 
 ## Performance Test
 
