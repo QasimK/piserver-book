@@ -70,11 +70,15 @@ Levels:
 
 \[crypt-integrity-AEAD\] \[crypt-integrity-AEAD\]
 
+Not the best idea to use the same disk - performance and disk-failure concerns.
+
 ## ext4
 
-64bit,extent,metadata\_csum,discard
+-O 64bit,extent,metadata\_csum,discard
 
--m 0
+-m 0 - for non-root drives, no performance impact unless nearly full and running for long time to cause fragmentation
 
+-T largefile - 1MiB files average limit for inodes
 
+noatime,lazytime,
 
