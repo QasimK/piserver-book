@@ -35,4 +35,5 @@
 
 * [Raspberry Pi Models](appendix/raspberry-pi-models.md)
 * [Things That Won't Work](appendix/things-that-wont-work.md)
+* [Storage](appendix/storage.md)
 
