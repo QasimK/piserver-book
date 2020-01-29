@@ -41,10 +41,12 @@ sudo smartctl -H /dev/sdx
 Run **destructive** read-write test of entire drive:
 
 ```
-sudo badblocks -wsv -b 4096 -c 65536 /dev/sdx
+sudo badblocks -wsv -b 4096 -c 65536 -o badblocks.txt /dev/sdx
 ```
 
 > This runs 4 test patterns and then terminates. Block size 4k matches physical block size. Number of blocks = 256 MB at time.
+
+If there is Current\_Pending\_Sector from SMART, the disk should automatically reallocate them when the sector is ZEROED, i.e. when badblocks is run. You can get the number of times this happens from Reallocated\_Event\_Count. You generally do not need to mark blocks as bad for the filesystem these days.
 
 ## Performance Test
 
