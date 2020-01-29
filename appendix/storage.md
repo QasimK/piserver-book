@@ -4,7 +4,7 @@
 
 > These are all safe to run without risk of data loss.
 >
-> Smart Data can be reset \(buyer beware\)
+> Smart Data can be reset \(buyer beware!\)
 
 Install:
 
@@ -45,18 +45,38 @@ sudo badblocks -wsv -b 4096 -c 65536 -o badblocks.txt /dev/sdx
 ```
 
 > This runs 4 test patterns and then terminates. Block size 4k matches physical block size. Number of blocks = 256 MB at time.
+>
+> -w = destructuve
+>
+> -s = show progress
+>
+> -v = output corruptions to stderr
+>
+> -b = block size
+>
+> -c = \#blocks
 
 If there is Current\_Pending\_Sector from SMART, the disk should automatically reallocate them when the sector is ZEROED, i.e. when badblocks is run. You can get the number of times this happens from Reallocated\_Event\_Count. _You generally do not need to mark blocks as bad for the filesystem these days._ Run a non-destructive read-write:
 
 ```
-sudo badblocks -nsv ...
+sudo badblocks -nsv -t 0 ...
 ```
+
+> -t = zero it only, do not run other test patterns
+
+TODO: How to identify file, zero it out, and restore from backup. Look at smartmontools wiki.
 
 ## Performance Test
 
+Physical sector size = 512b/4kib
+
+SSD Page Size. SSD erasure block size.
+
+Generic - http://codecapsule.com/2014/02/12/coding-for-ssds-part-1-introduction-and-table-of-contents/
+
 ## Bit Rot
 
-Parchive??
+Parchive?? - Only for specific files.
 
 cryptsetup --integrityX  --sector-size 4096 --label "" --allow-discards \(open only\)
 
@@ -93,4 +113,6 @@ Otherwise dm-crypt.
 -T largefile - 1MiB files average limit for inodes \(for backups\).
 
 noatime,lazytime
+
+what is fsck?
 
