@@ -74,7 +74,7 @@ Not the best idea to use the same disk - performance and disk-failure concerns.
 
 ## Encyption
 
-Linux fscrypt - fs file encryption could be useful. Once decrypted \(key added to kernal keyring\), it uses usual unix file permissions to protect access.
+Linux fscrypt - fs file encryption could be useful. Once decrypted \(key added to kernal keyring\), it uses usual unix file permissions to protect access. \(ext4, f2fs\)
 
 Otherwise dm-crypt.
 
