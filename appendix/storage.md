@@ -68,11 +68,15 @@ TODO: How to identify file, zero it out, and restore from backup. Look at smartm
 
 ## Performance Test
 
+## Partition
+
 Physical sector size = 512b/4kib
 
 SSD Page Size. SSD erasure block size.
 
-Generic - http://codecapsule.com/2014/02/12/coding-for-ssds-part-1-introduction-and-table-of-contents/
+Generic - [http://codecapsule.com/2014/02/12/coding-for-ssds-part-1-introduction-and-table-of-contents/](http://codecapsule.com/2014/02/12/coding-for-ssds-part-1-introduction-and-table-of-contents/)
+
+Conclusion seems to be stick to 1MiB default first sector.
 
 ## Bit Rot
 
