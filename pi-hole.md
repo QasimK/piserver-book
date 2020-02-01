@@ -27,13 +27,14 @@ We will install Pi-Hole with the admin dashboard accessible via our Nginx revers
 # The existing DNS resolver on Port 53 must be disabled
 systemctl disable --now systemd-resolved
 
-# As non-root user install Pi-Hole
+# As a non-root user install Pi-Hole from AUR
 yay -S --needed pi-hole-server
 
+# Install PHP for the web admin dashboard
 pacmatic -S --needed php-fpm php-sqlite
 ```
 
-Enable necessary PHP extensions in `/etc/php/php.ini`
+Enable necessary PHP extensions by uncommenting the following lines in `/etc/php/php.ini`
 
 ```
 [...]
@@ -44,7 +45,7 @@ extension=sqlite3
 [...]
 ```
 
-**TODO: open\_basedir**
+**TODO: open\_basedir for additional security.**
 
 Password Protect the admin interface:
 
@@ -58,9 +59,17 @@ Modify `/etc/pihole/pihole-FTL.conf`:
 # Optimise for storage lifetime
 DBINTERVAL=60.0
 
-# Reduce length of time queries are stored
+# Reduce length of time individual DNS queries are stored
 MAXDBDAYS=30
 ```
+
+Now enable the ad-blocking DNS server:
+
+```
+systemctl enable --now pihole-FTL
+```
+
+### Admin Dashboard
 
 Add the Nginx config to `/etc/nginx/sites-available/pihole.conf`:
 
@@ -129,7 +138,9 @@ interface=eth0
 interface=pivpn
 ```
 
-Modify Nginx config to allow admin dashboard connections from the VPN:
+Now on the VPN we can specify the DNS server to be PiServer's LAN IP address.
+
+Additionally, we can modify Nginx config to allow admin dashboard connections from the VPN:
 
 ```nginx
     #Allow our Personal VPN
@@ -137,6 +148,8 @@ Modify Nginx config to allow admin dashboard connections from the VPN:
 ```
 
 ### Cloudflared DNS-over-HTTPS
+
+We can use Cloudflare's encrypted DNS-over-HTTPS service instead of our ISP's cleartext DNS servers.
 
 First install `cloudflared`:
 
