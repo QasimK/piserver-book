@@ -8,14 +8,21 @@ Unfortunately it doesn't offer DNS-over-TLS or DNS-over-HTTPS out of the box, so
 
 [https://github.com/notasausage/pi-hole-unbound-wireguard](https://github.com/notasausage/pi-hole-unbound-wireguard)
 
-## Steps
+## Security
 
-We will use Nginx.
+* TODO: PiHole-FTLDNS has a local statistics server at `localhost:4711` usable with telnet which cannot be disabled. \(It is also not possible to set the configuration port to an invalid value.
 
-```
+* TODO: Cloudflared has a local metrics server at `loocalhost:38083/metrics` which cannot be disabled.
+
+## Installation
+
+We will install Pi-Hole with the admin dashboard accessible via our Nginx reverse proxy. There are [separate instructions](/web-server-nginx.md) to install Nginx.
+
+```console
+# The existing DNS resolver on Port 53 must be disabled
 systemctl disable --now systemd-resolved
 
-# As user not root
+# As non-root user install Pi-Hole
 yay -S --needed pi-hole-server
 
 pacmatic -S --needed php-fpm php-sqlite
@@ -60,13 +67,7 @@ TODO: COPY AND PASTE!
 
 **systemctl enable --now php-fpm.service**
 
-Modify /etc/pihole/setupVars.conf
 
-`# Overrides PIHOLE_INTERFACE`
-
-`DNSMASQ_LISTENING=local`
-
-Except that ^ doesn't seem to work reliably. So override 
 
 TODO: Backup - /etc/pihole/setupVars.conf, /etc/php/php.ini, nginx stuff, /etc/pihole/pihole-FTL.conf.
 
@@ -88,20 +89,22 @@ IPV4_ADDRESS=...
 IPV6_ADDRESS=...
 ```
 
-However, the above DNSMASQ\_LISTENING does not reliablely cause dnsmasq to listen on all local interfaces, so we override `/etc/dnsmasq.d/99-override.conf`:
+However, the above DNSMASQ\_LISTENING does not reliablely cause dnsmasq to listen on all local interfaces, so we override `/etc/dnsmasq.d/99-pivpn.conf`:
 
 ```ini
 interface=eth0
 interface=pivpn
 ```
 
-## cloudflared adblocker with pihole
+## Cloudflared DNS-over-HTTPS
 
 First install `cloudflared`:
 
-`yay -S --needed cloudflared-bin`
+```console
+$ yay -S --needed cloudflared-bin
+```
 
-Create example conf in /etc/cloudflared/pivpn.conf
+Create the configuration `/etc/cloudflared/cloudflared.conf`
 
 ```yaml
 proxy-dns: true
@@ -114,7 +117,9 @@ proxy-dns-port: 5053
 proxy-dns-address: 127.0.0.1
 ```
 
-Override service
+> The IPv6 upstream addresses should be removed if we do not have an IPv6-capable connection.
+
+Override service to ensure it has the necessary permissions to run using an unprivileged user `systemctl edit cloudflared@cloudflared`:
 
 ```ini
 [Service]
@@ -123,7 +128,27 @@ AmbientCapabilities=CAP_NET_BIND_SERVICE
 NoNewPrivileges=true
 ```
 
-Modify /etc/pihole/setupVars.conf
+Enable and start the service:
 
-PIHOLE\_DNS 1 with 127.0.0.1\#5053
+```console
+# systemctl enable --now cloudflared@cloudflared
+```
+
+> This includes a metrics server that cannot be disabled: `curl 127.0.0.1:38083/metrics`
+
+Now modify Pi-Hole to use this DNS resolver.
+
+First modify `/etc/pihole/setupVars.conf`:
+
+```ini
+PIHOLE_DNS_1=127.0.0.1#5053
+```
+
+Then modify `/etc/dnsmasq.d/98-cloudflared.conf`:
+
+```ini
+server=127.0.0.1#5053
+```
+
+
 
