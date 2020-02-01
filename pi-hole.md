@@ -4,6 +4,13 @@ Pre-requisites: Nginx
 
 Pi-Hole will allow us to \(optionally\) secure DNS queries, blocks ads, monitor DNS queries, and do all of that for the entire LAN and Personal VPN connections.
 
+In order to use this, individual devices' DNS configuration can be set to the PiServer's IP address, or the home router's DHCP/DNS can be configured to provide the PiServer's IP address to all devices on the LAN.
+
+**Warning**:
+
+* If the PiServer stops working, the internet will basically stop working for everyone on the LAN. The only way around this is to have a second - identical - Pi-Hole device, or to be really prepared to do a backup and restore process including having backup hardware ready to go.
+* The ad-blocking may cause some things to not work for some people that they want to work. Therefore, **TODO: a disable button** can be shared with everyone.
+
 ## Security
 
 * TODO: PHP `open_basedir` directive
@@ -101,7 +108,7 @@ Now enable the admin dashboard:
 systemctl enable --now php-fpm.server
 ```
 
-TODO: Nginx gzip config into Nginx page.
+TODO: Nginx gzip config into Nginx page. Move Nginx config to Nginx page.
 
 ### Personal VPN Configuration
 
@@ -198,6 +205,15 @@ Add the following files to the backup script:
     /etc/systemd/system/multi-user.target.wants/php-fpm.service \
     /etc/systemd/system/multi-user.target.wants/pihole-FTL.service \
 ```
+
+## Conclusion
+
+We have set up Pi-Hole which allows us to:
+
+* block ads for everyone on the LAN, and
+* block ads for everyone using the Personal VPN, and
+* use DNS-over-HTTPS using cloudflared, and
+* securely access the password-protected dashboard over the LAN and Personal VPN.
 
 
 
