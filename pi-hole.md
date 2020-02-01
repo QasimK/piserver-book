@@ -1,16 +1,12 @@
 # Pi-Hole
 
-Prereqs: Nginx
+Pre-requisites: Nginx
 
-Pi-Hole will allow us to, optionally, secure the DNS, blocks ads, monitor DNS queries, and do all of that for the entire LAN.
-
-Unfortunately it doesn't offer DNS-over-TLS or DNS-over-HTTPS out of the box, so we're not gonna bother with it until it does.
-
-[https://github.com/notasausage/pi-hole-unbound-wireguard](https://github.com/notasausage/pi-hole-unbound-wireguard)
+Pi-Hole will allow us to \(optionally\) secure DNS queries, blocks ads, monitor DNS queries, and do all of that for the entire LAN and Personal VPN connections.
 
 ## Security
 
-* TODO: PHP open\_basedir directive
+* TODO: PHP `open_basedir` directive
 
 * TODO: PiHole-FTLDNS has a local statistics server at `localhost:4711` usable with telnet which cannot be disabled. \(It is also not possible to set the configuration port to an invalid value.
 
