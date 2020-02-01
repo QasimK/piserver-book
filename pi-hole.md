@@ -105,8 +105,6 @@ Now enable the admin dashboard:
 systemctl enable --now php-fpm.server
 ```
 
-TODO: Backup - /etc/pihole/setupVars.conf, /etc/php/php.ini, nginx stuff, /etc/pihole/pihole-FTL.conf.
-
 TODO: Nginx gzip config into Nginx page.
 
 ### Personal VPN Configuration
