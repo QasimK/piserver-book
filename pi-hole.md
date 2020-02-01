@@ -204,7 +204,6 @@ Add the following files to the backup script:
 ```
     /etc/pihole/setupVars.conf \
     /etc/pihole/pihole-FTL.conf \
-    /etc/php/php.ini
     /etc/dnsmasq.d/98-cloudflared.conf \
     /etc/dnsmasq.d/99-pivpn.conf \
     /etc/php/php.ini \
