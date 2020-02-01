@@ -210,7 +210,6 @@ Add the following files to the backup script:
     /etc/php/php.ini \
     /etc/systemd/system/cloudflared@cloudflared.service.d\override.conf \
     /etc/systemd/system/multi-user.target.wants/cloudflared@cloudflared.service \
-    /etc/systemd/system/multi-user.target.wants/cloudflared@cloudflared.service \
     /etc/systemd/system/multi-user.target.wants/php-fpm.service \
     /etc/systemd/system/multi-user.target.wants/pihole-FTL.service \
 ```
