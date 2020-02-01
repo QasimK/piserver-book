@@ -61,8 +61,6 @@ MAXDBDAYS=30
 
 Add the Nginx config to `/etc/nginx/sites-available/pihole.conf`:
 
-nginx conf.: \(cp /usr/share/pihole/configs/nginx.example.conf pihole.conf\)
-
 ```nginx
 server {
     listen [::]:443 ssl http2 ipv6only=off;
@@ -76,36 +74,30 @@ server {
     proxy_intercept_errors on;
     error_page 404 /pihole/index.php;
 
-    index pihole/index.php index.php index.html index.htm;
-
     location / {
-        expires max;
-    try_files $uri $uri/ =404;
+        return 301 /admin;
     }
 
     location ~ \.php$ {
-    include fastcgi.conf;
-    fastcgi_pass unix:/run/php-fpm/php-fpm.sock;
+        include fastcgi.conf;
+        fastcgi_pass unix:/run/php-fpm/php-fpm.sock;
         fastcgi_intercept_errors on;
-    fastcgi_param SERVER_NAME $host;
-    fastcgi_param FQDN true;
-    # Mitigate https://httpoxy.org/ vulnerabilities
+        fastcgi_param SERVER_NAME $host;
+        fastcgi_param FQDN true;
+        # Mitigate https://httpoxy.org/ vulnerabilities
         fastcgi_param HTTP_PROXY "";
+    }   
+        
+    location /pihole {
+        root /srv/http/pihole;
     }
 
     location /admin {
-    root /srv/http/pihole;
-    index index.php;
-    }
-
-    location ~ /admin/\. {
-    deny all;
-    }
-
-    location ~ /\.ht {
-    deny all;
+        root /srv/http/pihole;
+        index index.php;
     }
 }
+
 ```
 
 Now enable the admin dashboard:
