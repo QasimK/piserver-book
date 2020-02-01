@@ -10,6 +10,8 @@ Unfortunately it doesn't offer DNS-over-TLS or DNS-over-HTTPS out of the box, so
 
 ## Security
 
+* TODO: PHP open\_basedir directive
+
 * TODO: PiHole-FTLDNS has a local statistics server at `localhost:4711` usable with telnet which cannot be disabled. \(It is also not possible to set the configuration port to an invalid value.
 
 * TODO: Cloudflared has a local metrics server at `loocalhost:38083/metrics` which cannot be disabled.
@@ -26,11 +28,9 @@ systemctl disable --now systemd-resolved
 yay -S --needed pi-hole-server
 
 pacmatic -S --needed php-fpm php-sqlite
-# pacmatic -S --needed nginx-mainline
-# configured separately.
 ```
 
-Enable extensions in /etc/php/php.ini
+Enable necessary PHP extensions in `/etc/php/php.ini`
 
 ```
 [...]
@@ -41,12 +41,12 @@ extension=sqlite3
 [...]
 ```
 
-TODO: open\_basedir
+**TODO: open\_basedir**
 
 Password Protect the admin interface:
 
 ```
-$ pihole -a -p
+pihole -a -p
 ```
 
 Modify `/etc/pihole/pihole-FTL.conf`:
@@ -59,23 +59,64 @@ DBINTERVAL=60.0
 MAXDBDAYS=30
 ```
 
+Add the Nginx config to `/etc/nginx/sites-available/pihole.conf`:
+
 nginx conf.: \(cp /usr/share/pihole/configs/nginx.example.conf pihole.conf\)
 
+```nginx
+server {
+    listen [::]:443 ssl http2 ipv6only=off;
+    allow 192.168.1.0/24;
+    deny all;
+
+    root /srv/http/pihole;
+    server_name pihole.piserver.local;
+    autoindex off;
+
+    proxy_intercept_errors on;
+    error_page 404 /pihole/index.php;
+
+    index pihole/index.php index.php index.html index.htm;
+
+    location / {
+        expires max;
+    try_files $uri $uri/ =404;
+    }
+
+    location ~ \.php$ {
+    include fastcgi.conf;
+    fastcgi_pass unix:/run/php-fpm/php-fpm.sock;
+        fastcgi_intercept_errors on;
+    fastcgi_param SERVER_NAME $host;
+    fastcgi_param FQDN true;
+    # Mitigate https://httpoxy.org/ vulnerabilities
+        fastcgi_param HTTP_PROXY "";
+    }
+
+    location /admin {
+    root /srv/http/pihole;
+    index index.php;
+    }
+
+    location ~ /admin/\. {
+    deny all;
+    }
+
+    location ~ /\.ht {
+    deny all;
+    }
+}
 ```
-TODO: COPY AND PASTE!
+
+Now enable the admin dashboard:
+
+```console
+systemctl enable --now php-fpm.server
 ```
-
-**systemctl enable --now php-fpm.service**
-
-
 
 TODO: Backup - /etc/pihole/setupVars.conf, /etc/php/php.ini, nginx stuff, /etc/pihole/pihole-FTL.conf.
 
-Security issues:
-
-PiHole FTL has open port on localhost:4711 for statistics \(cannot just set to invalid value. Maybe mask it\). This can be used with telnet.
-
-TODO: Nginx gzip config.
+TODO: Nginx gzip config into Nginx page.
 
 ### Personal VPN Configuration
 
@@ -96,7 +137,13 @@ interface=eth0
 interface=pivpn
 ```
 
-## Cloudflared DNS-over-HTTPS
+Modify Nginx config
+
+\# Allow our Personal VPN
+
+allow 10.0.0.0/24;
+
+### Cloudflared DNS-over-HTTPS
 
 First install `cloudflared`:
 
@@ -148,6 +195,24 @@ Then modify `/etc/dnsmasq.d/98-cloudflared.conf`:
 
 ```ini
 server=127.0.0.1#5053
+```
+
+## Backup
+
+Add the following files to the backup script:
+
+```
+    /etc/pihole/setupVars.conf \
+    /etc/pihole/pihole-FTL.conf \
+    /etc/php/php.ini
+    /etc/dnsmasq.d/98-cloudflared.conf \
+    /etc/dnsmasq.d/99-pivpn.conf \
+    /etc/php/php.ini \
+    /etc/systemd/system/cloudflared@cloudflared.service.d\override.conf \
+    /etc/systemd/system/multi-user.target.wants/cloudflared@cloudflared.service \
+    /etc/systemd/system/multi-user.target.wants/cloudflared@cloudflared.service \
+    /etc/systemd/system/multi-user.target.wants/php-fpm.service \
+    /etc/systemd/system/multi-user.target.wants/pihole-FTL.service \
 ```
 
 

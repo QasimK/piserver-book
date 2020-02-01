@@ -55,11 +55,11 @@ We might have said that how to use this application was out-of-scope, but that d
 * If we do not have a subscription, then, while our separate devices will have separate identities, we can use the same identity name. The device name can be changed later. If we want to change the identity name, then we can unlink it on the device and re-sync the folders.
 * The mobile camera backup cannot use encrypted folders.
 * You can backup the RW and RO keys to recover from the encrypted backup.
-* `sync_trash_ttl` controls how long files are archived for (default: 30 days on desktops, 1 day on mobiles).
+* `sync_trash_ttl` controls how long files are archived for \(default: 30 days on desktops, 1 day on mobiles\).
 
 ## Backup
 
-Add the following files to the backup script
+Add the following files to the backup script:
 
 ```
     /etc/systemd/system/multi-user.target.wants/rslsync.service \
