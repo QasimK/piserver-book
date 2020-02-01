@@ -87,7 +87,7 @@ server {
         # Mitigate https://httpoxy.org/ vulnerabilities
         fastcgi_param HTTP_PROXY "";
     }   
-        
+
     location /pihole {
         root /srv/http/pihole;
     }
@@ -97,7 +97,6 @@ server {
         index index.php;
     }
 }
-
 ```
 
 Now enable the admin dashboard:
@@ -129,11 +128,12 @@ interface=eth0
 interface=pivpn
 ```
 
-Modify Nginx config
+Modify Nginx config to allow admin dashboard connections from the VPN:
 
-\# Allow our Personal VPN
-
-allow 10.0.0.0/24;
+```nginx
+    #Allow our Personal VPN
+    allow 10.0.0.0/24;
+```
 
 ### Cloudflared DNS-over-HTTPS
 
