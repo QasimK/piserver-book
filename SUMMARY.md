@@ -30,6 +30,7 @@
 * [IPFS](ipfs.md)
 * [Blog \(Jekyll\)](blog-jekyll.md)
 * [Git](git.md)
+* [Photo Library](photo-library.md)
 
 ## Appendix
 
