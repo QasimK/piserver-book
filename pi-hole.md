@@ -69,6 +69,11 @@ Now enable the ad-blocking DNS server:
 systemctl enable --now pihole-FTL
 ```
 
+TEMP FIXES:
+
+* logrotate does not work chown root:root /etc/pihole/logrotate
+* Admin interface does not work: php-fm.service ReadWritePaths
+
 ### Admin Dashboard
 
 Add the Nginx config to `/etc/nginx/sites-available/pihole.conf`:
