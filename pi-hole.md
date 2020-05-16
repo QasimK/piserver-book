@@ -71,8 +71,7 @@ systemctl enable --now pihole-FTL
 
 TEMP FIXES:
 
-* logrotate does not work chown root:root /etc/pihole/logrotate
-* Admin interface does not work: php-fm.service ReadWritePaths
+* logrotate does not work - need chown root:root /etc/pihole/logrotate
 
 ### Admin Dashboard
 
@@ -114,6 +113,26 @@ server {
         index index.php;
     }
 }
+```
+
+We also need to allow the dashboard access to certain files because the systemd service is hardened by default. Override the php-fpm config `systemctl edit php-fpm.service`:
+
+TODO: Harden further, remove unnecessary
+
+```
+[Service]
+ReadWritePaths = /srv/http/pihole
+ReadWritePaths = /run/pihole-ftl/pihole-FTL.port
+ReadWritePaths = /run/log/pihole/pihole.log
+ReadWritePaths = /run/log/pihole-ftl/pihole-FTL.log
+ReadWritePaths = /etc/pihole
+ReadWritePaths = /etc/hosts
+ReadWritePaths = /etc/hostname
+ReadWritePaths = /etc/dnsmasq.d/
+ReadWritePaths = /proc/meminfo
+ReadWritePaths = /proc/cpuinfo
+ReadWritePaths = /sys/class/thermal/thermal_zone0/temp
+ReadWritePaths = /tmp
 ```
 
 Now enable the admin dashboard:
