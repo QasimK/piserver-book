@@ -14,9 +14,11 @@ Host piserver
 Substituting in the IP address of the Raspberry Pi. We could:
 
 * Try lots of random IP addresses until we find the right one \(they're usually `192.168.1.x`, and we can `ping` to narrow down the list\),
-* Search for machines with `nmap 192.168.1.0/24 -sL | grep -i pi`
-* Search for machines with open Port 22 with `sudo nmap -sT --open -p 22 192.168.1.0/24`
-* Use the MAC address on the Raspberry Pi obtained from `ip link list` and look at the list of devices on our DHCP server \(i.e. our router\),
+* Use the MAC address on the Raspberry Pi obtained from `ip link list` and look at the list of devices on our DHCP server \(i.e. our router\), or using `arp`.
+* Search for the Raspberry Pi MAC addresses: `sudo arp -n | grep 'b8:27:eb:'`
+* Search for machines with a ping scan `nmap -oG - -sn 192.168.1.0/24`
+* Search for machines with a list scan `nmap -oG - -sL 192.168.1.0/24 | grep -i pi`
+* Search for machines with an open Port 22: `nmap -oG - -p 22 --open 192.168.1.0/24`
 * Set a static IP address on the Raspberry Pi with `ip addr add`,
 * Set a static IP address for the Raspberry Pi on our DHCP server, or
 * Set up [**Service Discovery \(Avahi\)**](/service-discovery-avahi.md) so that we can `ssh piserver.local` which works no matter what IP address the was given to the RPi from the DHCP server.

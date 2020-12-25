@@ -45,6 +45,8 @@ extension=sqlite3
 [...]
 ```
 
+TODO: memory-limit = 256M to fix possible query log errors
+
 **TODO: open\_basedir for additional security.**
 
 Password Protect the admin interface:
@@ -142,6 +144,8 @@ systemctl enable --now php-fpm.server
 ```
 
 TODO: Nginx gzip config into Nginx page. Move Nginx config to Nginx page.
+
+TODO: pihole updateGravity - update adblock lists cron.
 
 ### Personal VPN Configuration
 
