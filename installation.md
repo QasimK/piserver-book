@@ -71,9 +71,6 @@ disable_overscan=1
 # Improve the boot time
 disable_splash=1
 boot_delay=0
-
-# Reduce minimum frequency of processor (to save power?)
-arm_freq_min=300
 ```
 
 > Note that the status of the HDMI port can be checked at /opt/vc/bin/tvservice.
