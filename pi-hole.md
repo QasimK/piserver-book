@@ -75,6 +75,12 @@ TEMP FIXES:
 
 * logrotate does not work - need chown root:root /etc/pihole/logrotate
 
+**FIX**
+
+usermod -aG pihole http
+
+Give http full access to pihole
+
 ### Admin Dashboard
 
 Add the Nginx config to `/etc/nginx/sites-available/pihole.conf`:
