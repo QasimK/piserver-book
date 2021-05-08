@@ -53,6 +53,7 @@ Edit `/boot/config.txt` with some or all of these options.
 
 ```ini
 # Reduce memory allocation to unused GPU, increasing RAM available to OS
+# Note: dtoverlay=vc4-kms-v3d requires much more memory
 gpu_mem=16
 
 # Disable unused WiFi and Bluetooth hardware to save power
